@@ -1,0 +1,18 @@
+/**
+ * 
+ */
+package com.pon.pub.hm.service;
+
+import com.support.custom.exception.CustomRuntimeException;
+
+/**
+ * @author Sanjeev
+ *
+ */
+public class RegistrationService {
+	
+	public boolean isThisMailIdExists(String mailId)throws CustomRuntimeException;
+    
+    public void saveThisOnLineVoter(RegistrationDTO registrationDTO)throws CustomRuntimeException;
+
+}

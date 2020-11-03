@@ -1,0 +1,23 @@
+/**
+ * 
+ */
+package com.pon.pvt.voter.dto;
+
+/**
+ * @author Sanjeev
+ *
+ */
+public class VoteLockinig {
+
+	private Integer id;
+	private Integer lockStatus;
+	private Integer voterId;
+	private String reqIpAdd;
+	private Integer onlineVoterAccountId;
+	private String election_year;
+	
+	  
+	 
+	 
+	  
+}

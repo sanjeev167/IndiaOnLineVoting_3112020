@@ -1,0 +1,12 @@
+/**
+ * 
+ */
+package com.pon.pvt.voter.service;
+
+/**
+ * @author Sanjeev
+ *
+ */
+public class VoterUserDetailsServiceImpl {
+
+}

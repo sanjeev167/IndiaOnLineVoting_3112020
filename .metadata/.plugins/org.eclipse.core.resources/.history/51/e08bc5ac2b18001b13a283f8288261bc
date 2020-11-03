@@ -1,0 +1,18 @@
+/**
+ * 
+ */
+package com.pon.pub.hm.service;
+
+/**
+ * @author Sanjeev
+ *
+ */
+public interface VoterIdentificationService {
+
+	boolean verifyVoterId();
+
+	boolean verifyAadharId();
+
+	boolean verifyAadharOTP();
+
+}

@@ -1,0 +1,19 @@
+/**
+ * 
+ */
+package com.pon.pub.hm.dto;
+
+/**
+ * @author Sanjeev
+ *
+ */
+public class LoginDTO {
+	
+	private String name;
+	
+	private String userLoginId;
+	
+	private String password;
+	
+	private String passwordConf;
+}

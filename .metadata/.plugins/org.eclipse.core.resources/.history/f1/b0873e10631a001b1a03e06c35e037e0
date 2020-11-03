@@ -1,0 +1,19 @@
+/**
+ * 
+ */
+package com.pon.pvt.voting.dto;
+
+/**
+ * @author Sanjeev
+ *
+ */
+public class VoterDetailsDTO {
+
+	private String name;
+	private String age;
+	private String sex;
+	private String dob;
+	private String fatherName;
+	private String address;
+	
+}

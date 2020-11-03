@@ -1,0 +1,28 @@
+/**
+ * 
+ */
+package com.pon.pub.ec.ctrl;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+/**
+ * @author Sanjeev
+ *
+ */
+@Controller
+@RequestMapping("/pub/offline/vote/cast")
+public class CastVoteOfflineController {
+
+	@GetMapping("offline")	
+	public String listVoters(Model model,HttpServletRequest request, HttpServletResponse response) {	
+		String target="/vote/offline";
+		
+		return target;
+	}
+}

@@ -1,0 +1,37 @@
+/**
+ * 
+ */
+package com.pon.pvt.voter.service;
+
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import com.pon.pvt.master.dto.NameValue;
+
+import com.pon.pvt.master.dto.ddData;
+import com.pon.pvt.voter.dto.VoteLockinigDTO;
+import com.support.custom.exception.CustomRuntimeException;
+import com.support.custom.validation.interfaceForServices.FieldValueWithParentIdExists;
+import com.support.grid_pagination.DataTableResults;
+
+/**
+ * @author Sanjeev
+ *
+ */
+public interface VoteLockinigService extends FieldValueWithParentIdExists{
+
+	
+	 public DataTableResults<VoteLockinigDTO> loadGrid(HttpServletRequest request,String whereClauseForBaseQuery) throws CustomRuntimeException;
+
+	    public VoteLockinigDTO getReordById(Integer id)throws CustomRuntimeException;
+	    
+	    public VoteLockinigDTO saveAndUpdate(VoteLockinigDTO voteLockinigDTO)throws CustomRuntimeException;
+
+		public boolean deleteOneRecord(Integer id)throws CustomRuntimeException;
+
+		boolean deleteMultipleRecords(Integer[] recordIdArray)throws CustomRuntimeException;
+		public List<NameValue> getVoteLockingList(Integer id)throws CustomRuntimeException;
+		public List<NameValue> getVoteLockingList()throws CustomRuntimeException;
+		
+}

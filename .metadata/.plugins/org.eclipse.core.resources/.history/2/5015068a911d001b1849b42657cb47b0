@@ -1,0 +1,248 @@
+/**
+ * 
+ */
+package com.pon.pvt.voter.ctrl;
+
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.google.gson.Gson;
+import com.pon.pub.hm.dto.RegistrationDTO;
+import com.pon.pub.hm.service.RegistrationService;
+import com.pon.pvt.master.dto.CityMasterDTO;
+import com.pon.pvt.voter.dto.VoteLockinigDTO;
+import com.pon.pvt.voter.entity.VoteLockinig;
+import com.pon.pvt.voter.service.VoteLockinigService;
+import com.support.JsonResponse.JsonResponse;
+import com.support.custom.exception.CustomRuntimeException;
+import com.support.custom.exception.ExceptionApplicationUtility;
+import com.support.grid_pagination.DataTableResults;
+
+/**
+ * @author Sanjeev
+ *
+ */
+@Controller
+@RequestMapping("/pvt/voter/")
+public class LockYourOnlineVoteController {
+	static final Logger log = LoggerFactory.getLogger(LockYourOnlineVoteController.class);
+
+	@Autowired
+	VoteLockinigService voteLockinigService;
+	@Autowired
+	RegistrationService registrationService;
+
+	@GetMapping("lock_vote")
+	public String lockVote(Model model, HttpServletRequest request, HttpServletResponse response) {
+		log.info("LockYourOnlineVoteController :==> lockVote :==> Started");
+		
+		  Object principal =SecurityContextHolder.getContext().getAuthentication().getPrincipal(); 
+		  String username=null;​ 
+		  if (principal instanceof UserDetails) { 
+			  username = ((UserDetails)principal). getUsername(); } 
+		  else { username = principal.
+		         toString(); }
+		 
+		 RegistrationDTO registrationModal=registrationService.loadByLoginId(username);
+		 
+		VoteLockinigDTO voteLockinigDTO;
+		try {
+			voteLockinigDTO = registrationService.loadByMailId("modi@gmail.com");
+			model.addAttribute(voteLockinigDTO);
+		} catch (CustomRuntimeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		log.info("LockYourOnlineVoteController :==> lockVote :==> Ended");
+		return "/voter/lock_vote";
+	}
+	
+	
+	@GetMapping("voteLockAuditTrail")
+	public String voteLockAuditTrail(Model model, HttpServletRequest request, HttpServletResponse response) {
+		log.info("LockYourOnlineVoteController :==> voteLockAuditTrail :==> Started");
+		
+		log.info("LockYourOnlineVoteController :==> voteLockAuditTrail :==> Ended");
+		return "/voter/voteLockAuditTrail";
+	}
+	
+	@RequestMapping(value = "paginated", method = RequestMethod.POST)
+	@ResponseBody
+	public String auditTrailPaginated(HttpServletRequest request, HttpServletResponse response, String voterId){
+		log.info("LockYourOnlineVoteController :==> auditTrailPaginated :==> Started");
+		DataTableResults<VoteLockinigDTO> dataTableResults=null;
+		try {
+			String currentUserMailId="modi@gmail.com";			
+			String whereClauseForBaseQuery = " and ova.mail_id='"+currentUserMailId+"'";			
+			dataTableResults=voteLockinigService.loadGridForVoter(request, whereClauseForBaseQuery);
+		}
+		catch (CustomRuntimeException ex) {
+			// Handle this exception
+			String exceptionCause= ex.getExceptionInfo().exceptionCause;
+		} catch (Exception ex) {
+			CustomRuntimeException exLocal=ExceptionApplicationUtility.wrapRunTimeException(ex);
+			//Handle this exception
+			String exceptionCause= exLocal.getExceptionInfo().exceptionCause;
+		}
+		log.info("LockYourOnlineVoteController :==> auditTrailPaginated :==> End");
+		return new Gson().toJson(dataTableResults);
+	}
+
+	@PostMapping("verifyVotingSecret")
+	@ResponseBody
+	public String verifyVotingSecret(@RequestParam String secret, HttpServletRequest request,
+			HttpServletResponse response) {
+		log.info("LockYourOnlineVoteController :==> verifyVotingSecret :==> Started");
+		JsonResponse jsonResponse = new JsonResponse();
+		try {
+			String status[] = voteLockinigService.verifyVotingSecret(secret);
+			if (status[0].equals("1")) {
+				jsonResponse.setStatus(true);
+				jsonResponse.setStatusMsg(status[1]);
+			} else {
+				jsonResponse.setStatus(false);
+				jsonResponse.setStatusMsg(status[1]);
+			}
+		} catch (CustomRuntimeException ex) {
+			// . Handle this exception
+			String exceptionCause = ex.getExceptionInfo().exceptionCause;
+			jsonResponse.setStatus(false);
+			jsonResponse.setStatusMsg(exceptionCause);
+		} catch (Exception ex) {
+			CustomRuntimeException exLocal = ExceptionApplicationUtility.wrapRunTimeException(ex);
+			// Handle this exception
+			String exceptionCause = exLocal.getExceptionInfo().exceptionCause;
+			jsonResponse.setStatus(false);
+			jsonResponse.setStatusMsg(exceptionCause);
+		}
+		log.info("LockYourOnlineVoteController :==> verifyVotingSecret :==> End");
+		return new Gson().toJson(jsonResponse);
+
+	}
+
+	@PostMapping("verifyMobileOtp")
+	@ResponseBody
+	public String verifyMobileOtp(@RequestParam String mobileOtp, HttpServletRequest request,
+			HttpServletResponse response) {
+		log.info("LockYourOnlineVoteController :==> verifyMobileOtp :==> Started");
+		JsonResponse jsonResponse = new JsonResponse();
+		try {
+			String status[] = voteLockinigService.verifyMobileOtp(mobileOtp);
+			if (status[0].equals("1")) {
+				jsonResponse.setStatus(true);
+				jsonResponse.setStatusMsg(status[1]);
+			} else {
+				jsonResponse.setStatus(false);
+				jsonResponse.setStatusMsg(status[1]);
+			}
+		} catch (CustomRuntimeException ex) {
+			// . Handle this exception
+			String exceptionCause = ex.getExceptionInfo().exceptionCause;
+			jsonResponse.setStatus(false);
+			jsonResponse.setStatusMsg(exceptionCause);
+		} catch (Exception ex) {
+			CustomRuntimeException exLocal = ExceptionApplicationUtility.wrapRunTimeException(ex);
+			// Handle this exception
+			String exceptionCause = exLocal.getExceptionInfo().exceptionCause;
+			jsonResponse.setStatus(false);
+			jsonResponse.setStatusMsg(exceptionCause);
+		}
+		log.info("LockYourOnlineVoteController :==> verifyMobileOtp :==> End");
+		return new Gson().toJson(jsonResponse);
+
+	}
+
+	@PostMapping("verifyMailOtp")
+	@ResponseBody
+	public String verifyMailOtp(@RequestParam String mailOtp, HttpServletRequest request,
+			HttpServletResponse response) {
+		log.info("LockYourOnlineVoteController :==> verifyMailOtp :==> Started");
+		JsonResponse jsonResponse = new JsonResponse();
+		try {
+			String status[] = voteLockinigService.verifyMailOtp(mailOtp);
+			if (status[0].equals("1")) {
+				jsonResponse.setStatus(true);
+				jsonResponse.setStatusMsg(status[1]);
+			} else {
+				jsonResponse.setStatus(false);
+				jsonResponse.setStatusMsg(status[1]);
+			}
+		} catch (CustomRuntimeException ex) {
+			// . Handle this exception
+			String exceptionCause = ex.getExceptionInfo().exceptionCause;
+			jsonResponse.setStatus(false);
+			jsonResponse.setStatusMsg(exceptionCause);
+		} catch (Exception ex) {
+			CustomRuntimeException exLocal = ExceptionApplicationUtility.wrapRunTimeException(ex);
+			// Handle this exception
+			String exceptionCause = exLocal.getExceptionInfo().exceptionCause;
+			jsonResponse.setStatus(false);
+			jsonResponse.setStatusMsg(exceptionCause);
+		}
+		log.info("LockYourOnlineVoteController :==> verifyMailOtp :==> End");
+		return new Gson().toJson(jsonResponse);
+
+	}
+
+	@PostMapping("lockOrUnlockVote")
+	@ResponseBody
+	public String lockOrUnlockVote(@RequestBody @Valid VoteLockinigDTO voteLockinigDTO, BindingResult result,
+			HttpServletRequest request, HttpServletResponse response) {
+		log.info("LockYourOnlineVoteController :==> lockOrUnlockVote :==> Started");
+		JsonResponse jsonResponse = new JsonResponse();
+		voteLockinigDTO.setReqIpAdd(request.getRemoteAddr());
+		try {
+			if (result.hasErrors()) {
+				// Get error message
+				Map<String, String> errors = result.getFieldErrors().stream()
+						.collect(Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage));
+
+				jsonResponse.setFieldErrMsgMap(errors);
+				jsonResponse.setStatus(false);
+				jsonResponse.setStatusMsg("Error found");
+			} else {
+				VoteLockinigDTO voteLockinigDTO1 = voteLockinigService.saveAndUpdate(voteLockinigDTO);
+				jsonResponse.setStatus(true);
+				jsonResponse.setFormObject(voteLockinigDTO1);
+				jsonResponse.setStatusMsg("Your vote locking status has been updated");				
+			}
+		} catch (CustomRuntimeException ex) {
+			// . Handle this exception
+			String exceptionCause = ex.getExceptionInfo().exceptionCause;
+			jsonResponse.setStatus(false);
+			jsonResponse.setStatusMsg(exceptionCause);
+		} catch (Exception ex) {
+			CustomRuntimeException exLocal = ExceptionApplicationUtility.wrapRunTimeException(ex);
+			// Handle this exception
+			String exceptionCause = exLocal.getExceptionInfo().exceptionCause;
+			jsonResponse.setStatus(false);
+			jsonResponse.setStatusMsg(exceptionCause);
+		}
+		log.info("LockYourOnlineVoteController :==> lockOrUnlockVote :==> End");
+		return new Gson().toJson(jsonResponse);
+
+	}
+
+}

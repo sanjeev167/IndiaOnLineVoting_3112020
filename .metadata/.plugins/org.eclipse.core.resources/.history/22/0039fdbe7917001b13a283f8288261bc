@@ -1,0 +1,24 @@
+/**
+ * 
+ */
+package com.support.custom.validation.fieldLevelValidator;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
+
+import javax.validation.Constraint;
+
+/**
+ * @author Sanjeev
+ *
+ */
+@Documented
+@Constraint(validatedBy = ContactNumberValidator.class)
+@Target( { ElementType.METHOD, ElementType.FIELD })
+@Retention(RetentionPolicy.RUNTIME)
+public @interface ContactNumberConstraint {
+    String message() default "Invalid phone number";
+    Class<?>[] groups() default {};
+    Class<? extends Payload>[] payload() default {};
+}

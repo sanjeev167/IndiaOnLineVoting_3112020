@@ -1,0 +1,27 @@
+/**
+ * 
+ */
+package com.pon.pub.hm.service;
+
+import com.pon.pub.hm.dto.RegistrationDTO;
+import com.support.custom.exception.CustomRuntimeException;
+
+/**
+ * @author Sanjeev
+ *
+ */
+public class RegistrationServiceImpl implements RegistrationService{
+
+	@Override
+	public boolean isThisMailIdExists(String mailId) throws CustomRuntimeException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void saveThisOnLineVoter(RegistrationDTO registrationDTO) throws CustomRuntimeException {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

@@ -1,0 +1,14 @@
+/**
+ * 
+ */
+package com.pon.pvt.voting.repo;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+/**
+ * @author Sanjeev
+ *
+ */
+public interface MarkOnlineVoterRepository extends JpaRepository<MarkOnlineVoter, Integer>{
+
+}

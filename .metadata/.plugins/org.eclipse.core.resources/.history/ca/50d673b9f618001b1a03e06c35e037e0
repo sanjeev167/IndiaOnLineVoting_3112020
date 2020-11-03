@@ -1,0 +1,12 @@
+/**
+ * 
+ */
+package com.pon.pvt.voter.dto;
+
+/**
+ * @author Sanjeev
+ *
+ */
+public class VoteLockinig {
+
+}

@@ -1,0 +1,29 @@
+/**
+ * 
+ */
+package com.pon.pvt.voter.ctrl;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.pon.pub.hm.modal.RegistrationModal;
+
+
+
+/**
+ * @author Sanjeev
+ *
+ */
+@Controller
+@RequestMapping("/pvt/voter/")
+public class LockYourOnlineVoteController {
+	@GetMapping("lock_vote")
+	public String login( RegistrationModal registrationModal,HttpServletRequest request, HttpServletResponse response) {
+		
+		return "/voter/lock_vote";
+	}
+}

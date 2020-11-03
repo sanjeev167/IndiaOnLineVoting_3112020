@@ -1,0 +1,41 @@
+/**
+ * 
+ */
+package com.pon.pub.hm.service;
+
+import com.support.custom.exception.CustomRuntimeException;
+
+/**
+ * @author Sanjeev
+ *
+ */
+public class VoterIdentificationServiceImpl implements VoterIdentificationService{
+
+	@Override
+	public String [] verifyVoterId(String voterId) throws CustomRuntimeException{
+		// TODO Auto-generated method stub
+		String status[]=new String[2];
+		//First check the format of voter-id
+		status[1]="Voter-Id has been verified.";
+		status[0]="Wrong Voter-Id supplied.";
+		//Next check it in the database whether it exists or not
+		
+		
+		return status;
+	}
+
+	@Override
+	public String [] verifyAadharId(String aadharId) throws CustomRuntimeException{
+		// TODO Auto-generated method stub
+		String status[]=new String[2];
+		return status;
+	}
+
+	@Override
+	public String [] verifyAadharOTP(String aadharOtp) throws CustomRuntimeException{
+		// TODO Auto-generated method stub
+		String status[]=new String[2];
+		return status;
+	}
+
+}

@@ -1,0 +1,17 @@
+/**
+ * 
+ */
+package com.pon.pvt.voting.service;
+
+import com.support.custom.exception.CustomRuntimeException;
+
+/**
+ * @author Sanjeev
+ *
+ */
+public interface ElectionResultService {
+	
+	public List<VoteRepository> getAssemblyResult()throws CustomRuntimeException;
+	public List<LoksabhaVoteRepository> getAssemblyResult()throws CustomRuntimeException;
+
+}

@@ -1,0 +1,8 @@
+
+#=========================================
+#====== InternalResourceViewResolver =====
+#=========================================
+
+spring.mvc.view.prefix=/WEB-INF/jsp/
+spring.mvc.view.suffix=.jsp
+server.max-http-header-size=65536

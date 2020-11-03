@@ -1,0 +1,19 @@
+/**
+ * 
+ */
+package com.pon.pvt.voter.repo;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.pon.pvt.voter.entity.VoteLockinig;
+
+/**
+ * @author Sanjeev
+ *
+ */
+
+@Repository
+public interface VoteLockinigRepository extends  JpaRepository<VoteLockinig, Integer> {
+
+}

@@ -1,0 +1,79 @@
+/**
+ * 
+ */
+package com.pon.pvt.voting.service;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import com.pon.pvt.voting.entity.LoksabhaVoteRepository;
+import com.pon.pvt.voting.entity.VoteRepository;
+import com.support.custom.exception.CustomRuntimeException;
+import com.support.grid_pagination.DataTableResults;
+
+/**
+ * @author Sanjeev
+ *
+ */
+@Service
+public class ElectionResultServiceImpl implements ElectionResultService{
+
+	@Override
+	public DataTableResults<VoteRepository> getAssemblyResult(String yearId, String electionTypeId, String stateId, String loksabhaId,
+			String assemblyId) throws CustomRuntimeException {
+		// TODO Auto-generated method stub
+		
+		yearId="2020";
+		electionTypeId="A";
+		loksabhaId="3";
+		assemblyId="3";
+		String baseQuery="Select distinct(vro.assembly_candidate_id), "
+				+ "       vro.voting_party_id,       "
+				+ "       vro.symbol, "
+			
+				+ "      (select count(vr.voting_party_id) as total from vote_repository vr  where  "
+				+ "       vr.election_type='"+electionTypeId+"' and"
+				+ "       vr.election_year='"+yearId+"' and     "
+				+ "       vr.loksabha_id='"+loksabhaId+"' and"
+				+ "       vr.assembly_id='"+assemblyId+"' and "
+				+ "       vr.assembly_candidate_id=vro.assembly_candidate_id and"
+				+ "       vr.voting_mode='1' Group By vr.voting_party_id) as online,"
+				
+				+ "       (select count(vr.voting_party_id) as total from vote_repository vr  where  "
+				+ "       vr.election_type='"+electionTypeId+"' and"
+				+ "       vr.election_year='"+yearId+"' and     "
+				+ "       vr.loksabha_id='"+loksabhaId+"' and"
+				+ "       vr.assembly_id='"+assemblyId+"' and "
+				+ "        vr.assembly_candidate_id=vro.assembly_candidate_id and  "
+				+ "       vr.voting_mode='0' Group By vr.voting_party_id) as offline,"
+			
+				+ "       count(vro.voting_mode) as total, RANK() OVER(ORDER BY COUNT(*) DESC) AS rank,"
+				
+				+ "       (select count(distinct(vr.assembly_candidate_id)) from vote_repository vr  where  "
+				+ "       vr.election_type='"+electionTypeId+"' and"
+				+ "       vr.election_year='"+yearId+"' and     "
+				+ "       vr.loksabha_id='"+loksabhaId+"' and"
+				+ "       vr.assembly_id='"+assemblyId+"' and "
+				+ "       )as totalrecords"
+				
+				+ "       from vote_repository vro  where  "
+				+ "       vro.election_type='"+electionTypeId+"' and"
+				+ "       vro.election_year='"+yearId+"' and     "
+				+ "       vro.loksabha_id='"+loksabhaId+"' and"
+				+ "       vro.assembly_id='"+assemblyId+"' and "
+				+ "       Group By vro.voting_party_id,vro.assembly_candidate_id,vro.symbol "
+				+ "       order by total desc";
+				
+		
+		return null;
+	}
+
+	@Override
+	public DataTableResults<LoksabhaVoteRepository> getLoksabhaResult(String yearId, String electionTypeId, String stateId,
+			String loksabhaId, String assemblyId) throws CustomRuntimeException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

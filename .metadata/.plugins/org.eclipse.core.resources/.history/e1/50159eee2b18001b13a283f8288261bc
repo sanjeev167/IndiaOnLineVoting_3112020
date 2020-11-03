@@ -1,0 +1,30 @@
+/**
+ * 
+ */
+package com.pon.pub.hm.service;
+
+/**
+ * @author Sanjeev
+ *
+ */
+public class VoterIdentificationServiceImpl implements VoterIdentificationService{
+
+	@Override
+	public boolean verifyVoterId(String voterId) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean verifyAadharId(String aadharId) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean verifyAadharOTP(String aadharOtp) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+}

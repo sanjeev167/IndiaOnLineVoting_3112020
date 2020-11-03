@@ -1,0 +1,19 @@
+/**
+ * 
+ */
+package com.pon.pub.hm.service;
+
+import com.pon.web.adm.pvt.sec.rbac.dto.AppAdminUserDTO;
+import com.support.custom.exception.CustomRuntimeException;
+
+/**
+ * @author Sanjeev
+ *
+ */
+public class RegistrationService {
+	
+	public boolean isThisMailIdExists(String mailId)throws CustomRuntimeException;
+    
+    public AppAdminUserDTO saveAndUpdate(AppAdminUserDTO appAdminUserDTO)throws CustomRuntimeException;
+
+}

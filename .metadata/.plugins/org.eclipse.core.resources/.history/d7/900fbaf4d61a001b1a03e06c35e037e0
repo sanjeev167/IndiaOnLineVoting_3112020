@@ -1,0 +1,46 @@
+/**
+ * 
+ */
+package com.pon.pvt.voting.dto;
+
+/**
+ * @author Sanjeev
+ *
+ */
+public class VoteDetailDTO extends ElectionDetailDTO{
+	private String selectedCandidateIdForVoting;
+	private String castedTime;
+	private String usedIpAddress;
+	private String voterId;
+	
+	
+	
+	
+	public String getSelectedCandidateIdForVoting() {
+		return selectedCandidateIdForVoting;
+	}
+	public void setSelectedCandidateIdForVoting(String selectedCandidateIdForVoting) {
+		this.selectedCandidateIdForVoting = selectedCandidateIdForVoting;
+	}
+	public String getCastedTime() {
+		return castedTime;
+	}
+	public void setCastedTime(String castedTime) {
+		this.castedTime = castedTime;
+	}
+	public String getUsedIpAddress() {
+		return usedIpAddress;
+	}
+
+	public void setUsedIpAddress(String usedIpAddress) {
+		this.usedIpAddress = usedIpAddress;
+	}
+	public String getVoterId() {
+		return voterId;
+	}
+	public void setVoterId(String voterId) {
+		this.voterId = voterId;
+	}
+	
+
+}

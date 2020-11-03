@@ -1,0 +1,12 @@
+/**
+ * 
+ */
+package com.pon.pub.hm.dto;
+
+/**
+ * @author Sanjeev
+ *
+ */
+public class LoginModal {
+
+}

@@ -1,0 +1,53 @@
+/**
+ * 
+ */
+package com.pon.pub.hm.ctrl;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.pon.pub.hm.dto.RegistrationDTO;
+import com.pon.web.user.pub.en.ctrl.Logger;
+import com.pon.web.user.pub.en.ctrl.WebUserLoginController;
+import com.sun.org.slf4j.internal.LoggerFactory;
+
+/**
+ * @author Sanjeev
+ *
+ */
+@Controller
+@RequestMapping("/pub/voter/")
+public class LoginController {
+	
+	static final Logger log = LoggerFactory.getLogger(LoginController.class);
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	@GetMapping("login")
+	public String login( HttpServletRequest request, HttpServletResponse response) {
+		
+		return "login";
+	}
+	
+	
+	
+	@GetMapping("fgotpwd")
+	public String fgotpwd( RegistrationDTO registrationModal, HttpServletRequest request, HttpServletResponse response) {
+		
+		return "fgotpwd";
+	}
+	
+	
+	
+
+}

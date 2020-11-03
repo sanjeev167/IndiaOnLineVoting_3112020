@@ -1,0 +1,141 @@
+/**
+ * 
+ */
+package com.pon.pvt.voting.ctrl;
+
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.google.gson.Gson;
+import com.pon.pvt.voting.dto.AssemblyBalletForEnrolledVotersDTO;
+import com.pon.pvt.voting.dto.ElectionDetailDTO;
+import com.pon.pvt.voting.dto.VoteDetailDTO;
+import com.pon.pvt.voting.dto.VoterDetailsDTO;
+import com.pon.pvt.voting.service.LoksabhaBalletService;
+import com.support.JsonResponse.JsonResponse;
+import com.support.custom.exception.CustomRuntimeException;
+import com.support.custom.exception.ExceptionApplicationUtility;
+import com.support.grid_pagination.DataTableResults;
+
+/**
+ * @author Sanjeev
+ *
+ */
+@Controller
+@RequestMapping("/pvt/vote/")
+public class OnlineBalletPaperController {
+	
+	static final Logger log = LoggerFactory.getLogger(OnlineBalletPaperController.class);
+
+	@Autowired
+    LoksabhaBalletService loksabhaBalletService;
+	
+	@GetMapping("online")	
+	public String listCandidateInBalletPaper(@RequestParam(required = false) String voterId,@RequestParam(required = false) String electionType,Model model,HttpServletRequest request, HttpServletResponse response) {
+		log.info("OnlineBalletPaperController :==> listCandidateInBalletPaper :==> Started");
+		String target ="/vote/online";
+		electionType="A";voterId= "10-07-45-022-0004";
+		try {
+		ElectionDetailDTO electionDetailDTO=loksabhaBalletService.loadElectionDetails(voterId, electionType);		
+		model.addAttribute(electionDetailDTO);
+		VoterDetailsDTO voterDetailsDTO=loksabhaBalletService.loadVotersDetails(voterId);
+		model.addAttribute(voterDetailsDTO);
+		}catch (CustomRuntimeException ex) {
+			// Handle this exception
+			String exceptionCause= ex.getExceptionInfo().exceptionCause;
+		} catch (Exception ex) {
+			CustomRuntimeException exLocal=ExceptionApplicationUtility.wrapRunTimeException(ex);
+			//Handle this exception
+			String exceptionCause= exLocal.getExceptionInfo().exceptionCause;
+		}
+		log.info("OnlineBalletPaperController :==> listCandidateInBalletPaper :==> End");
+		return target;		
+		
+	}
+	
+	
+	@RequestMapping(value = "assemblyBalletPaperPaginated", method = RequestMethod.POST)
+	@ResponseBody
+	public String balletPaperPaginated( @RequestParam String voterId, HttpServletRequest request, HttpServletResponse response){
+		
+		log.info("OnlineBalletPaperController :==> assemblyBalletPaperPaginated :==> Started");
+		
+		DataTableResults<AssemblyBalletForEnrolledVotersDTO> dataTableResults=null;
+		voterId= "10-07-45-022-0004";
+		try {		
+			
+			dataTableResults = loksabhaBalletService.loadElectionBalletPaperGrid(voterId, request);
+			
+		}
+		catch (CustomRuntimeException ex) {
+			// Handle this exception
+			String exceptionCause= ex.getExceptionInfo().exceptionCause;
+		} catch (Exception ex) {
+			CustomRuntimeException exLocal=ExceptionApplicationUtility.wrapRunTimeException(ex);
+			//Handle this exception
+			String exceptionCause= exLocal.getExceptionInfo().exceptionCause;
+		}
+		log.info("OnlineBalletPaperController :==> assemblyBalletPaperPaginated :==> Started");
+		return new Gson().toJson(dataTableResults);
+	}
+	
+	@RequestMapping(value = "receiveVote", method = RequestMethod.POST)
+	@ResponseBody
+	public String receiveVote( @RequestBody @Valid VoteDetailDTO voteDetailDTO, BindingResult result, HttpServletRequest request, HttpServletResponse response){
+		
+		log.info("OnlineBalletPaperController :==> receiveVote :==> Started");		
+		JsonResponse jsonResponse = new JsonResponse();		
+
+		try {
+			if (result.hasErrors()) {
+				// Get error message
+				Map<String, String> errors = result.getFieldErrors().stream()
+						.collect(Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage));
+                System.out.println("errors = "+errors);
+				jsonResponse.setStatus(false);
+				jsonResponse.setStatusMsg("Error found");
+				jsonResponse.setFieldErrMsgMap(errors);
+
+			} else {
+				// Implement business logic to save record into database			
+				jsonResponse.setFormObject(loksabhaBalletService.castVote(voteDetailDTO));
+				jsonResponse.setStatus(true);
+				jsonResponse.setStatusMsg("You've casted your vote. An acknowledgement message has been sent both at mail and your mobile no.");
+			} 
+		}
+		catch (CustomRuntimeException ex) {
+			// Handle this exception
+			String exceptionCause= ex.getExceptionInfo().exceptionCause;
+			jsonResponse.setStatus(false);
+			jsonResponse.setStatusMsg(exceptionCause);
+		} catch (Exception ex) {
+			CustomRuntimeException exLocal=ExceptionApplicationUtility.wrapRunTimeException(ex);
+			//Handle this exception
+			String exceptionCause= exLocal.getExceptionInfo().exceptionCause;
+			jsonResponse.setStatus(false);
+			jsonResponse.setStatusMsg(exceptionCause);
+		}
+		log.info("OnlineBalletPaperController :==> receiveVote :==> Started");
+		return new Gson().toJson(jsonResponse);
+	}
+
+	
+}

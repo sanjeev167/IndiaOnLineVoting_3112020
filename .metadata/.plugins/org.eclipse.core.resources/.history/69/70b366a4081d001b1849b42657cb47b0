@@ -1,0 +1,26 @@
+/**
+ * 
+ */
+package com.pon.pub.hm.service;
+
+import com.support.custom.exception.CustomRuntimeException;
+
+/**
+ * @author Sanjeev
+ *
+ */
+public interface VoterIdentificationService {
+
+	String [] verifyVoterId(String voterId) throws CustomRuntimeException;
+
+	String [] verifyAadharId(String aadharId) throws CustomRuntimeException;
+
+	String [] verifyAadharOTP(String aadharOtp) throws CustomRuntimeException;
+
+	String[] thumbImpressionVerification(String impression) throws CustomRuntimeException;
+
+	String[] verifyMobileNo(String mobileNo)throws CustomRuntimeException;
+
+	String[] verifyMobileOtpNo(String mobileOtp)throws CustomRuntimeException;
+
+}

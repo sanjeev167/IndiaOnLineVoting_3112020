@@ -1,0 +1,52 @@
+1603619687326	Copy file
+1603619732089	Rename resource 'LoksabhaCandidateMasterController.java'
+1603619925453	Copy file
+1603619958789	Rename resource 'lcandidate_master.jsp'
+1603631096154	Copy file
+1603631124283	Rename resource 'AssemblyCandidateMasterController.java'
+1603631250821	Copy file
+1603631266435	Rename resource 'acandidate_master.jsp'
+1603707624255	Move 3 resources to 'hm'
+1603707922699	Delete element
+1603708036952	Delete elements
+1603708180249	Rename resource 'modal'
+1603708239674	Delete element
+1603797138466	Rename resource 'LoginModal.java'
+1603799402557	Rename resource 'RegistrationModal.java'
+1603800704709	Copy file
+1603800726930	Delete element
+1603873037299	Copy file
+1603873089138	Delete element
+1603873165822	Rename resource 'modal'
+1603873832902	Rename resource 'VoteLockinig.java'
+1603877237466	Delete element
+1603978942322	Copy file
+1603978969949	Rename resource 'votersEnrolled.jsp'
+1604030188260	Move 'VoteRepository.java' to 'entity'
+1604030253806	Move 2 resources to 'entity'
+1604032483151	Delete element
+1604040092543	Move 'OfflineBalletService.java' to 'service'
+1604052447536	Rename resource 'BalletForEnrolledVoters.java'
+1604052536892	Move 'AssemblyBalletForEnrolledVoters.java' to 'entity'
+1604085500538	Rename resource 'MarkOnlineVoter.java'
+1604126856557	Rename resource 'OnlineBalletServiceImpl.java'
+1604126922929	Rename resource 'OfflineBalletService.java'
+1604126994662	Rename resource 'OfflineBalletServiceImpl.java'
+1604127194777	Copy file
+1604127316191	Delete element
+1604127436061	Rename resource 'OfflineBalletPaperController.java'
+1604129075528	Delete element
+1604131723572	Rename resource 'AssemblyBalletPaperController.java'
+1604131819641	Rename resource 'LoksabhaBalletPaperController.java'
+1604131914884	Copy file
+1604132038822	Copy file
+1604132086243	Delete element
+1604132096754	Delete element
+1604132141118	Delete element
+1604137793045	Delete element
+1604138211641	Rename resource 'offline.jsp'
+1604138240914	Rename resource 'online.jsp'
+1604142437564	Rename resource 'offlineA.jsp'
+1604142447827	Rename resource 'offlineL.jsp'
+1604142460511	Delete elements
+1604187342512	Delete element

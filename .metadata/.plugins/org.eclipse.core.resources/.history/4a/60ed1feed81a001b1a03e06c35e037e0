@@ -1,0 +1,16 @@
+/**
+ * 
+ */
+package com.pon.pvt.voting.repo;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.pon.pvt.master.entity.StateMaster;
+
+/**
+ * @author Sanjeev
+ *
+ */
+public enum VoteRepositoryRepository implements JpaRepository<VoteRepository, Integer>{
+
+}

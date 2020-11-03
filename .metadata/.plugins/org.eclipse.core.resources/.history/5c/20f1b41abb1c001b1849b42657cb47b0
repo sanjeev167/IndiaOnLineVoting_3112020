@@ -1,0 +1,47 @@
+/**
+ * 
+ */
+package com.pon.pub.hm.service;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User.UserBuilder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.pon.pub.hm.entity.OnlineVoterAccount;
+import com.pon.pub.hm.repo.OnlineVoterAccountRepository;
+
+/**
+ * @author Sanjeev
+ *
+ */
+@Service
+public class VoterUserDetailsServiceImpl implements UserDetailsService{
+	private static final Logger log=LoggerFactory.getLogger(VoterUserDetailsServiceImpl.class);
+	@Autowired
+	private OnlineVoterAccountRepository onlineVoterAccountRepository;	
+
+	@Transactional
+	@Override
+	public UserDetails loadUserByUsername(String email) {
+		
+		OnlineVoterAccount onlineVoterAccount = onlineVoterAccountRepository.findByEmail(email).get();
+		CustomVoterUserDetailsImpl customVoterUserDetailsImpl = new CustomVoterUserDetailsImpl();
+		UserBuilder builder = null;
+		 log.info("Sanjeev = "+new BCryptPasswordEncoder().encode(onlineVoterAccount.getPwd()));
+		if (onlineVoterAccount != null) {
+			builder = org.springframework.security.core.userdetails.User.withUsername(email);
+			builder.password(new BCryptPasswordEncoder().encode(onlineVoterAccount.getPwd()));
+			builder.authorities(customVoterUserDetailsImpl.getAuthorities(onlineVoterAccount));			
+		} else {
+			throw new UsernameNotFoundException("User not found.");
+		}
+		return builder.build();
+	}
+}

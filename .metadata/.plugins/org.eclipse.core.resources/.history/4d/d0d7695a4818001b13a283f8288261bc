@@ -1,0 +1,33 @@
+/**
+ * 
+ */
+package com.pon.pub.hm.dto;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+
+/**
+ * @author Sanjeev
+ *
+ */
+public class LoginDTO {
+	
+	@NotEmpty(message = "User name is required.")	
+	private String name;
+	
+	@NotEmpty(message = "User login is required.")
+	@Email(message = "Invalid email")
+	private String userLoginId;
+	
+	    @ValidPassword	
+		@NotBlank(message = "Password is required.")	
+		private String password;
+		
+		@NotBlank(message = "Password confirm is required.")	
+		private String passwordConf;
+
+	
+	
+	
+}

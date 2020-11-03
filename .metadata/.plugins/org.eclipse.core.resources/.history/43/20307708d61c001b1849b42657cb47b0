@@ -1,0 +1,39 @@
+################################
+# @Author : Sanjeev Kumar
+# @Date   : 12/3/2020
+################################
+
+
+# ===============================
+# DATASOURCE
+# =============================== 
+ 
+# DataSource (LostVote System).
+ 
+spring.datasource.driver-class-name.pon=org.postgresql.Driver
+spring.datasource.url.pon=jdbc:postgresql://localhost:5432/LostVote
+spring.datasource.username.pon=postgres
+spring.datasource.password.pon=postgres
+  
+
+ 
+# ===============================
+# JPA / HIBERNATE
+# ===============================
+ 
+spring.jpa.show-sql=true
+spring.jpa.hibernate.ddl-auto=none
+hibernate.format_sql=true
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQL9Dialect
+#spring.jpa.properties.hibernate.current_session_context_class.acl=org.springframework.orm.hibernate5.SpringSessionContext
+ 
+
+# ===============================
+# HikariCP settings
+# spring.datasource.hikari.*
+# ===============================
+spring.datasource.hikari.connection-timeout=60000
+spring.datasource.hikari.maximum-pool-size=5
+
+
+

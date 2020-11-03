@@ -1,0 +1,199 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.pon.pvt.voting.entity;
+
+import java.io.Serializable;
+import java.util.Date;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import com.pon.pvt.master.entity.AssemblyMaster;
+import com.pon.pvt.master.entity.LoksabhaCandidateMaster;
+import com.pon.pvt.master.entity.LoksabhaMaster;
+import com.pon.pvt.master.entity.PollingBoothMaster;
+import com.pon.pvt.master.entity.VotersEnrolled;
+
+/**
+ *
+ * @author Sanjeev
+ */
+@Entity
+@Table(name = "loksabha_vote_repository")
+@NamedQueries({
+    @NamedQuery(name = "LoksabhaVoteRepository.findAll", query = "SELECT l FROM LoksabhaVoteRepository l"),
+    @NamedQuery(name = "LoksabhaVoteRepository.findById", query = "SELECT l FROM LoksabhaVoteRepository l WHERE l.id = :id"),
+    @NamedQuery(name = "LoksabhaVoteRepository.findByVotingPartyId", query = "SELECT l FROM LoksabhaVoteRepository l WHERE l.votingPartyId = :votingPartyId"),
+    @NamedQuery(name = "LoksabhaVoteRepository.findByElectionType", query = "SELECT l FROM LoksabhaVoteRepository l WHERE l.electionType = :electionType"),
+    @NamedQuery(name = "LoksabhaVoteRepository.findByVotingMode", query = "SELECT l FROM LoksabhaVoteRepository l WHERE l.votingMode = :votingMode"),
+    @NamedQuery(name = "LoksabhaVoteRepository.findByVotingDate", query = "SELECT l FROM LoksabhaVoteRepository l WHERE l.votingDate = :votingDate"),
+    @NamedQuery(name = "LoksabhaVoteRepository.findByElectionYear", query = "SELECT l FROM LoksabhaVoteRepository l WHERE l.electionYear = :electionYear")})
+public class LoksabhaVoteRepository implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id")
+    private Integer id;
+    @Column(name = "voting_party_id")
+    private Integer votingPartyId;
+    @Column(name = "election_type")
+    private Character electionType;
+    @Column(name = "voting_mode")
+    private Integer votingMode;
+    @Column(name = "voting_date")
+    @Temporal(TemporalType.DATE)
+    private Date votingDate;
+    @Column(name = "election_year")
+    private String electionYear;
+    @JoinColumn(name = "assembly_id", referencedColumnName = "id")
+    @ManyToOne
+    private AssemblyMaster assemblyId;
+    @JoinColumn(name = "loksabha_candidate_id", referencedColumnName = "id")
+    @ManyToOne
+    private LoksabhaCandidateMaster loksabhaCandidateId;
+    @JoinColumn(name = "loksabha_id", referencedColumnName = "id")
+    @ManyToOne
+    private LoksabhaMaster loksabhaId;
+    @JoinColumn(name = "polling_booth_id", referencedColumnName = "id")
+    @ManyToOne
+    private PollingBoothMaster pollingBoothId;
+    @JoinColumn(name = "voter_id", referencedColumnName = "id")
+    @ManyToOne
+    private VotersEnrolled voterId;
+
+    public LoksabhaVoteRepository() {
+    }
+
+    public LoksabhaVoteRepository(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getVotingPartyId() {
+        return votingPartyId;
+    }
+
+    public void setVotingPartyId(Integer votingPartyId) {
+        this.votingPartyId = votingPartyId;
+    }
+
+    public Character getElectionType() {
+        return electionType;
+    }
+
+    public void setElectionType(Character electionType) {
+        this.electionType = electionType;
+    }
+
+    public Integer getVotingMode() {
+        return votingMode;
+    }
+
+    public void setVotingMode(Integer votingMode) {
+        this.votingMode = votingMode;
+    }
+
+    public Date getVotingDate() {
+        return votingDate;
+    }
+
+    public void setVotingDate(Date votingDate) {
+        this.votingDate = votingDate;
+    }
+
+    public String getElectionYear() {
+        return electionYear;
+    }
+
+    public void setElectionYear(String electionYear) {
+        this.electionYear = electionYear;
+    }
+
+    public AssemblyMaster getAssemblyId() {
+        return assemblyId;
+    }
+
+    public void setAssemblyId(AssemblyMaster assemblyId) {
+        this.assemblyId = assemblyId;
+    }
+
+    public LoksabhaCandidateMaster getLoksabhaCandidateId() {
+        return loksabhaCandidateId;
+    }
+
+    public void setLoksabhaCandidateId(LoksabhaCandidateMaster loksabhaCandidateId) {
+        this.loksabhaCandidateId = loksabhaCandidateId;
+    }
+
+    public LoksabhaMaster getLoksabhaId() {
+        return loksabhaId;
+    }
+
+    public void setLoksabhaId(LoksabhaMaster loksabhaId) {
+        this.loksabhaId = loksabhaId;
+    }
+
+    public PollingBoothMaster getPollingBoothId() {
+        return pollingBoothId;
+    }
+
+    public void setPollingBoothId(PollingBoothMaster pollingBoothId) {
+        this.pollingBoothId = pollingBoothId;
+    }
+
+    public VotersEnrolled getVoterId() {
+        return voterId;
+    }
+
+    public void setVoterId(VotersEnrolled voterId) {
+        this.voterId = voterId;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof LoksabhaVoteRepository)) {
+            return false;
+        }
+        LoksabhaVoteRepository other = (LoksabhaVoteRepository) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "com.example.demo.LoksabhaVoteRepository[ id=" + id + " ]";
+    }
+    
+}

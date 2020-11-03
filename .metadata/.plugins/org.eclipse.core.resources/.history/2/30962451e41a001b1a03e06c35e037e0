@@ -1,0 +1,12 @@
+/**
+ * 
+ */
+package com.pon.pvt.voting.repo;
+
+/**
+ * @author Sanjeev
+ *
+ */
+public interface MarkOfflineVoterRepository {
+
+}

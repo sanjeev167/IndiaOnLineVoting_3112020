@@ -1,0 +1,32 @@
+/**
+ * 
+ */
+package com.pon.pvt.voter.repo;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.pon.pvt.voter.entity.VoteLockinig;
+
+/**
+ * @author Sanjeev
+ *
+ */
+
+@Repository
+public interface VoteLockinigRepository extends  JpaRepository<VoteLockinig, Integer> {
+
+	
+	
+
+	@Modifying
+	@Transactional
+	@Query("delete from VoteLockinig sm where sm.id in ?1")
+	void deleteStateWithIds(Integer[] recordIdArray);
+
+	@Query("SELECT CASE WHEN COUNT(name) > 0 THEN 'true' ELSE 'false' END FROM VoteLockinig sm where sm.countryId.id in ?1 and sm.name in ?2 and sm.id <> ?3")	
+	boolean existsByCountryIdAndStateNameExceptThisId(int parseInt, String stateName, int id);
+}

@@ -1,0 +1,144 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.pon.pvt.voting.entity;
+import java.io.Serializable;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+
+/**
+ *
+ * @author Sanjeev
+ */
+@Entity
+@Table(name = "mark_online_voter")
+@NamedQueries({
+    @NamedQuery(name = "MarkOnlineVoter.findAll", query = "SELECT m FROM MarkOnlineVoter m"),
+    @NamedQuery(name = "MarkOnlineVoter.findById", query = "SELECT m FROM MarkOnlineVoter m WHERE m.id = :id"),
+    @NamedQuery(name = "MarkOnlineVoter.findByHasVoted", query = "SELECT m FROM MarkOnlineVoter m WHERE m.hasVoted = :hasVoted"),
+    @NamedQuery(name = "MarkOnlineVoter.findByElectionType", query = "SELECT m FROM MarkOnlineVoter m WHERE m.electionType = :electionType"),
+    @NamedQuery(name = "MarkOnlineVoter.findByElectionYear", query = "SELECT m FROM MarkOnlineVoter m WHERE m.electionYear = :electionYear"),
+    @NamedQuery(name = "MarkOnlineVoter.findByAssemblyId", query = "SELECT m FROM MarkOnlineVoter m WHERE m.assemblyId = :assemblyId"),
+    @NamedQuery(name = "MarkOnlineVoter.findByLoksabhaId", query = "SELECT m FROM MarkOnlineVoter m WHERE m.loksabhaId = :loksabhaId")})
+public class MarkOnlineVoter implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id")
+    private Integer id;
+    @Column(name = "has_voted")
+    private Boolean hasVoted;
+    @Column(name = "election_type")
+    private String electionType;
+    @Column(name = "election_year")
+    private String electionYear;
+    @Column(name = "assembly_id")
+    private Integer assemblyId;
+    @Column(name = "loksabha_id")
+    private Integer loksabhaId;
+    @JoinColumn(name = "voter_id", referencedColumnName = "id")
+    @ManyToOne
+    private VoteRepository voterId;
+
+    public MarkOnlineVoter() {
+    }
+
+    public MarkOnlineVoter(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Boolean getHasVoted() {
+        return hasVoted;
+    }
+
+    public void setHasVoted(Boolean hasVoted) {
+        this.hasVoted = hasVoted;
+    }
+
+    public String getElectionType() {
+        return electionType;
+    }
+
+    public void setElectionType(String electionType) {
+        this.electionType = electionType;
+    }
+
+    public String getElectionYear() {
+        return electionYear;
+    }
+
+    public void setElectionYear(String electionYear) {
+        this.electionYear = electionYear;
+    }
+
+    public Integer getAssemblyId() {
+        return assemblyId;
+    }
+
+    public void setAssemblyId(Integer assemblyId) {
+        this.assemblyId = assemblyId;
+    }
+
+    public Integer getLoksabhaId() {
+        return loksabhaId;
+    }
+
+    public void setLoksabhaId(Integer loksabhaId) {
+        this.loksabhaId = loksabhaId;
+    }
+
+    public VoteRepository getVoterId() {
+        return voterId;
+    }
+
+    public void setVoterId(VoteRepository voterId) {
+        this.voterId = voterId;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof MarkOnlineVoter)) {
+            return false;
+        }
+        MarkOnlineVoter other = (MarkOnlineVoter) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "com.example.demo.MarkOnlineVoter[ id=" + id + " ]";
+    }
+    
+}

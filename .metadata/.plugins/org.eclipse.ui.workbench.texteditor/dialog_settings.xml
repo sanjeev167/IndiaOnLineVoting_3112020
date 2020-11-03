@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
+		<item key="selection" value="candidate"/>
+		<item key="wrap" value="true"/>
+		<item key="casesensitive" value="true"/>
+		<item key="wholeword" value="false"/>
+		<item key="incremental" value="false"/>
+		<item key="isRegEx" value="false"/>
+		<list key="findhistory">
+			<item value="assembly_candidate"/>
+			<item value="loksabha_candidate"/>
+			<item value="loksabha_repository"/>
+			<item value="searchAndReloadGrid"/>
+			<item value="pub/vote"/>
+			<item value="pub/ec"/>
+			<item value="OfflineBalletPaperController"/>
+			<item value="\r\n"/>
+			<item value="   \r\n"/>
+			<item value="+ &quot;\r\n&quot;"/>
+			<item value=" \r\n"/>
+			<item value="Assembly"/>
+			<item value="assembly"/>
+			<item value="LoksabhaBalletPaperController"/>
+			<item value="AssemblyBalletPaperController"/>
+		</list>
+		<list key="replacehistory">
+			<item value="candidate"/>
+			<item value="loksabha_vote_repository"/>
+			<item value="OnlineBalletPaperController"/>
+			<item value=""/>
+			<item value="ElectionResultController"/>
+			<item value="Loksabha"/>
+			<item value="loksabha"/>
+			<item value="OfflineBalletPaperController"/>
+			<item value="loksabhaBalletService"/>
+			<item value="LoksabhaBalletPaperController"/>
+			<item value="AssemblyBalletPaperController"/>
+			<item value="assemblyBalletService"/>
+			<item value="LoksabhaBalletServiceImpl"/>
+			<item value="AssemblyBalletServiceImpl"/>
+			<item value="AssemblyBalletForEnrolledVotersDTO"/>
+		</list>
+	</section>
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
+		<item key="DIALOG_X_ORIGIN" value="1156"/>
+		<item key="DIALOG_Y_ORIGIN" value="500"/>
+		<item key="DIALOG_WIDTH" value="385"/>
+		<item key="DIALOG_HEIGHT" value="523"/>
+		<item key="DIALOG_FONT_NAME" value="1|Segoe UI|9.0|0|WINDOWS|1|-18|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI"/>
+	</section>
+</section>

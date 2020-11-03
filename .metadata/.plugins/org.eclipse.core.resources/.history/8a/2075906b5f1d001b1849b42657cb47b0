@@ -1,0 +1,32 @@
+/**
+ * 
+ */
+package com.pon.pvt.voter.repo;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.pon.pub.hm.entity.OnlineVoterAccount;
+import com.pon.pvt.voter.entity.VoteLockinig;
+
+/**
+ * @author Sanjeev
+ *
+ */
+
+@Repository
+public interface VoteLockinigRepository extends  JpaRepository<VoteLockinig, Integer> {
+
+	@Modifying
+	@Transactional
+	@Query("delete from VoteLockinig sm where sm.id in ?1")
+	void deleteVoteLockinigWithIds(Integer[] recordIdArray);	
+	
+	@Query("Select max(vl.id) from VoteLockinig vl where vl.onlineVoterAccountId=?1")
+	VoteLockinig getTheLatestVoteLock(OnlineVoterAccount onlineVoterAccount);
+
+	
+}

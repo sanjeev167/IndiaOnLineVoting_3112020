@@ -1,0 +1,12 @@
+/**
+ * 
+ */
+package com.support.custom.validation.fieldLevelValidator;
+
+/**
+ * @author Sanjeev
+ *
+ */
+public class ContactNumberConstraint {
+
+}

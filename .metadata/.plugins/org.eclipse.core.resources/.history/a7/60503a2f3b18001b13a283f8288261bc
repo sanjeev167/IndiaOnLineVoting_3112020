@@ -1,0 +1,303 @@
+/**
+ * 
+ */
+package com.support.util;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Base64;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+import org.springframework.core.io.ClassPathResource;
+
+import com.google.gson.Gson;
+import com.support.grid_pagination.PaginationCriteria;
+/**
+ * @author Sanjeev
+ *
+ */
+public class AppUtil {
+	
+	/**
+	 * Checks if is collection empty.
+	 *
+	 * @param collection the collection
+	 * @return true, if is collection empty
+	 */
+	private static boolean isCollectionEmpty(Collection<?> collection) {
+		if (collection == null || collection.isEmpty()) {
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * Checks if is object empty.
+	 *
+	 * @param object the object
+	 * @return true, if is object empty
+	 */
+	public static boolean isObjectEmpty(Object object) {
+		if(object == null) return true;
+		else if(object instanceof String) {
+			if (((String)object).trim().length() == 0) {
+				return true;
+			}
+		} else if(object instanceof Collection) {
+			return isCollectionEmpty((Collection<?>)object);
+		}
+		return false;
+	}
+	
+	/**
+	 * Gets the bean to json string.
+	 *
+	 * @param beanClass the bean class
+	 * @return the bean to json string
+	 */
+	public static String getBeanToJsonString(Object beanClass) {
+		return new Gson().toJson(beanClass);
+	}
+	
+	/**
+	 * Gets the bean to json string.
+	 *
+	 * @param beanClasses the bean classes
+	 * @return the bean to json string
+	 */
+	public static String getBeanToJsonString(Object... beanClasses) {
+		StringBuilder stringBuilder = new StringBuilder();
+		for (Object beanClass : beanClasses) {
+			stringBuilder.append(getBeanToJsonString(beanClass));
+			stringBuilder.append(", ");
+		}
+		return stringBuilder.toString();
+	}
+
+	/**
+	 * Concatenate.
+	 *
+	 * @param listOfItems the list of items
+	 * @param separator the separator
+	 * @return the string
+	 */
+	public String concatenate(List<String> listOfItems, String separator) {
+		StringBuilder sb = new StringBuilder();
+		Iterator<String> stit = listOfItems.iterator();
+		
+		while (stit.hasNext()) {
+			sb.append(stit.next());
+			if(stit.hasNext()) {
+				sb.append(separator);
+			}
+		}
+		
+		return sb.toString();		
+	}
+	
+	/**
+	 * Builds the paginated query.
+	 *
+	 * @param baseQuery the base query
+	 * @param paginationCriteria the pagination criteria
+	 * @return the string
+	 */
+	public static String buildPaginatedQuery(String baseQuery, PaginationCriteria paginationCriteria) {
+		
+		//String queryTemplate = "SELECT FILTERED_ORDERD_RESULTS.* FROM (SELECT BASEINFO.* FROM ( %s ) BASEINFO %s  %s ) FILTERED_ORDERD_RESULTS LIMIT %d, %d";
+		StringBuilder sb = new StringBuilder("SELECT FILTERED_ORDERD_RESULTS.* "
+				                + "FROM (SELECT BASEINFO.* FROM ( #BASE_QUERY# ) BASEINFO "
+				                + "#WHERE_CLAUSE#  #ORDER_CLASUE# ) FILTERED_ORDERD_RESULTS LIMIT #PAGE_SIZE#"
+				                + " OFFSET #PAGE_NUMBER#");
+		
+		String finalQuery = null;
+		String whereClausePrepared=((AppUtil.isObjectEmpty(paginationCriteria.getFilterByClause())) ? "" : " WHERE ") 
+				          + paginationCriteria.getFilterByClause();
+		
+		
+		if(!AppUtil.isObjectEmpty(paginationCriteria)) {
+			finalQuery = sb.toString()
+					       .replaceAll("#BASE_QUERY#", baseQuery)
+						   .replaceAll("#WHERE_CLAUSE#",whereClausePrepared )						   
+						   .replaceAll("#ORDER_CLASUE#", paginationCriteria.getOrderByClause())
+						   .replaceAll("#PAGE_NUMBER#", paginationCriteria.getPageNumber().toString())
+						   .replaceAll("#PAGE_SIZE#", paginationCriteria.getPageSize().toString());
+		}
+		
+		return (null == finalQuery) ?  baseQuery : finalQuery;
+	}
+	
+	public static String buildPaginatedQueryForOracle(String baseQuery, PaginationCriteria paginationCriteria) {
+		
+		StringBuilder sb = new StringBuilder("SELECT * FROM (SELECT FILTERED_ORDERED_RESULTS.*, COUNT(1) OVER() total_records, ROWNUM AS RN FROM (SELECT BASEINFO.* FROM ( #BASE_QUERY# ) BASEINFO ) FILTERED_ORDERED_RESULTS #WHERE_CLAUSE# #ORDER_CLASUE# ) WHERE RN > (#PAGE_NUMBER# * #PAGE_SIZE#) AND RN <= (#PAGE_NUMBER# + 1) * #PAGE_SIZE# ");
+		String finalQuery = null;
+		
+		//Datatable start is set to 0, 5, 10 ..etc (5 is page size)
+		//For oracle paginated query we need page start from 1,2,3
+		
+		int pageNo = paginationCriteria.getPageNumber() / paginationCriteria.getPageSize();
+		paginationCriteria.setPageNumber(pageNo);
+		
+		if(!AppUtil.isObjectEmpty(paginationCriteria)) {
+			finalQuery = sb.toString().replaceAll("#BASE_QUERY#", baseQuery)
+							.replaceAll("#WHERE_CLAUSE#", ((AppUtil.isObjectEmpty(paginationCriteria.getFilterByClause())) ? "" : " WHERE ") + paginationCriteria.getFilterByClause())
+								.replaceAll("#ORDER_CLASUE#", paginationCriteria.getOrderByClause())
+									.replaceAll("#PAGE_NUMBER#", paginationCriteria.getPageNumber().toString())
+										.replaceAll("#PAGE_SIZE#", paginationCriteria.getPageSize().toString());
+		}
+		return (null == finalQuery) ?  baseQuery : finalQuery;
+	}
+	
+	
+	
+	
+	
+	
+	//############  Following methods are not for datatables #####################/
+	
+	
+	public static String convertJavaDateIntoStringDate(java.util.Date dateComing) {
+		
+		//Date date = (Date) Calendar.getInstance().getTime();  
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");  
+		return dateFormat.format(dateComing); 
+		
+	}
+	
+	
+	public static Date convertStringDateIntoSqlDate(String dateString) {
+		
+		 Date date=Date.valueOf(dateString);//converting string into sql date  
+		 return date;
+	}
+
+	public static java.util.Date convertStringDateIntoJavaDate(String stringDate) {
+		// TODO Auto-generated method stub
+		java.util.Date date=null;
+		try {
+			date=new SimpleDateFormat("yyyy-MM-dd").parse(stringDate);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}  
+		return date;
+	}
+	
+	public static String returnVoterId(String stateNo,String loksabhaNo, String assemblyNo,String boothNo,String nextVoterNo) {
+		
+		String voterId=("00" + stateNo).substring(stateNo.length())+"-"+
+				("00" + loksabhaNo).substring(loksabhaNo.length())+"-"+
+				("00" + assemblyNo).substring(assemblyNo.length())+"-"+
+				("000" + boothNo).substring(boothNo.length())+"-[ "+
+				("0000" + nextVoterNo).substring(nextVoterNo.length())+" ]";
+		
+		return voterId;
+		
+	}
+	
+	public static String base64ImgEncoder(File imgFile) {
+		  String base64Image = "";	 
+		  
+		 // File file = new File(imagePath);		 
+		 
+		  try (FileInputStream imageInFile = new FileInputStream(imgFile)) {
+		    // Reading a Image file from file system
+		    byte imageData[] = new byte[(int) imgFile.length()];
+		    imageInFile.read(imageData);
+		    base64Image = Base64.getEncoder().encodeToString(imageData);
+		  } catch (FileNotFoundException e) {
+		    System.out.println("Image not found" + e);
+		  } catch (IOException ioe) {
+		    System.out.println("Exception while reading the Image " + ioe);
+		  }
+		  return base64Image;
+		}
+	
+	public static void base64ImgDecoder(String base64Image, String pathFile) {
+		  try (FileOutputStream imageOutFile = new FileOutputStream(pathFile)) {
+		    // Converting a Base64 String into Image byte array
+		    byte[] imageByteArray = Base64.getDecoder().decode(base64Image);
+		    imageOutFile.write(imageByteArray);
+		  } catch (FileNotFoundException e) {
+		    System.out.println("Image not found" + e);
+		  } catch (IOException ioe) {
+		    System.out.println("Exception while reading the Image " + ioe);
+		  }
+		}
+	
+	public static boolean isValidMobile(String s) 
+	{ 
+	      
+	    // The given argument to compile() method  
+	    // is regular expression. With the help of  
+	    // regular expression we can validate mobile 
+	    // number.  
+	    // 1) Begins with 0 or 91 
+	    // 2) Then contains 7 or 8 or 9. 
+	    // 3) Then contains 9 digits 
+	    Pattern p = Pattern.compile("(0/91)?[7-9][0-9]{9}"); 
+	  
+	    // Pattern class contains matcher() method 
+	    // to find matching between given number  
+	    // and regular expression 
+	    Matcher m = p.matcher(s); 
+	    return (m.find() && m.group().equals(s)); 
+	}
+
+	public static boolean checkVoterIdFormat(String voterId) {
+		// TODO Auto-generated method stub
+		if(voterId.length()==17)
+		return true;//As it is coming through masking. So there is no possibility of getting it wrong
+		else
+			return false;
+	}
+
+	public static boolean checkAadharIdFormat(String aadharId) {
+		// TODO Auto-generated method stub
+		if(aadharId.length()==15)
+		    return true;//As it is coming through masking. So there is no possibility of getting it wrong
+		else
+			return false;
+	}
+
+	public static boolean checkItFromAadharPortal(String aadharId) {
+		// TODO Auto-generated method stub
+		if(aadharId.equals("999-999-999-999"))
+		    return true;//Here, we are returning true as its actual implementaion will be made when the Aadhar id verfication will be integrated
+		else
+			return false;
+					
+	}
+
+	public static boolean checkAadharOTPFormat(String aadharOtp) {
+		// TODO Auto-generated method stub
+		if(aadharOtp.length()==4)
+		return true;//As it is coming through masking. So there is no possibility of getting it wrong
+		else
+			return false;
+	}
+
+	public static boolean checkOTPFromAadharPortal(String aadharOtp) {
+		// TODO Auto-generated method stub
+				if(aadharOtp.equals("5555"))//When its actual implementation will be made, it will be verified by calling an Aadhar Serrvice here.			
+				     return true;
+				else
+					return false;
+	} 
+}

@@ -1,0 +1,23 @@
+/**
+ * 
+ */
+package com.pon.pub.ec.service;
+
+import com.pon.pvt.voting.dto.ElectionBalletPaperDTO;
+import com.pon.pvt.voting.dto.ElectionDetailDTO;
+import com.pon.pvt.voting.dto.VoterDetailsDTO;
+import com.support.custom.exception.CustomRuntimeException;
+
+/**
+ * @author Sanjeev
+ *
+ */
+public interface OfflineBalletService {
+
+	public ElectionDetailDTO loadElectionDetails() throws CustomRuntimeException;
+	public VoterDetailsDTO loadVotersDetails() throws CustomRuntimeException;
+	public ElectionBalletPaperDTO loadElectionBalletPaperGrid() throws CustomRuntimeException;
+	public boolean receiveVote(ElectionDetailDTO electionDetailDTO,VoterDetailsDTO voterDetailsDTO,VoteDetailDTO voteDetailDTO) throws CustomRuntimeException;
+	
+	
+}

@@ -1,0 +1,178 @@
+/**
+ * 
+ */
+package com.pon.pub.hm.service;
+
+import com.pon.pub.hm.dto.RegistrationDTO;
+import com.pon.pub.hm.repo.OnlineVoterAccountRepository;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.support.custom.exception.CustomRuntimeException;
+import com.support.custom.exception.ExceptionApplicationUtility;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.modelmapper.internal.util.Assert;
+/**
+ * @author Sanjeev
+ *
+ */
+public class RegistrationServiceImpl implements RegistrationService {
+
+	static final Logger log = LoggerFactory.getLogger(RegistrationServiceImpl.class);
+	
+	@Autowired
+	OnlineVoterAccountRepository onlineVoterAccountRepository;
+
+	// This will directly put your result into your mapped dto
+	@Override
+	public RegistrationDTO getReordById(Integer id) throws CustomRuntimeException {
+		log.info("     RegistrationServiceImpl :==> getReordById ==> Started");
+		RegistrationDTO registrationDTO = null;
+		try {
+			OnlineVoterAccount onlineVoterAccount = onlineVoterAccountRepository.getOne(id);
+			registrationDTO = new RegistrationDTO();
+			registrationDTO.setId(onlineVoterAccount.getId());
+			registrationDTO.setDepartmentNameId(onlineVoterAccount.getUserCategory().getDepartmentMaster().getId() + "");
+			registrationDTO.setCategoryNameId(onlineVoterAccount.getUserCategory().getId() + "");
+			registrationDTO.setName(onlineVoterAccount.getName());
+			registrationDTO.setUserLoginId(onlineVoterAccount.getEmail());
+			registrationDTO.setPassword(onlineVoterAccount.getPassword());
+		} catch (Exception ex) {
+			throw ExceptionApplicationUtility.wrapRunTimeException(ex);
+		}
+		log.info("     RegistrationServiceImpl :==> getReordById ==> Ended");
+		return registrationDTO;
+	}
+
+	@Override
+	public RegistrationDTO saveAndUpdate(RegistrationDTO registrationDTO) throws CustomRuntimeException {
+		log.info("     UserAccountServiceImpl :==> saveAndUpdate ==> Started");
+
+		OnlineVoterAccount onlineVoterAccount = null;
+		RegistrationDTO registrationDTONew = null;
+		try {
+			if (registrationDTO.getId() != null)
+				onlineVoterAccount = onlineVoterAccountRepository.getOne(registrationDTO.getId());
+			else
+				onlineVoterAccount = new OnlineVoterAccount();
+
+			onlineVoterAccount.setId(registrationDTO.getId());
+			onlineVoterAccount.setName(registrationDTO.getName());
+			onlineVoterAccount.setEmail(registrationDTO.getUserLoginId());
+			onlineVoterAccount.setUserCategory(
+					userCategoryRepository.getOne(Integer.parseInt(registrationDTO.getCategoryNameId())));
+			onlineVoterAccount.setPassword(registrationDTO.getPassword());
+			OnlineVoterAccount returnedOnlineVoterAccount = onlineVoterAccountRepository.saveAndFlush(onlineVoterAccount);
+
+			registrationDTONew = new RegistrationDTO(returnedOnlineVoterAccount.getId(),
+					returnedOnlineVoterAccount.getUserCategory().getDepartmentMaster().getId() + "",
+
+					returnedOnlineVoterAccount.getUserCategory().getId() + "", returnedOnlineVoterAccount.getName(),
+					returnedOnlineVoterAccount.getEmail(), returnedOnlineVoterAccount.getPassword());
+		} catch (Exception ex) {
+			throw ExceptionApplicationUtility.wrapRunTimeException(ex);
+		}
+		log.info("     UserAccountServiceImpl :==> saveAndUpdate ==> Ended");
+
+		return registrationDTONew;
+	}
+
+	@Override
+	public boolean deleteRecordById(Integer id) throws CustomRuntimeException {
+		log.info("     UserAccountServiceImpl :==> deleteRecordById ==> Started");
+		boolean isDeleted = true;
+		try {
+			onlineVoterAccountRepository.deleteById(id);
+		} catch (Exception ex) {
+			isDeleted = false;
+			throw ExceptionApplicationUtility.wrapRunTimeException(ex);
+		}
+		log.info("     UserAccountServiceImpl :==> deleteRecordById ==> Ended");
+		return isDeleted;
+	}
+
+	@Transactional
+	@Override
+	public boolean deleteMultipleRecords(Integer[] recordIdArray) throws CustomRuntimeException {
+
+		log.info("     UserAccountServiceImpl :==> deleteMultipleRecords ==> Started");
+		boolean isDeleted = true;
+		try {
+			onlineVoterAccountRepository.deleteAppAdminUserWithIds(recordIdArray);
+		} catch (Exception ex) {
+			isDeleted = false;
+			throw ExceptionApplicationUtility.wrapRunTimeException(ex);
+		}
+		log.info("     UserAccountServiceImpl :==> deleteMultipleRecords ==> Ended");
+		return isDeleted;
+	}
+
+	@Override
+	public List<NameValue> getAppAdminUserList(Integer id) throws CustomRuntimeException {
+		log.info("     UserAccountServiceImpl :==> getAppAdminUserList ==> Started");
+		List<NameValue> onlineVoterAccountListNew = new ArrayList<NameValue>();
+		NameValue nameValue = null;
+		try {
+			List<OnlineVoterAccount> onlineVoterAccountList = userCategoryRepository.getOne(id).getOnlineVoterAccounts();
+			for (OnlineVoterAccount onlineVoterAccount : onlineVoterAccountList) {
+				nameValue = new NameValue(onlineVoterAccount.getId(), onlineVoterAccount.getEmail());
+				onlineVoterAccountListNew.add(nameValue);
+			}
+		} catch (Exception ex) {
+			throw ExceptionApplicationUtility.wrapRunTimeException(ex);
+		}
+		log.info("     UserAccountServiceImpl :==> getAppAdminUserList ==> Ended");
+		return onlineVoterAccountListNew;
+	}
+
+	
+	
+	
+	@Override
+	public boolean fieldValueExists(Object value, String fieldName) throws CustomRuntimeException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean fieldValueExists(Object loginIdValue, String loginIdName, Object idValue, String id)
+			throws CustomRuntimeException {
+		log.info("     RegistrationServiceImpl :==> fieldValueExists ==> Started");
+
+		boolean recordFound = false;
+		try {
+			Assert.notNull(loginIdName);
+			Assert.notNull(id);
+			if (!loginIdName.equals("userLoginId") && !id.equals("id")) {
+				throw ExceptionApplicationUtility
+						.wrapRunTimeException(new UnsupportedOperationException("Field name not supported"));
+			}
+
+			if (loginIdValue == null) {
+				return false;
+			}
+			if (!loginIdValue.equals("") && idValue == null) {
+				// Case of adding new one
+				recordFound = this.onlineVoterAccountRepository.existsByUserLoginId(loginIdValue.toString());
+
+			}
+			if (!loginIdValue.equals("") && idValue != null) {
+				// Case of editing existing one
+				recordFound = this.onlineVoterAccountRepository.existsByUserLoginIdExceptThisId(loginIdValue.toString(),
+						Integer.parseInt(idValue.toString()));
+
+			}
+
+		} catch (Exception ex) {
+			throw ExceptionApplicationUtility.wrapRunTimeException(ex);
+		}
+		log.info("     RegistrationServiceImpl :==> fieldValueExists ==> Ended");
+		return recordFound;
+	}
+
+}
