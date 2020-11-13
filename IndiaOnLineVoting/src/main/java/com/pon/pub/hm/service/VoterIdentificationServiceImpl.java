@@ -243,4 +243,46 @@ public class VoterIdentificationServiceImpl implements VoterIdentificationServic
 		return lockStatus;
 	}
 
+	@Override
+	public String[] verifyOfflineVoterId(String voterId) throws CustomRuntimeException {
+		// TODO Auto-generated method stub
+				String status[]=new String[2];
+				//First check the format of voter-id
+				if(AppUtil.checkVoterIdFormat(voterId)) {
+					//Next check it in the database whether it exists or not
+					if(votersEnrolledRepository.searchByVoterIdForOffline(voterId)) {
+						status[0]="1";
+						status[1]="Voter-Id has been verified. Now, go for Aadhar verification either through OTP or thumb impression.";
+					}else {
+						status[0]="0";
+						status[1]="Either Wrong Voter-Id supplied or not an offline voter.";
+					}
+				}else {
+					status[0]="0";
+					status[1]="Wrong Voter-Id format is supplied.";
+				}
+				return status;
+	}
+
+	@Override
+	public String[] verifyOnlineVoterId(String voterId) throws CustomRuntimeException {
+		// TODO Auto-generated method stub
+		String status[]=new String[2];
+		//First check the format of voter-id
+		if(AppUtil.checkVoterIdFormat(voterId)) {
+			//Next check it in the database whether it exists or not
+			if(votersEnrolledRepository.searchByVoterIdForOnline(voterId)) {
+				status[0]="1";
+				status[1]="Voter-Id has been verified. Now, go for Aadhar verification either through OTP or thumb impression.";
+			}else {
+				status[0]="0";
+				status[1]="Wrong Voter-Id supplied.";
+			}
+		}else {
+			status[0]="0";
+			status[1]="Wrong Voter-Id format is supplied.";
+		}
+		return status;
+	}
+
 }

@@ -1,0 +1,12 @@
+/**
+ * 
+ */
+package com.pon.config.sec;
+
+/**
+ * @author Sanjeev
+ *
+ */
+public class MySimpleUrlAuthenticationSuccessHandler {
+
+}

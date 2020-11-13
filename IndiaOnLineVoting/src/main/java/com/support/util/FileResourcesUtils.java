@@ -18,18 +18,18 @@ import java.util.List;
 
 public class FileResourcesUtils {
 
-	public static void main(String[] args) throws IOException {
+	/*public static void main(String[] args) throws IOException {
 
 		FileResourcesUtils app = new FileResourcesUtils();
 		File file = null;
 		// String fileName = "database.properties";
 		String fileName = "/resources/assets/ec/bjp.jpg";
 
-		System.out.println("getResourceAsStream : " + fileName);
+		//System.out.println("getResourceAsStream : " + fileName);
 		InputStream is = app.getFileFromResourceAsStream(fileName);
 		printInputStream(is);
 
-		System.out.println("\ngetResource : " + fileName);
+		//System.out.println("\ngetResource : " + fileName);
 		
 		try {
 			file = app.getFileFromResource(fileName);
@@ -39,7 +39,7 @@ public class FileResourcesUtils {
 		}
 		printFile(file);
 
-	}
+	}*/
 
 	// get a file from the resources folder
 	// works everywhere, IDEA, unit test and JAR file.

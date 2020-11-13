@@ -1,0 +1,105 @@
+/**
+ * 
+ */
+package com.pon.pvt.master.dto;
+
+import java.util.Date;
+
+/**
+ * @author Sanjeev
+ *
+ */
+public class SensetivePagelinkDTO {
+	    private Integer id;	    
+	    private String name;	   
+	    private String pageUrl;
+	    private String activateStartDateS;	    
+	    private String activateEndDateS;
+	    private Date activateStartDate;	    
+	    private Date activateEndDate;	
+	    private String activationMessage;	  
+	    private String denyMessage;
+	    
+		public SensetivePagelinkDTO(Integer id, String name, String pageUrl, Date activateStartDate,
+				Date activateEndDate, String activationMessage, String denyMessage) {
+			super();
+			this.id = id;
+			this.name = name;
+			this.pageUrl = pageUrl;
+			this.activateStartDate = activateStartDate;
+			this.activateEndDate = activateEndDate;
+			this.activationMessage = activationMessage;
+			this.denyMessage = denyMessage;
+		}
+		
+		
+		
+		public SensetivePagelinkDTO(Integer id, String name, String pageUrl, String activateStartDateS,
+				String activateEndDateS, String activationMessage, String denyMessage) {
+			super();
+			this.id = id;
+			this.name = name;
+			this.pageUrl = pageUrl;
+			this.activateStartDateS = activateStartDateS;
+			this.activateEndDateS = activateEndDateS;
+			this.activationMessage = activationMessage;
+			this.denyMessage = denyMessage;
+		}
+
+
+
+		public Integer getId() {
+			return id;
+		}
+		public void setId(Integer id) {
+			this.id = id;
+		}
+		public String getName() {
+			return name;
+		}
+		public void setName(String name) {
+			this.name = name;
+		}
+		public String getPageUrl() {
+			return pageUrl;
+		}
+		public void setPageUrl(String pageUrl) {
+			this.pageUrl = pageUrl;
+		}
+		public String getActivateStartDateS() {
+			return activateStartDateS;
+		}
+		public void setActivateStartDateS(String activateStartDateS) {
+			this.activateStartDateS = activateStartDateS;
+		}
+		public String getActivateEndDateS() {
+			return activateEndDateS;
+		}
+		public void setActivateEndDateS(String activateEndDateS) {
+			this.activateEndDateS = activateEndDateS;
+		}
+		public Date getActivateStartDate() {
+			return activateStartDate;
+		}
+		public void setActivateStartDate(Date activateStartDate) {
+			this.activateStartDate = activateStartDate;
+		}
+		public Date getActivateEndDate() {
+			return activateEndDate;
+		}
+		public void setActivateEndDate(Date activateEndDate) {
+			this.activateEndDate = activateEndDate;
+		}
+		public String getActivationMessage() {
+			return activationMessage;
+		}
+		public void setActivationMessage(String activationMessage) {
+			this.activationMessage = activationMessage;
+		}
+		public String getDenyMessage() {
+			return denyMessage;
+		}
+		public void setDenyMessage(String denyMessage) {
+			this.denyMessage = denyMessage;
+		}
+}

@@ -353,8 +353,11 @@ var baseUrl = '/pvt/master/loksabha';
 function clearFormData() {
 	//alert("Clearing form data");
 	$("#addEditFormId").trigger("reset");
-	$('#loksabhaNameId').val("");
+	
 	$('#stateNameId').val("");
+	$('#loksabhaNameId').val("");
+	$('#loksabhaNoId').val("");
+	
 }
 //This will be called for cleaning the error message already shown on the page.
 function cleanAllMsg() {
@@ -363,6 +366,8 @@ function cleanAllMsg() {
 	$('#deleteSelectedSuccessMsgId').html("");
 	$('#loksabhaNameId_err').html("");
 	$('#stateNameId_err').html("");
+	$('#loksabhaNoId_err').html("");
+	
 }
 
 function hideAllRequired() {	
@@ -381,8 +386,10 @@ function cleanAllHiddenInput() {
 //Apply read only on all the fields of the form so that thevalue of the field
 //can not be changed.
 function applyReadOnlyProp() {
-	$('#loksabhaNameId').prop("readonly", true);
+	
 	$('#stateNameId').attr('disabled', true);
+	$('#loksabhaNameId').prop("readonly", true);
+	$('#loksabhaNoId').prop("readonly", true);
 	
 	
 }
@@ -390,8 +397,11 @@ function applyReadOnlyProp() {
 //Remove read only from all the fields of the form so that they could be
 //changed.
 function removeReadOnlyProp() {
+	
+	$('#stateNameId').attr('disabled', false);
 	$('#loksabhaNameId').prop("readonly", false);
-	$('#stateNameId').attr('disabled', false);	
+	$('#loksabhaNoId').prop("readonly", false);
+		
 }
 
 //If the form requires anything pre-loaded. it can be done here.

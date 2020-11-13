@@ -1,0 +1,12 @@
+/**
+ * 
+ */
+package com.pon.pvt.master.entity;
+
+/**
+ * @author Sanjeev
+ *
+ */
+public class ElectionType {
+
+}

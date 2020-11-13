@@ -1,0 +1,305 @@
+/**
+ * 
+ */
+package com.pon.pvt.master.service;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.servlet.http.HttpServletRequest;
+
+import org.modelmapper.internal.util.Assert;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.pon.pvt.master.dto.NameValue;
+import com.pon.pvt.master.dto.SensetivePagelinkDTO;
+import com.pon.pvt.master.entity.SensetivePagelinkMaster;
+import com.pon.pvt.master.repo.SensetivePagelinkRepository;
+import com.support.custom.exception.CustomRuntimeException;
+import com.support.custom.exception.ExceptionApplicationUtility;
+import com.support.grid_pagination.DataTableRequest;
+import com.support.grid_pagination.DataTableResults;
+import com.support.grid_pagination.PaginationCriteria;
+import com.support.util.AppConstants;
+import com.support.util.AppUtil;
+
+/**
+ * @author Sanjeev
+ *
+ */
+@Service
+public class SensetivePagelinkServiceImpl implements SensetivePagelinkService {
+
+	static final Logger log = LoggerFactory.getLogger(SensetivePagelinkServiceImpl.class);
+
+	/** The entity manager. */
+	@Autowired
+	@PersistenceContext(unitName= AppConstants.JPA_UNIT_LOSTVOTE)
+	private EntityManager entityManager;
+
+	@Autowired
+	SensetivePagelinkRepository sensetivePagelinkRepository;
+
+	// Using constructor mapping
+	@Override
+	public DataTableResults<SensetivePagelinkDTO> loadGrid(HttpServletRequest request,String whereClauseForBaseQuery) throws CustomRuntimeException{
+		log.info("     SensetivePagelinkServiceImpl :==> loadGrid :==> Started");
+		DataTableResults<SensetivePagelinkDTO> dataTableResult ;
+		try {
+			DataTableRequest<SensetivePagelinkMaster> dataTableInRQ = new DataTableRequest<SensetivePagelinkMaster>(request);
+			PaginationCriteria pagination = dataTableInRQ.getPaginationRequest();
+
+			String baseQuery = "SELECT id as id, "
+					          + " name as name, "
+					          + " page_url as pageUrl,"
+					          + " activate_start_date as activateStartDate,"
+					          + " activate_end_date as activateEndDate,"
+					          + " activation_message as activationMessage,"
+					          + " deny_message as denyMessage,"
+					          + " channel_state as channelState,"
+					          
+					          + " (SELECT COUNT(1) FROM sensetive_pagelink_master "
+					          +whereClauseForBaseQuery+") AS totalrecords  "
+					          + "FROM sensetive_pagelink_master "+whereClauseForBaseQuery;
+
+			String paginatedQuery = AppUtil.buildPaginatedQuery(baseQuery, pagination);
+			Query query = entityManager.createNativeQuery(paginatedQuery, "SensetivePagelinkDTOMapping");
+			@SuppressWarnings("unchecked")
+			List<SensetivePagelinkDTO> SensetivePagelinkList = query.getResultList();
+			dataTableResult = new DataTableResults<SensetivePagelinkDTO>();
+			dataTableResult.setDraw(dataTableInRQ.getDraw());
+			dataTableResult.setListOfDataObjects(SensetivePagelinkList);
+			if (!AppUtil.isObjectEmpty(SensetivePagelinkList)) {
+				dataTableResult.setRecordsTotal(SensetivePagelinkList.get(0).getTotalrecords().toString());
+				if (dataTableInRQ.getPaginationRequest().isFilterByEmpty()) {
+					dataTableResult.setRecordsFiltered(SensetivePagelinkList.get(0).getTotalrecords().toString());
+				} else {
+					dataTableResult.setRecordsFiltered(Integer.toString(SensetivePagelinkList.size()));
+				}
+			}
+		}catch(Exception ex) {			
+			throw ExceptionApplicationUtility.wrapRunTimeException(ex);
+		}
+		log.info("     SensetivePagelinkServiceImpl :==> loadGrid :==> Ended");
+		return dataTableResult;
+	}
+
+	// This will directly put your result into your mapped dto
+	@Transactional
+	@Override
+	public SensetivePagelinkDTO getReordById(Integer id) throws CustomRuntimeException{
+		log.info("     SensetivePagelinkServiceImpl :==> getReordById :==> Started");
+		SensetivePagelinkDTO sensetivePagelinkDTO=new SensetivePagelinkDTO();
+		try {
+			SensetivePagelinkMaster sensetivePagelinkMaster=sensetivePagelinkRepository.getOne(id);
+			sensetivePagelinkDTO.setId(sensetivePagelinkMaster.getId());
+			sensetivePagelinkDTO.setName(sensetivePagelinkMaster.getName());
+			sensetivePagelinkDTO.setPageUrl(sensetivePagelinkMaster.getPageUrl());
+			sensetivePagelinkDTO.setActivateEndDateS(AppUtil.convertJavaDateIntoStringDateWithTime(sensetivePagelinkMaster.getActivateEndDate()));
+			sensetivePagelinkDTO.setActivateStartDateS(AppUtil.convertJavaDateIntoStringDateWithTime(sensetivePagelinkMaster.getActivateStartDate()));
+			sensetivePagelinkDTO.setActivationMessage(sensetivePagelinkMaster.getActivationMessage());
+			sensetivePagelinkDTO.setDenyMessage(sensetivePagelinkMaster.getDenyMessage());	
+			String channelState;
+			if(sensetivePagelinkMaster.isChannelState())
+				channelState="1";
+			else
+				channelState="0";
+			sensetivePagelinkDTO.setChannelStateS(channelState);
+			
+		}catch(Exception ex ) {
+			throw ExceptionApplicationUtility.wrapRunTimeException(ex);
+		}
+		log.info("     SensetivePagelinkServiceImpl :==> getReordById :==> Ended");
+		return sensetivePagelinkDTO;
+	}
+
+	@Transactional
+	@Override	
+	public SensetivePagelinkDTO saveAndUpdate(SensetivePagelinkDTO sensetivePagelinkDTO) throws CustomRuntimeException{
+		log.info("     SensetivePagelinkServiceImpl :==> saveAndUpdate :==> Stated");
+		SensetivePagelinkMaster sensetivePagelinkMaster;
+		SensetivePagelinkDTO returningSensetivePagelinkDTO;
+		try {
+			if(sensetivePagelinkDTO.getId()!=null)
+				sensetivePagelinkMaster =sensetivePagelinkRepository.getOne(sensetivePagelinkDTO.getId());
+			else
+				sensetivePagelinkMaster =new SensetivePagelinkMaster();
+			    sensetivePagelinkMaster.setId(sensetivePagelinkDTO.getId());
+			    sensetivePagelinkMaster.setName(sensetivePagelinkDTO.getName()); 
+			    sensetivePagelinkMaster.setPageUrl(sensetivePagelinkDTO.getPageUrl());
+			    
+			    sensetivePagelinkMaster.setActivateStartDate(AppUtil.convertStringDateIntoJavaDateWithTime(sensetivePagelinkDTO.getActivateStartDateS()));
+			    sensetivePagelinkMaster.setActivateEndDate(AppUtil.convertStringDateIntoJavaDateWithTime(sensetivePagelinkDTO.getActivateEndDateS()));
+			 
+			    sensetivePagelinkMaster.setActivationMessage(sensetivePagelinkDTO.getActivationMessage());
+			    sensetivePagelinkMaster.setDenyMessage(sensetivePagelinkDTO.getDenyMessage());
+			    boolean channelStateB;
+				if(sensetivePagelinkDTO.getChannelStateS().equals("1"))
+					channelStateB=true;
+				else
+					channelStateB=false;
+				
+			    sensetivePagelinkMaster.setChannelState(channelStateB);
+			 
+			SensetivePagelinkMaster returnedSensetivePagelinkMaster = sensetivePagelinkRepository.saveAndFlush(sensetivePagelinkMaster);
+           String channelState;
+			if(returnedSensetivePagelinkMaster.isChannelState())
+				channelState="1";
+			else
+			channelState="0";
+			returningSensetivePagelinkDTO=new SensetivePagelinkDTO(returnedSensetivePagelinkMaster.getId(), 
+					                                               returnedSensetivePagelinkMaster.getName(),
+					                                               returnedSensetivePagelinkMaster.getPageUrl(),
+					                                               AppUtil.convertJavaDateIntoStringDate(returnedSensetivePagelinkMaster.getActivateStartDate()),
+					                                               AppUtil.convertJavaDateIntoStringDate(returnedSensetivePagelinkMaster.getActivateEndDate()),
+					                                               returnedSensetivePagelinkMaster.getActivationMessage(),
+					                                               returnedSensetivePagelinkMaster.getDenyMessage(),
+					                                               channelState);
+			
+			
+			
+		}catch(Exception ex) {
+			throw ExceptionApplicationUtility.wrapRunTimeException(ex);
+		}
+		log.info("     SensetivePagelinkServiceImpl :==> saveAndUpdate :==> Ended");
+		return returningSensetivePagelinkDTO;
+	}
+
+	@Transactional
+	@Override
+	public boolean deleteOneRecord(Integer id) throws CustomRuntimeException{
+		log.info("     SensetivePagelinkServiceImpl :==> deleteOneRecord :==> Stated");
+		try {
+			sensetivePagelinkRepository.deleteById(id);;
+		}catch(Exception ex) {
+			throw ExceptionApplicationUtility.wrapRunTimeException(ex);
+		}
+		log.info("     SensetivePagelinkServiceImpl :==> deleteOneRecord :==> Ended");
+		return true;
+	}
+
+	@Transactional
+	@Override
+	public void deleteMultipleRecords(Integer[] recordIdArray) throws CustomRuntimeException{
+		log.info("     SensetivePagelinkServiceImpl :==> deleteMultipleRecords :==> Stated");
+		try {
+			sensetivePagelinkRepository.deleteSensitiveLinkWithIds(recordIdArray);
+		}catch(Exception ex) {
+			throw ExceptionApplicationUtility.wrapRunTimeException(ex);
+		}
+		log.info("     SensetivePagelinkServiceImpl :==> deleteMultipleRecords :==> Ended");
+	}
+
+	
+	@Override
+	public List<NameValue> getSensetivePagelinkList() throws CustomRuntimeException{
+		List<NameValue> SensetivePagelinkList=new ArrayList<NameValue>();		
+		NameValue nameValue;
+		try {
+			log.info("     SensetivePagelinkServiceImpl :==> getSensetivePagelinkList :==> Stated");
+			List<SensetivePagelinkMaster> sensetivePagelinkMasterList=sensetivePagelinkRepository.findAll();		
+			for(SensetivePagelinkMaster sensetivePagelinkMaster:sensetivePagelinkMasterList) {
+				nameValue=new NameValue(sensetivePagelinkMaster.getId(),sensetivePagelinkMaster.getName());
+				SensetivePagelinkList.add(nameValue);
+			}	
+		}catch(Exception ex) {
+			throw ExceptionApplicationUtility.wrapRunTimeException(ex);
+		}
+		log.info("     SensetivePagelinkServiceImpl :==> getSensetivePagelinkList :==> Ended");
+		return SensetivePagelinkList;
+	}
+
+	@Override	
+	public boolean fieldValueExists(Object fieldValue, String fieldName,Object idValue, String idFieldName)	throws CustomRuntimeException {		
+		log.info("     SensetivePagelinkServiceImpl :==> fieldValueExists :==> Stated");
+		Assert.notNull(fieldName);
+		boolean recordFound=false;
+		try {
+			
+			if (!fieldName.equals("name")) {
+				throw ExceptionApplicationUtility.wrapRunTimeException(new UnsupportedOperationException("Field name not supported"));            
+			}
+			if (!idFieldName.equals("id")) {
+				throw ExceptionApplicationUtility.wrapRunTimeException(new UnsupportedOperationException("Field name not supported"));            
+			}
+			if (fieldValue == null) {
+				return false;
+			}
+			//This is an add case
+			if(idValue==null) {
+				recordFound=this.sensetivePagelinkRepository.existsBySensitiveLinkName(fieldValue.toString()); 				
+			}
+			else {				
+				recordFound=this.sensetivePagelinkRepository.existsBySensitiveLinkNameExceptThisId(fieldValue.toString(),Integer.parseInt(idValue.toString()));				
+				
+				//if record found other than this id, it means that there is some other record which has this name. Unique check 
+				//should be applied otherwise this check should be avoided.
+				
+			}
+			
+		}catch(Exception ex) {
+			throw ExceptionApplicationUtility.wrapRunTimeException(ex);
+		}
+		log.info("     SensetivePagelinkServiceImpl :==> fieldValueExists :==> Ended");
+		return recordFound;
+	}
+
+	@Override
+	public boolean fieldValueExists(Object value, String fieldName) throws CustomRuntimeException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public List<String> getActiveMarqueList() throws CustomRuntimeException {
+		// TODO Auto-generated method stub
+		List<SensetivePagelinkMaster> sensetivePagelinkMasterList=sensetivePagelinkRepository.findByChannelState(true);
+		//Prepare marquee list
+		String color[]= {"red;","blue;","green;","black;"};
+		List<String> marqueeList=new ArrayList<String>(); int i=0;
+		for(SensetivePagelinkMaster sensetivePagelinkMaster:sensetivePagelinkMasterList) {
+			if(i>3) i=0;
+			marqueeList.add("<span style='color:"+color[i]+"'>"+sensetivePagelinkMaster.getActivationMessage()+"</span>"+"&nbsp;&nbsp;&nbsp;");
+		    i++;
+		}		
+		return marqueeList;
+		}
+
+	@Override
+	public SensetivePagelinkMaster getSensetivePagelinkDetails(String pageUrl) throws CustomRuntimeException {
+		// TODO Auto-generated method stub
+		DateFormat dtf = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss a");  
+		   LocalDateTime now = LocalDateTime.now();  
+		  System.out.println(dtf.format(now)); 
+		  // System.out.println(pageUrl);
+		  
+		   Date today=AppUtil.convertStringDateIntoJavaDateWithTime(dtf.format(now));
+		  // System.out.println(today);
+		   SensetivePagelinkMaster sensetivePagelinkMaster=sensetivePagelinkRepository.getSensetivePagelinkActiveNow(today,pageUrl);
+	       //System.out.println(sensetivePagelinkMaster);
+		   if(sensetivePagelinkMaster==null) {
+			 sensetivePagelinkMaster=sensetivePagelinkRepository.getSensetivePagelinkDetails(pageUrl);
+			 sensetivePagelinkMaster.setChannelState(false);
+			 String activeTimeRange=" Earlier this link was active from "+AppUtil.convertJavaDateIntoStringDateWithTime(sensetivePagelinkMaster.getActivateStartDate())+
+					                " to "+
+					                AppUtil.convertJavaDateIntoStringDateWithTime(sensetivePagelinkMaster.getActivateEndDate());
+			 
+			 sensetivePagelinkMaster.setDenyMessage(sensetivePagelinkMaster.getDenyMessage()+"  "+activeTimeRange);  
+		}
+			
+		return sensetivePagelinkMaster;
+	}
+
+}//End of SensetivePagelinkServiceImpl

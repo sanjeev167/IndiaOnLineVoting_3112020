@@ -177,7 +177,42 @@ public class AppUtil {
 	//############  Following methods are not for data tables #####################/
 	
 	
-	public static String convertJavaDateIntoStringDate(java.util.Date dateComing) {
+	public static String convertJavaDateIntoStringDateWithTime(java.util.Date dateComing) {
+		
+		//Date date = (Date) Calendar.getInstance().getTime();  
+		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss a");  
+		//System.out.println("stringDate = "+dateComing);
+		return dateFormat.format(dateComing); 
+		
+	}
+	
+	public static java.util.Date convertStringDateIntoJavaDateWithTime(String stringDate) {
+		// TODO Auto-generated method stub
+		java.util.Date date=null;
+		//System.out.println("stringDate = "+stringDate);
+		try {
+			date=new SimpleDateFormat("dd-MM-yyyy hh:mm:ss a").parse(stringDate);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}  
+		return date;
+	}
+	
+	public static java.util.Date convertStringDateIntoJavaDateWithTime24Hr(String stringDate) {
+		// TODO Auto-generated method stub
+		java.util.Date date=null;
+		//System.out.println("24 hr date format = "+stringDate);
+		try {
+			date=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss a").parse(stringDate);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}  
+		return date;
+	}
+	
+public static String convertJavaDateIntoStringDate(java.util.Date dateComing) {
 		
 		//Date date = (Date) Calendar.getInstance().getTime();  
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");  
@@ -185,13 +220,6 @@ public class AppUtil {
 		
 	}
 	
-	
-	public static Date convertStringDateIntoSqlDate(String dateString) {
-		
-		 Date date=Date.valueOf(dateString);//converting string into sql date  
-		 return date;
-	}
-
 	public static java.util.Date convertStringDateIntoJavaDate(String stringDate) {
 		// TODO Auto-generated method stub
 		java.util.Date date=null;
@@ -203,6 +231,15 @@ public class AppUtil {
 		}  
 		return date;
 	}
+	
+	
+	public static Date convertStringDateIntoSqlDate(String dateString) {
+		
+		 Date date=Date.valueOf(dateString);//converting string into sql date  
+		 return date;
+	}
+
+	
 	
 	public static String returnVoterId(String stateNo,String loksabhaNo, String assemblyNo,String boothNo,String nextVoterNo) {
 		
@@ -267,6 +304,7 @@ public class AppUtil {
 
 	public static boolean checkVoterIdFormat(String voterId) {
 		// TODO Auto-generated method stub
+		//System.out.println(voterId +" voterId.length() = "+voterId.length());
 		if(voterId.length()==17)
 		return true;//As it is coming through masking. So there is no possibility of getting it wrong
 		else

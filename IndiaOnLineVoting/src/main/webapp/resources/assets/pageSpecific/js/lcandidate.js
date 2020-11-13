@@ -175,7 +175,8 @@ $('#stateNameId').on('change', function(e) {
 	$('#loksabhaNameId').empty().append('<option  value="">-Select-</option>');	
 	loadStateCombo($('#stateNameId').val(),"");
 	
-	$('#partyNameId').empty().append('<option  value="">-Select-</option>');	
+	$('#partyNameId').empty().append('<option  value="">-Select-</option>');
+	
 	loadStateBasedPartyCombo($('#stateNameId').val(),"");
 });
 
@@ -745,7 +746,7 @@ function loadStateBasedPartyCombo(id,selectedId){
 	
 	/* stop form from submitting normally */	
 	method = 'GET';
-	url = "/pvt/master/party/" + "/list?stateId=" + id;		
+	url = "/pvt/master/party" + "/list?stateId=" + id;		
 	$
 	.ajax({
 		type : method,

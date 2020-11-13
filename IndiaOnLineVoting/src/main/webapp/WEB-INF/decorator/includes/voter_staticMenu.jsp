@@ -14,10 +14,7 @@
 					<span class="pull-right-container"> 
 				</span>
 			</a></li>
-			<li><a href="<%=request.getContextPath() %>/pvt/voter/voteLockAuditTrail"> <i class="fa fa-th"></i> <span>Vote-Locking-Audit-Trail</span>
-					<span class="pull-right-container"> 
-				</span>
-			</a></li>
+			
 			
 			
 			

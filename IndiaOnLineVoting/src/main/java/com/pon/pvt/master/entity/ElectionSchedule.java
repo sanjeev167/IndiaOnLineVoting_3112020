@@ -30,10 +30,12 @@ import javax.persistence.TemporalType;
 @NamedQueries({
     @NamedQuery(name = "ElectionSchedule.findAll", query = "SELECT e FROM ElectionSchedule e"),
     @NamedQuery(name = "ElectionSchedule.findById", query = "SELECT e FROM ElectionSchedule e WHERE e.id = :id"),
-    @NamedQuery(name = "ElectionSchedule.findByElectionType", query = "SELECT e FROM ElectionSchedule e WHERE e.electionType = :electionType"),
+    @NamedQuery(name = "ElectionSchedule.findByStateId", query = "SELECT e FROM ElectionSchedule e WHERE e.stateId = :stateId"),
     @NamedQuery(name = "ElectionSchedule.findByElectionYear", query = "SELECT e FROM ElectionSchedule e WHERE e.electionYear = :electionYear"),
     @NamedQuery(name = "ElectionSchedule.findByElectionFor", query = "SELECT e FROM ElectionSchedule e WHERE e.electionFor = :electionFor"),
-    @NamedQuery(name = "ElectionSchedule.findByElectionDate", query = "SELECT e FROM ElectionSchedule e WHERE e.electionDate = :electionDate")})
+    @NamedQuery(name = "ElectionSchedule.findByElectionDate", query = "SELECT e FROM ElectionSchedule e WHERE e.electionDate = :electionDate"),
+    @NamedQuery(name = "ElectionSchedule.findByScheduleNo", query = "SELECT e FROM ElectionSchedule e WHERE e.scheduleNo = :scheduleNo"),
+    @NamedQuery(name = "ElectionSchedule.findByElectionTypeId", query = "SELECT e FROM ElectionSchedule e WHERE e.electionTypeId = :electionTypeId")})
 public class ElectionSchedule implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -42,8 +44,8 @@ public class ElectionSchedule implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Column(name = "election_type")
-    private String electionType;
+    @Column(name = "state_id")
+    private Integer stateId;
     @Column(name = "election_year")
     private Integer electionYear;
     @Column(name = "election_for")
@@ -51,15 +53,22 @@ public class ElectionSchedule implements Serializable {
     @Column(name = "election_date")
     @Temporal(TemporalType.DATE)
     private Date electionDate;
+    @Column(name = "schedule_no")
+    private Integer scheduleNo;
+    @Column(name = "election_type_id")
+    private Integer electionTypeId;
     @JoinColumn(name = "assembly_id", referencedColumnName = "id")
     @ManyToOne
     private AssemblyMaster assemblyId;
+    @JoinColumn(name = "election_name_id", referencedColumnName = "id")
+    @ManyToOne
+    private ElectionNameMaster electionNameId;
     @JoinColumn(name = "loksabha_id", referencedColumnName = "id")
     @ManyToOne
     private LoksabhaMaster loksabhaId;
-    @JoinColumn(name = "state_id", referencedColumnName = "id")
+    @JoinColumn(name = "polling_booth_id", referencedColumnName = "id")
     @ManyToOne
-    private StateMaster stateId;
+    private PollingBoothMaster pollingBoothId;
 
     public ElectionSchedule() {
     }
@@ -76,12 +85,12 @@ public class ElectionSchedule implements Serializable {
         this.id = id;
     }
 
-    public String getElectionType() {
-        return electionType;
+    public Integer getStateId() {
+        return stateId;
     }
 
-    public void setElectionType(String electionType) {
-        this.electionType = electionType;
+    public void setStateId(Integer stateId) {
+        this.stateId = stateId;
     }
 
     public Integer getElectionYear() {
@@ -108,12 +117,36 @@ public class ElectionSchedule implements Serializable {
         this.electionDate = electionDate;
     }
 
+    public Integer getScheduleNo() {
+        return scheduleNo;
+    }
+
+    public void setScheduleNo(Integer scheduleNo) {
+        this.scheduleNo = scheduleNo;
+    }
+
+    public Integer getElectionTypeId() {
+        return electionTypeId;
+    }
+
+    public void setElectionTypeId(Integer electionTypeId) {
+        this.electionTypeId = electionTypeId;
+    }
+
     public AssemblyMaster getAssemblyId() {
         return assemblyId;
     }
 
     public void setAssemblyId(AssemblyMaster assemblyId) {
         this.assemblyId = assemblyId;
+    }
+
+    public ElectionNameMaster getElectionNameId() {
+        return electionNameId;
+    }
+
+    public void setElectionNameId(ElectionNameMaster electionNameId) {
+        this.electionNameId = electionNameId;
     }
 
     public LoksabhaMaster getLoksabhaId() {
@@ -124,12 +157,12 @@ public class ElectionSchedule implements Serializable {
         this.loksabhaId = loksabhaId;
     }
 
-    public StateMaster getStateId() {
-        return stateId;
+    public PollingBoothMaster getPollingBoothId() {
+        return pollingBoothId;
     }
 
-    public void setStateId(StateMaster stateId) {
-        this.stateId = stateId;
+    public void setPollingBoothId(PollingBoothMaster pollingBoothId) {
+        this.pollingBoothId = pollingBoothId;
     }
 
     @Override
@@ -154,7 +187,7 @@ public class ElectionSchedule implements Serializable {
 
     @Override
     public String toString() {
-        return "com.pon.pvt.master.entity.ElectionSchedule[ id=" + id + " ]";
+        return "com.example.demo.ElectionSchedule[ id=" + id + " ]";
     }
     
 }

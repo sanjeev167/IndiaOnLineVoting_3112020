@@ -1,4 +1,4 @@
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
@@ -13,25 +13,178 @@
     </section>
 
     <!-- Main content -->
-    <section class="content">
+   <section class="content" style="margin: 0px; padding: 0px">
+	<!-- Info boxes -->
+	<div class="col-md-12">
+		<div class="row">
+			<div class="col-md-3 col-sm-6 col-xs-12">
+				<div class="info-box">
+					<span class="info-box-icon bg-aqua"><img
+						src="<%request.getContextPath();%>/resources/assets/ec/img/enrolledvoters.jpeg" /></span>
 
-      <!-- Default box -->
-      <div class="box">
-        <div class="box-header with-border">
-          <h3 class="box-title">Dashboard Section. Implemented Latter</h3>         
-        </div>
-        <div class="box-body">
-         Will be implemented latter. Prototype has no such scope.
-        </div>
-        <!-- /.box-body -->
-        <div class="box-footer">
-          Footer
-        </div>
-        <!-- /.box-footer-->
-      </div>
-      <!-- /.box -->
+					<div class="info-box-content">
+						<span class="info-box-text">Enrolled-Voters</span> <span
+							class="info-box-number"><c:out
+								value="${totalRegisteredVoters}" /></span>
+					</div>
+					<!-- /.info-box-content -->
+					&nbsp;<a href="/pvt/adm/db/voters" class="small-box-footer"> More
+						info <i class="fa fa-arrow-circle-right"></i>
+					</a>
+				</div>
+				<!-- /.info-box -->
+			</div>
+			<!-- /.col -->
+			<div class="col-md-3 col-sm-6 col-xs-12">
+				<div class="info-box">
+					<span class="info-box-icon bg-green"><img
+						src="<%request.getContextPath();%>/resources/assets/ec/img/onlinevoters.jpeg" /></span>
 
-    </section>
+					<div class="info-box-content">
+						<span class="info-box-text">Online-Voters</span> <span
+							class="info-box-number"><c:out
+								value="${totalOnlineVoters}" /></span>
+					</div>
+					<!-- /.info-box-content -->
+					&nbsp;<a href="/pvt/adm/db/voters" class="small-box-footer"> More
+						info <i class="fa fa-arrow-circle-right"></i>
+					</a>
+				</div>
+				<!-- /.info-box -->
+			</div>
+			<!-- /.col -->
+
+			
+			
+			
+			
+			
+			
+			
+			<div class="col-md-3 col-sm-6 col-xs-12">
+				<div class="info-box">
+					<span class="info-box-icon bg-red"><img
+						src="<%request.getContextPath();%>/resources/assets/ec/img/electionschedule.png" height="70" /></span>
+
+					<div class="info-box-content">
+						<span class="info-box-text">Elect. Schedule</span> <span
+							class="info-box-number"></span>
+					</div>
+					<!-- /.info-box-content -->
+					<br> &nbsp;<a href="<%=request.getContextPath() %>/pvt/adm/electionSchedule" class="small-box-footer"> More info
+						<i class="fa fa-arrow-circle-right"></i>
+					</a>
+			</div>
+				<!-- /.info-box -->
+			</div>
+			<!-- /.col -->
+			<div class="col-md-3 col-sm-6 col-xs-12">
+				<div class="info-box">
+					<span class="info-box-icon bg-green"><img
+						src="<%request.getContextPath();%>/resources/assets/ec/img/onlineusers.jpg" /></span>
+
+					<div class="info-box-content">
+						<span class="info-box-text">Online-Users</span> <span
+							class="info-box-number"><c:out value="${onLineUsers}" /></span>
+					</div>
+
+
+					<!-- /.info-box-content -->
+				</div>
+				<!-- /.info-box -->
+			</div>
+			<!-- /.col -->
+			
+		</div>
+		<!-- /.row -->
+
+		<!-- Info boxes -->
+		<div class="row">
+			<div class="col-md-3 col-sm-6 col-xs-12">
+				<div class="info-box">
+					<span class="info-box-icon bg-red"><img	src="<%request.getContextPath();%>/resources/assets/ec/img/offlineVote.jpg" /></span>
+
+					<div class="info-box-content">
+						<span class="info-box-text">Offline-Voters</span> <span
+							class="info-box-number"><c:out
+								value="${totalOfflineVoters}" /></span>
+					</div>
+					<!-- /.info-box-content -->
+					&nbsp;<a href="/pvt/adm/db/voters" class="small-box-footer"> More info <i class="fa fa-arrow-circle-right"></i>
+					</a>
+				</div> <!-- /.info-box -->
+		   </div>
+		 <!-- /.col -->
+		 
+		 
+		<div class="col-md-3 col-sm-6 col-xs-12">
+				<div class="info-box">
+					<span class="info-box-icon bg-green"><img
+						src="<%request.getContextPath();%>/resources/assets/ec/img/electionresult.jpg" /></span>
+					<div class="info-box-content">
+						<span class="info-box-text">Election Result</span> <span
+							class="info-box-number"></span>
+					</div>
+					<!-- /.info-box-content -->
+					<br> &nbsp;<a href="/pvt/adm/db/result" class="small-box-footer"> More info
+						<i class="fa fa-arrow-circle-right"></i>
+					</a>
+				</div>
+				<!-- /.info-box -->
+	   </div>
+
+
+			<!-- fix for small devices only -->
+			<div class="clearfix visible-sm-block"></div>
+
+			<div class="col-md-3 col-sm-6 col-xs-12">
+				<div class="info-box">
+					<span class="info-box-icon bg-red"><img
+						src="<%request.getContextPath();%>/resources/assets/ec/img/website-1292338_640.jpg" /></span>
+
+					<div class="info-box-content">
+						<span class="info-box-text">Visitors</span> <span
+							class="info-box-number">${hitCount}</span>
+					</div>
+					<!-- /.info-box-content -->
+				</div>
+				<!-- /.info-box -->
+		  </div>
+			<!-- /.col -->
+			
+			
+			
+			<div class="col-md-3 col-sm-6 col-xs-12">
+				<div class="info-box">
+					<span class="info-box-icon bg-green"><img
+						src="<%request.getContextPath();%>/resources/assets/ec/img/sensitivelink.jpg"
+						height="70" /></span>
+
+					<div class="info-box-content">
+						<span class="info-box-text">Sensitive-Link</span> <span
+							class="info-box-number"></span>
+					</div>
+
+					<!-- /.info-box-content -->
+					<br> &nbsp;<a href="<%=request.getContextPath() %>/pvt/adm/sensitiveLink" class="small-box-footer"> More info
+						<i class="fa fa-arrow-circle-right"></i>
+					</a>
+
+				</div>
+
+				<!-- /.info-box -->
+			</div>
+			<!-- /.col -->
+		</div>
+		<!-- /.row -->
+
+		
+
+	</div>
+</section>
+
+   
+   
     <!-- /.content -->
   
 

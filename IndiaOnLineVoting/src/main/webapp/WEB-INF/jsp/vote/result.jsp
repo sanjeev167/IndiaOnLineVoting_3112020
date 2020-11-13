@@ -18,7 +18,7 @@
 
 					<!-- Profile Image -->
 					<div class="box box-primary">
-						<div class="box-body box-profile" style="height:385px">
+						<div class="box-body box-profile" style="height:450px">
 							<img class="profile-user-img img-responsive img-circle"
 								src="<%request.getContextPath();%>/resources/assets/ec/img/result.jpg">
 
@@ -32,16 +32,29 @@
 								Year &nbsp;&nbsp;&nbsp;2020
 							</p>
 
-							<ul class="list-group list-group-unbordered"> 
-								<li class="list-group-item"><b>State</b> <select id="stateNameId"
-									class="pull-right"><option value="">-Select-</option></select></li>
+															
+											<div class="form-group">										                
+										                <select class="form-control select2" style="width: 100%;" id="stateNameId">
+										                  <option value="">-Select State-</option>							                  
+										                </select>
+										   </div>
+										   <!-- /.form-group -->
+															
+											<div class="form-group">										               
+										                <select class="form-control select2" style="width: 100%;" id="loksabhaNameId"  disabled="disabled">
+										                  <option value="">-Select Loksabha-</option>							                  
+										                </select>
+										   </div>
+										   <!-- /.form-group -->
+																
+											<div class="form-group">
+										                
+										                <select class="form-control select2" style="width: 100%;" id="assemblyNameIdId" disabled="disabled">
+										                  <option value="">-Select Assembly-</option>							                  
+										                </select>
+										   </div>
+										   <!-- /.form-group -->
 								
-								<li class="list-group-item"><b>Lok Sabha</b><select id="loksabhaNameId" disabled="disabled"
-									class="pull-right"><option value="">-Select-</option></select></li>
-								<li class="list-group-item"><b>Assembly</b><select id="assemblyNameIdId" disabled="disabled"
-									class="pull-right"><option value="">-Select-</option></select></li>	
-								
-							</ul>
                              <div style="display: none;" id="searchResultButtonId">
 							<a href="#" class="btn btn-primary btn-block" id="showEcResultId"><b>Election-Result</b></a>
 							</div>
@@ -49,8 +62,6 @@
 						<!-- /.box-body -->
 					</div>
 					<!-- /.box -->
-                
-
 				</div>
 				<!-- /.col -->
 
@@ -61,8 +72,13 @@
 					<!-- Default box -->
 					<div class="box">
 						<div class="box-header with-border">
-							<h3 class="box-title">Election-Result for Assembly/Parliamentary</h3>	
-											
+							<h3 class="box-title">Election-Result:-- &nbsp;&nbsp;
+							   <label>State: &nbsp;&nbsp;</label>[<strong id="stateResultId" style="color:red"></strong> ] &nbsp;&nbsp;
+							   <label>Loksabha:</label> &nbsp;&nbsp;[<strong style="color:red" id="loksabhaResultId"></strong>]&nbsp;&nbsp;							   
+							   <label>Assembly:</label> &nbsp;&nbsp;
+							   [<strong id="assemblyResultId" style="color:red"></strong>]							  						
+							</h3>	
+										
 						</div>	
 						<!-- 
 						<div class="box-header with-border">
@@ -114,18 +130,20 @@
 	<!-- page script -->
 	<script>
 		$(function() {
-			loadGrid("2020","A","10","2","2")
+			loadGrid("2000","A","10","2","2");//these input has been dummy to get grid data blank at start
 			loadStateCombo();
 
-			$("#showEcResultId").click(function(){
+			$("#showEcResultId").click(function(){             
 				var yearId="2020";
 				var electionTypeId=$("input[name=electionType]:checked").val();
 				var stateId=$("#stateNameId").val();
 				var loksabhaId=$("#loksabhaNameId").val();
 				var assemblyId=$("#assemblyNameIdId").val();
-
-				//alert(yearId);alert(electionTypeId);alert(stateId);alert(loksabhaId);alert(assemblyId);			
-				//loadGrid(yearId,electionTypeId,stateId,loksabhaId,assemblyId);
+				
+				 $("#stateResultId").html($("#stateNameId option:selected").text());
+				 $("#loksabhaResultId").html($("#loksabhaNameId option:selected").text());
+				 if($("#assemblyNameIdId option:selected").text()!="-Select-")
+				 $("#assemblyResultId").html($("#assemblyNameIdId option:selected").text());
 
 				var table = $('#ecResultTableId').DataTable();
 				table.ajax.url( "/pub/vote/resultPaginated?yearId="+yearId+
@@ -201,6 +219,10 @@
 						"ordering" : true,
 						"searching" : true,
 						"aaSorting" : [ [ 6, "desc" ]],
+
+						"oLanguage": {
+						      "sZeroRecords": "<label style='color:red;'>No election has yet been conducted in this constituency.</label>"
+						    },
 						"ajax" : {							
 							"url" : "/pub/vote/resultPaginated?yearId="+yearId+
 							                                "&electionTypeId="+electionTypeId+

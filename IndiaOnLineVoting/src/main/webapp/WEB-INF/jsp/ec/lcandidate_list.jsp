@@ -11,7 +11,7 @@
 <!-- Main content -->
 <section class="content container-fluid">
 	<div class="row">
-		<div class="col-md-9">
+		<div class="col-md-12">
 			<div class="box box-primary ">
 				<div class="box-header with-border">
 
@@ -89,8 +89,8 @@
 							<label for="inputSortName" class="col-sm-4 control-label">
 								Year</label>
 							<div class="col-sm-7">								
-									<select class="form-control" name="electionYear"id="electionYearId">
-									<option value="">-- Select --</option>
+									<select class="form-control select2" style="width: 100%;" name="electionYear"id="electionYearId">
+									
 									
 									<% for(int i=2020;i<2031;i++){%>
 									
@@ -108,9 +108,9 @@
 							<label for="inputStateName" class="col-sm-4 control-label">
 								State</label>
 							<div class="col-sm-7">
-								<select class="form-control" name="stateNameId"
+								<select class="form-control select2" style="width: 100%;" name="stateNameId"
 									id="stateNameId">
-									<option value="">-- Select --</option>
+									
 
 								</select> <span id="stateNameId_err" class="field-error"></span>
 	    					</div>
@@ -120,7 +120,7 @@
 							<label for="inputLoksabhaName" class="col-sm-4 control-label">
 								Loksabha</label>
 							<div class="col-sm-7">
-								<select class="form-control" name="loksabhaNameId" id="loksabhaNameId">
+								<select class="form-control select2" style="width: 100%;" name="loksabhaNameId" id="loksabhaNameId">
 									<option value="">-- Select --</option>
 
 								</select> <span id="loksabhaNameId_err" class="field-error"></span>
@@ -154,7 +154,7 @@
 							<label for="inputPartyName" class="col-sm-4 control-label">
 								Party</label>
 							<div class="col-sm-7">
-								<select class="form-control" name="partyNameId"
+								<select class="form-control select2" style="width: 100%;" name="partyNameId"
 									id="partyNameId">
 									<option value="">-- Select --</option>
 

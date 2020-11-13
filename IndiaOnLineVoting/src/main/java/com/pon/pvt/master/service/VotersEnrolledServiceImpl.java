@@ -398,10 +398,24 @@ public class VotersEnrolledServiceImpl implements VotersEnrolledService {
 		else
 			return false;
 	}
-	
-	
-	
-	
-	
 
+	@Override
+	public Integer findTotalRegisteredVoters() throws CustomRuntimeException {
+		// TODO Auto-generated method stub
+		return votersEnrolledRepository.findTotalRegisteredVoters();
+		
+	}
+
+	@Override
+	public Integer findTotalOnlineVoters() throws CustomRuntimeException {
+		// TODO Auto-generated method stub
+		return votersEnrolledRepository.findTotalOnlineVoters();
+	}
+
+	@Override
+	public Integer findTotalOfflineVoters() throws CustomRuntimeException {
+		// TODO Auto-generated method stub
+		return votersEnrolledRepository.findTotalOfflineVoters();
+	}
+	
 }

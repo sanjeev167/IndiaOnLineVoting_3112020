@@ -53,7 +53,7 @@ public class ExceptionController implements ErrorController{
 	        
 	        else if(statusCode == 440) {
 	        	//System.out.println("ExceptionController: -->. Ajax call session expiration error.");	        	
-	        	 return "redirect:/admin/pub/login?invalid";
+	        	 return "redirect:/adm/pub/login?invalid";
 	        }
 	      }
 	  

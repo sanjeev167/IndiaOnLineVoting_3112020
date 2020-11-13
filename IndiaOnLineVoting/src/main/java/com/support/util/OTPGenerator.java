@@ -61,7 +61,7 @@ public class OTPGenerator {
 		return generatedOTP.toString();
 	}
 
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 
 		// SecureRandom class
 		System.out.println("Radom number 1: " + genrateOTP1(6));
@@ -72,6 +72,6 @@ public class OTPGenerator {
 		// SplittableRandom class
 		System.out.println("Radom number 3: " + genrateOTP3(8));
 
-	}
+	}*/
 
 }

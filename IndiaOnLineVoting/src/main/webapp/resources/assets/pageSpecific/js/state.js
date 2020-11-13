@@ -391,8 +391,10 @@ function preparePage() {
 //This will be called with an ajax response object and it will be used for
 //loading the page with the response.
 function loadRecordInForm(response) {
-	$('#stateRecordId').val(response.id);	
+	$('#stateRecordId').val(response.id);
+		
 	$('#countryNameId').val(response.countryId);
+	
 	$('#stateNameId').val(response.stateName);
 }
 

@@ -1,5 +1,0 @@
-package com.pon.pub.hm.repo;
-
-public interface OnlineVoterAccountRepository {
-
-}

@@ -89,9 +89,9 @@
 							<label for="inputStateName" class="col-sm-4 control-label">
 								State</label>
 							<div class="col-sm-7">
-								<select class="form-control" name="stateNameId"
+								<select class="form-control select2" style="width: 100%;" name="stateNameId"
 									id="stateNameId">
-									<option value="">-- Select --</option>
+									
 
 								</select> <span id="stateNameId_err" class="field-error"></span>
 							</div>
@@ -100,8 +100,8 @@
 							<label for="inputLoksabhaName" class="col-sm-4 control-label">
 								Loksabha</label>
 							<div class="col-sm-7">
-								<select class="form-control" name="loksabhaNameId" id="loksabhaNameId">
-									<option value="">-- Select --</option>
+								<select class="form-control select2" style="width: 100%;" name="loksabhaNameId" id="loksabhaNameId">
+									
 
 								</select> <span id="loksabhaNameId_err" class="field-error"></span>
 							</div>
@@ -112,8 +112,8 @@
 							<label for="inputSortName" class="col-sm-4 control-label">
 								Assembly</label>
 							<div class="col-sm-7">
-							   <select class="form-control" name="assemblyNameId" id="assemblyNameIdId">
-									<option value="">-- Select --</option>
+							   <select class="form-control select2" style="width: 100%;" name="assemblyNameId" id="assemblyNameIdId">
+									
 
 								</select> 
 								<span id="assemblyNameId_err" class="field-error"></span>

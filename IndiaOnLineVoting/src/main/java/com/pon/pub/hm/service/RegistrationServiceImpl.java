@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import com.support.custom.exception.CustomRuntimeException;
 import com.support.custom.exception.ExceptionApplicationUtility;
+import com.support.util.EncrytedPasswordUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,7 +77,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 			onlineVoterAccount.setId(registrationDTO.getId());
 			onlineVoterAccount.setName(registrationDTO.getName());
 			onlineVoterAccount.setMailId(registrationDTO.getUserLoginId());
-			onlineVoterAccount.setPwd(registrationDTO.getPassword());			
+			onlineVoterAccount.setPwd(EncrytedPasswordUtils.encrytePassword(registrationDTO.getPassword()));			
 			onlineVoterAccount.setVoterId(votersEnrolledRepository.findAVoterByVoterId(registrationDTO.getVoterId()));
 			
 			onlineVoterAccount.setAadharId(registrationDTO.getAadharId().replace("-", ""));

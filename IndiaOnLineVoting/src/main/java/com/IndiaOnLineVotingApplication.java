@@ -5,8 +5,10 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
 
 import com.pon.pub.hm.repo.OnlineVoterAccountRepository;
 
@@ -27,6 +29,8 @@ import com.pon.pub.hm.repo.OnlineVoterAccountRepository;
  * maven install
  */
 @SpringBootApplication
+@ServletComponentScan(basePackages = "com.pon.config.filter")
+
 public class IndiaOnLineVotingApplication extends SpringBootServletInitializer implements CommandLineRunner{
 
 	@Autowired

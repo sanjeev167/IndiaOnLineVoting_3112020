@@ -1,0 +1,49 @@
+/**
+ * 
+ */
+package com.pon.config.listener;
+
+import javax.servlet.ServletContext;
+import javax.servlet.annotation.WebListener;
+import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpSessionEvent;
+import javax.servlet.http.HttpSessionListener;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
+import com.pon.pub.hm.component.HitCountComponent;
+
+/**
+ * @author Sanjeev
+ *
+ */
+@WebListener
+public class UserSessionListener implements HttpSessionListener {
+	
+
+	@Override
+	public void sessionCreated(HttpSessionEvent sessionEvent) {
+		HttpSession session = sessionEvent.getSession();
+
+		ApplicationContext ctx =  WebApplicationContextUtils.getWebApplicationContext(session.getServletContext());
+		HitCountComponent hitCountComponent= (HitCountComponent) ctx.getBean("hitCountComponent");
+		System.out.println("sessionCreated hitCountComponent in session listener ="+hitCountComponent);
+		Integer onlineUsersCount = 0;
+		
+		hitCountComponent.setOnLineUsers(++onlineUsersCount);
+		System.out.println("sessionCreated hit Count in session listener= " + hitCountComponent.getHitCount());
+	}
+
+	@Override
+	public void sessionDestroyed(HttpSessionEvent sessionEvent) {
+		HttpSession session = sessionEvent.getSession();
+		ApplicationContext ctx =  WebApplicationContextUtils.getWebApplicationContext(session.getServletContext());
+		HitCountComponent hitCountComponent= (HitCountComponent) ctx.getBean("hitCountComponent");
+		System.out.println("sessionDestroyed in session listener ="+hitCountComponent);
+		Integer onlineUsersCount = hitCountComponent.getOnLineUsers();
+		hitCountComponent.setOnLineUsers(--onlineUsersCount);
+		System.out.println("sessionDestroyed hit Count in session listener= " + hitCountComponent.getHitCount());
+	}
+}

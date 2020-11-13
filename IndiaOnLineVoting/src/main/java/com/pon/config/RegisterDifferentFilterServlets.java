@@ -3,11 +3,14 @@
  */
 package com.pon.config;
 
+import com.pon.config.filter.HitCounterFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
+import org.springframework.core.Ordered;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import com.pon.config.filter.CustomSiteMeshFilter;;
 /**
  * @author Sanjeev
@@ -16,7 +19,7 @@ import com.pon.config.filter.CustomSiteMeshFilter;;
 
 @Configuration
 public class RegisterDifferentFilterServlets extends SpringBootServletInitializer {
-	
+	private static final Logger log=LoggerFactory.getLogger(RegisterDifferentFilterServlets.class);
 	// Register CustomSiteMeshFilter.This filter will work on a request path starts
 	// with "/*
 	@Bean
@@ -27,7 +30,18 @@ public class RegisterDifferentFilterServlets extends SpringBootServletInitialize
 		return filterRegBean;
 	}
 
-	
+	// Register HitCounterFilter.This filter will work on a request path starts with
+		// "/"
+		@Bean
+		public FilterRegistrationBean<HitCounterFilter> HitCounterFilter() {
+			FilterRegistrationBean<HitCounterFilter> filterRegBean = new FilterRegistrationBean<>();
+			filterRegBean.setFilter(new HitCounterFilter());
+			filterRegBean.addUrlPatterns("/");
+			filterRegBean.setOrder(Ordered.LOWEST_PRECEDENCE -1 );
+			log.info(
+					"Sanjeev =>> HitCounterFilter has been registered and its order is [ " + filterRegBean.getOrder() + "]");
+			return filterRegBean;
+		}
 
 	
 }

@@ -83,12 +83,14 @@ public class PollingBoothMaster implements Serializable {
     private Integer updatedBy;
     @Basic(optional = false)
     @Column(name = "active_c")
-    private Character activeC;
+    private Character activeC='Y';
     @OneToMany(mappedBy = "boothId")
     private List<VotersEnrolled> votersEnrolledList;
     @JoinColumn(name = "assembly_id", referencedColumnName = "id")
     @ManyToOne
     private AssemblyMaster assemblyId;
+    @OneToMany(mappedBy = "pollingBoothId")
+    private List<ElectionSchedule> electionScheduleList;
 
     public PollingBoothMaster() {
     }
@@ -180,6 +182,14 @@ public class PollingBoothMaster implements Serializable {
 
     public void setAssemblyId(AssemblyMaster assemblyId) {
         this.assemblyId = assemblyId;
+    }
+
+    public List<ElectionSchedule> getElectionScheduleList() {
+        return electionScheduleList;
+    }
+
+    public void setElectionScheduleList(List<ElectionSchedule> electionScheduleList) {
+        this.electionScheduleList = electionScheduleList;
     }
 
     @Override

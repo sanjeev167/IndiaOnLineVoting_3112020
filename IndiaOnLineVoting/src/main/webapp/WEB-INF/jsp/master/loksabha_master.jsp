@@ -89,8 +89,8 @@
 							<label for="inputStateName" class="col-sm-4 control-label">
 								State</label>
 							<div class="col-sm-7">
-								<select class="form-control" name="stateId" id="stateNameId" >
-									<option value="">-- Select --</option>																	
+								<select class="form-control select2" style="width: 100%;" name="stateId" id="stateNameId" >
+																										
 								</select>
 								 <span id="stateNameId_err" class="field-error"></span>
 							</div>
@@ -110,7 +110,7 @@
 								No</label>
 							<div class="col-sm-7">
 								<input type="text" class="form-control" name="loksabhaNo"
-									id="loksabhaNoId" placeholder="Loksabha Name">
+									id="loksabhaNoId" placeholder="Loksabha No">
 								<span id="loksabhaNoId_err" class="field-error"></span>
 							</div>
 						</div>

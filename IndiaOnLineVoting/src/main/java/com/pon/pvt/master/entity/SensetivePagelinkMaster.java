@@ -7,17 +7,23 @@ package com.pon.pvt.master.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
+import javax.persistence.ColumnResult;
+import javax.persistence.ConstructorResult;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SqlResultSetMapping;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import com.pon.pvt.master.dto.SensetivePagelinkDTO;
 
 /**
  *
@@ -29,12 +35,37 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "SensetivePagelinkMaster.findAll", query = "SELECT s FROM SensetivePagelinkMaster s"),
     @NamedQuery(name = "SensetivePagelinkMaster.findById", query = "SELECT s FROM SensetivePagelinkMaster s WHERE s.id = :id"),
     @NamedQuery(name = "SensetivePagelinkMaster.findByName", query = "SELECT s FROM SensetivePagelinkMaster s WHERE s.name = :name"),
-    @NamedQuery(name = "SensetivePagelinkMaster.findByUrl", query = "SELECT s FROM SensetivePagelinkMaster s WHERE s.url = :url"),
+    @NamedQuery(name = "SensetivePagelinkMaster.findByPageUrl", query = "SELECT s FROM SensetivePagelinkMaster s WHERE s.pageUrl = :pageUrl"),
     @NamedQuery(name = "SensetivePagelinkMaster.findByCreatedOn", query = "SELECT s FROM SensetivePagelinkMaster s WHERE s.createdOn = :createdOn"),
     @NamedQuery(name = "SensetivePagelinkMaster.findByCreatedBy", query = "SELECT s FROM SensetivePagelinkMaster s WHERE s.createdBy = :createdBy"),
     @NamedQuery(name = "SensetivePagelinkMaster.findByUpdatedOn", query = "SELECT s FROM SensetivePagelinkMaster s WHERE s.updatedOn = :updatedOn"),
     @NamedQuery(name = "SensetivePagelinkMaster.findByUpdatedBy", query = "SELECT s FROM SensetivePagelinkMaster s WHERE s.updatedBy = :updatedBy"),
-    @NamedQuery(name = "SensetivePagelinkMaster.findByActiveC", query = "SELECT s FROM SensetivePagelinkMaster s WHERE s.activeC = :activeC")})
+    @NamedQuery(name = "SensetivePagelinkMaster.findByActiveC", query = "SELECT s FROM SensetivePagelinkMaster s WHERE s.activeC = :activeC"),
+    @NamedQuery(name = "SensetivePagelinkMaster.findByActivateStartDate", query = "SELECT s FROM SensetivePagelinkMaster s WHERE s.activateStartDate = :activateStartDate"),
+    @NamedQuery(name = "SensetivePagelinkMaster.findByActivateEndDate", query = "SELECT s FROM SensetivePagelinkMaster s WHERE s.activateEndDate = :activateEndDate"),
+    @NamedQuery(name = "SensetivePagelinkMaster.findByActivationMessage", query = "SELECT s FROM SensetivePagelinkMaster s WHERE s.activationMessage = :activationMessage"),
+    @NamedQuery(name = "SensetivePagelinkMaster.findByDenyMessage", query = "SELECT s FROM SensetivePagelinkMaster s WHERE s.denyMessage = :denyMessage"),
+    @NamedQuery(name = "SensetivePagelinkMaster.findByChannelState", query = "SELECT s FROM SensetivePagelinkMaster s WHERE s.channelState = :channelState"),
+    })
+ 
+@SqlResultSetMapping(
+        name = "SensetivePagelinkDTOMapping",
+        classes = @ConstructorResult(
+                targetClass = SensetivePagelinkDTO.class,
+                columns = { @ColumnResult(name = "id", type = Integer.class), 
+                            @ColumnResult(name = "name"),                             
+                            @ColumnResult(name = "pageUrl"), 
+                            @ColumnResult(name = "activateStartDate", type = Date.class),
+                            @ColumnResult(name = "activateEndDate", type = Date.class),
+                            @ColumnResult(name = "activationMessage"),
+                            @ColumnResult(name = "denyMessage"),    
+                            @ColumnResult(name = "channelState", type = Boolean.class),  
+                            
+                            @ColumnResult(name = "totalrecords", type = Integer.class),
+                            }))
+
+
+
 public class SensetivePagelinkMaster implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -45,8 +76,8 @@ public class SensetivePagelinkMaster implements Serializable {
     private Integer id;
     @Column(name = "name")
     private String name;
-    @Column(name = "url")
-    private String url;
+    @Column(name = "page_url")
+    private String pageUrl;
     @Column(name = "created_on")
     @Temporal(TemporalType.TIME)
     private Date createdOn;
@@ -59,7 +90,22 @@ public class SensetivePagelinkMaster implements Serializable {
     private Integer updatedBy;
     @Basic(optional = false)
     @Column(name = "active_c")
-    private Character activeC;
+    private Character activeC='Y';
+    @Column(name = "activate_start_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date activateStartDate;
+    @Column(name = "activate_end_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date activateEndDate;
+    @Column(name = "activation_message")
+    private String activationMessage;
+    @Column(name = "deny_message")
+    private String denyMessage;
+    
+    @Column(name = "channel_state")
+    private boolean channelState;
+    
+   
 
     public SensetivePagelinkMaster() {
     }
@@ -89,12 +135,12 @@ public class SensetivePagelinkMaster implements Serializable {
         this.name = name;
     }
 
-    public String getUrl() {
-        return url;
+    public String getPageUrl() {
+        return pageUrl;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setPageUrl(String pageUrl) {
+        this.pageUrl = pageUrl;
     }
 
     public Date getCreatedOn() {
@@ -137,7 +183,50 @@ public class SensetivePagelinkMaster implements Serializable {
         this.activeC = activeC;
     }
 
-    @Override
+    public Date getActivateStartDate() {
+        return activateStartDate;
+    }
+
+    public void setActivateStartDate(Date activateStartDate) {
+        this.activateStartDate = activateStartDate;
+    }
+
+    public Date getActivateEndDate() {
+        return activateEndDate;
+    }
+
+    public void setActivateEndDate(Date activateEndDate) {
+        this.activateEndDate = activateEndDate;
+    }
+
+    public String getActivationMessage() {
+        return activationMessage;
+    }
+
+    public void setActivationMessage(String activationMessage) {
+        this.activationMessage = activationMessage;
+    }
+
+    public String getDenyMessage() {
+        return denyMessage;
+    }
+
+    public void setDenyMessage(String denyMessage) {
+        this.denyMessage = denyMessage;
+    }
+
+    
+    
+    
+    public boolean isChannelState() {
+		return channelState;
+	}
+
+	public void setChannelState(boolean channelState) {
+		this.channelState = channelState;
+	}
+
+	@Override
     public int hashCode() {
         int hash = 0;
         hash += (id != null ? id.hashCode() : 0);
@@ -163,3 +252,4 @@ public class SensetivePagelinkMaster implements Serializable {
     }
     
 }
+

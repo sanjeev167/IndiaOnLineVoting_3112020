@@ -1,0 +1,204 @@
+/**
+ * 
+ */
+package com.pon.pvt.master.dto;
+
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import com.pon.pvt.master.entity.AssemblyMaster;
+import com.pon.pvt.master.entity.ElectionNameMaster;
+import com.pon.pvt.master.entity.LoksabhaMaster;
+import com.pon.pvt.master.entity.PollingBoothMaster;
+
+/**
+ * @author Sanjeev
+ *
+ */
+public class ElectionScheduleDTO {
+
+	private Integer id;    
+    private String stateId; 
+    private String stateName; 
+    private String electionYear;   
+    private String electionFor;   
+    private Date electionDate; 
+    private Date electionDateS; 
+    private String scheduleNo; 
+    
+    private String electionTypeId; 
+    private String electionTypeName; 
+    
+    private String assemblyId; 
+    private String assemblyName; 
+    
+    private String electionNameId;
+    private String electionName;
+    
+    private String loksabhaId;
+    private String loksabhaName;
+    private String pollingBoothId;
+    private String pollingBoothName;    
+    
+    
+	public ElectionScheduleDTO(Integer id, String stateName, String electionYear, String electionFor, Date electionDate,
+			String scheduleNo, String electionTypeName, String assemblyName, String electionName, String loksabhaName,
+			String pollingBoothName) {
+		super();
+		this.id = id;
+		this.stateName = stateName;
+		this.electionYear = electionYear;
+		this.electionFor = electionFor;
+		this.electionDate = electionDate;
+		this.scheduleNo = scheduleNo;
+		this.electionTypeName = electionTypeName;
+		this.assemblyName = assemblyName;
+		this.electionName = electionName;
+		this.loksabhaName = loksabhaName;
+		this.pollingBoothName = pollingBoothName;
+	}
+	
+	
+	
+	
+	
+	public ElectionScheduleDTO( String stateId,Integer id, String electionYear, String electionFor, Date electionDateS,
+			String scheduleNo, String electionTypeId, String assemblyId, String electionNameId, String loksabhaId,
+			String pollingBoothId) {
+		super();
+		this.id = id;
+		this.stateId = stateId;
+		this.electionYear = electionYear;
+		this.electionFor = electionFor;
+		this.electionDateS = electionDateS;
+		this.scheduleNo = scheduleNo;
+		this.electionTypeId = electionTypeId;
+		this.assemblyId = assemblyId;
+		this.electionNameId = electionNameId;
+		this.loksabhaId = loksabhaId;
+		this.pollingBoothId = pollingBoothId;
+	}
+
+
+
+
+
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	public String getStateId() {
+		return stateId;
+	}
+	public void setStateId(String stateId) {
+		this.stateId = stateId;
+	}
+	public String getStateName() {
+		return stateName;
+	}
+	public void setStateName(String stateName) {
+		this.stateName = stateName;
+	}
+	public String getElectionYear() {
+		return electionYear;
+	}
+	public void setElectionYear(String electionYear) {
+		this.electionYear = electionYear;
+	}
+	public String getElectionFor() {
+		return electionFor;
+	}
+	public void setElectionFor(String electionFor) {
+		this.electionFor = electionFor;
+	}
+	public Date getElectionDate() {
+		return electionDate;
+	}
+	public void setElectionDate(Date electionDate) {
+		this.electionDate = electionDate;
+	}
+	public Date getElectionDateS() {
+		return electionDateS;
+	}
+	public void setElectionDateS(Date electionDateS) {
+		this.electionDateS = electionDateS;
+	}
+	public String getScheduleNo() {
+		return scheduleNo;
+	}
+	public void setScheduleNo(String scheduleNo) {
+		this.scheduleNo = scheduleNo;
+	}
+	public String getElectionTypeId() {
+		return electionTypeId;
+	}
+	public void setElectionTypeId(String electionTypeId) {
+		this.electionTypeId = electionTypeId;
+	}
+	public String getElectionTypeName() {
+		return electionTypeName;
+	}
+	public void setElectionTypeName(String electionTypeName) {
+		this.electionTypeName = electionTypeName;
+	}
+	public String getAssemblyId() {
+		return assemblyId;
+	}
+	public void setAssemblyId(String assemblyId) {
+		this.assemblyId = assemblyId;
+	}
+	public String getAssemblyName() {
+		return assemblyName;
+	}
+	public void setAssemblyName(String assemblyName) {
+		this.assemblyName = assemblyName;
+	}
+	public String getElectionNameId() {
+		return electionNameId;
+	}
+	public void setElectionNameId(String electionNameId) {
+		this.electionNameId = electionNameId;
+	}
+	public String getElectionName() {
+		return electionName;
+	}
+	public void setElectionName(String electionName) {
+		this.electionName = electionName;
+	}
+	public String getLoksabhaId() {
+		return loksabhaId;
+	}
+	public void setLoksabhaId(String loksabhaId) {
+		this.loksabhaId = loksabhaId;
+	}
+	public String getLoksabhaName() {
+		return loksabhaName;
+	}
+	public void setLoksabhaName(String loksabhaName) {
+		this.loksabhaName = loksabhaName;
+	}
+	public String getPollingBoothId() {
+		return pollingBoothId;
+	}
+	public void setPollingBoothId(String pollingBoothId) {
+		this.pollingBoothId = pollingBoothId;
+	}
+	public String getPollingBoothName() {
+		return pollingBoothName;
+	}
+	public void setPollingBoothName(String pollingBoothName) {
+		this.pollingBoothName = pollingBoothName;
+	}
+    
+    
+    
+    
+    
+}

@@ -1,0 +1,48 @@
+/**
+ * 
+ */
+package com.pon.pvt.master.dto;
+
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import com.pon.pvt.master.entity.AssemblyMaster;
+import com.pon.pvt.master.entity.ElectionNameMaster;
+import com.pon.pvt.master.entity.LoksabhaMaster;
+import com.pon.pvt.master.entity.PollingBoothMaster;
+
+/**
+ * @author Sanjeev
+ *
+ */
+public class ElectionScheduleDTO {
+
+	private Integer id;    
+    private String stateId; 
+    private String stateName; 
+    private String electionYear;   
+    private String electionFor;   
+    private Date electionDate; 
+    private Date electionDateS; 
+    private String scheduleNo; 
+    
+    private String electionTypeId; 
+    private String electionTypeName; 
+    
+    private String assemblyId; 
+    private String assemblyName; 
+    
+    private String electionNameId;
+    private String electionName;
+    
+    private String loksabhaId;
+    private String loksabhaName;
+    private String pollingBoothId;
+    private String pollingBoothName;
+    
+}

@@ -67,11 +67,11 @@ public class OnlineVoterAccount implements Serializable {
     @Column(name = "mail_id")
     private String mailId;
     
-    //@Convert(converter = AttributeEncryptor.class)
+    @Convert(converter = AttributeEncryptor.class)
     @Column(name = "mobile")
     private String mobile;
     
-    //@Convert(converter = AttributeEncryptor.class)
+    //@Convert(converter = AttributeEncryptor.class)//It has already been encrypted through security
     @Column(name = "pwd")
     private String pwd;
     
@@ -80,7 +80,7 @@ public class OnlineVoterAccount implements Serializable {
             write = "PGP_SYM_ENCRYPT (?, 'secret-key-12345')"
     )*/
     
-   // @Convert(converter = AttributeEncryptor.class)
+   @Convert(converter = AttributeEncryptor.class)
     @Column(name = "secret")
     private String secret;
     

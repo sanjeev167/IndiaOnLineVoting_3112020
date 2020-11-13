@@ -107,7 +107,7 @@ public class ElectionResultServiceImpl implements ElectionResultService{
 				+ "       Group By vro.voting_party_id,vro.candidate_id,vro.symbol "
 				+ "       order by totalVotes desc";
 				
-		//System.out.println("baseQuery = "+baseQuery);
+		System.out.println("baseQuery = "+baseQuery);
 		String paginatedQuery = AppUtil.buildPaginatedQuery(baseQuery, pagination);		
 		Query query = entityManager.createNativeQuery(paginatedQuery, "VoteRepositoryDTOMapping");
 

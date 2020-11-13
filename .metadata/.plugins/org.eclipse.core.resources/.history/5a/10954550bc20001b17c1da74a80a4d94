@@ -1,0 +1,58 @@
+/**
+ * 
+ */
+package com.pon.pub.hm.ctrl;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import com.pon.pub.hm.component.HitCountComponent;
+import com.pon.pvt.master.service.VotersEnrolledService;
+import com.support.custom.exception.CustomRuntimeException;
+
+
+
+/**
+ * @author Sanjeev
+ *
+ */
+
+@Controller
+public class HomeController {
+	
+	@Autowired
+	VotersEnrolledService votersEnrolledService;
+	
+	@Autowired
+	HitCountComponent hitCountComponent;  
+	
+	@GetMapping({"/","home"})
+	public String welcome(Model model,HttpServletRequest request, HttpServletResponse response) {
+		
+		try {			
+			model.addAttribute("totalRegisteredVoters",votersEnrolledService.findTotalRegisteredVoters());
+			model.addAttribute("totalOfflineVoters",votersEnrolledService.findTotalOfflineVoters());
+			model.addAttribute("totalOnlineVoters",votersEnrolledService.findTotalOnlineVoters());
+			model.addAttribute("hitCount",hitCountComponent.getHitCount());
+			model.addAttribute("onLineUsers",hitCountComponent.getOnLineUsers());	
+			System.out.println("hitCountComponent.getOnLineUsers() = "+hitCountComponent.getOnLineUsers());
+			System.out.println("hitCountComponent.getHitCount() = "+hitCountComponent.getHitCount());
+			
+		} catch (CustomRuntimeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return "home";
+		
+		
+	}
+
+}

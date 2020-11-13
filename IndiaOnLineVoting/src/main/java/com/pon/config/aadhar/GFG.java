@@ -38,7 +38,7 @@ class GFG {
     } 
   
     // Driver Code. 
-    public static void main(String args[]) 
+   /* public static void main(String args[]) 
     { 
   
         // Test Case 1: 
@@ -60,5 +60,5 @@ class GFG {
         // Test Case 5: 
         String str5 = "417598346012"; 
         System.out.println(isValidAadharNumber(str5)); 
-    } 
+    } */
 } 

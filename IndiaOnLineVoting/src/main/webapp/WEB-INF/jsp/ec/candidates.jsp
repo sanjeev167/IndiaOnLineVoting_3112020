@@ -43,12 +43,12 @@
 							</p>
 
 							<ul class="list-group list-group-unbordered">
-								<li class="list-group-item"><b>State</b> <select
+								<li class="list-group-item"><b>State</b> <select class="form-control select2" style="width: 100%;"
 									class="pull-right"><option>-Select-</option></select></li>
 								
-								<li class="list-group-item"><b>Lok Sabha</b><select
+								<li class="list-group-item"><b>Lok Sabha</b><select class="form-control select2" style="width: 100%;"
 									class="pull-right"><option>-Select-</option></select></li>
-							    <li class="list-group-item"><b>Assembly</b><select
+							    <li class="list-group-item"><b>Assembly</b><select class="form-control select2" style="width: 100%;"
 									class="pull-right"><option>-Select-</option></select></li>
 								
 							</ul>

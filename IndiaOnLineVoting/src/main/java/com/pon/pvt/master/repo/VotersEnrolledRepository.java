@@ -53,4 +53,19 @@ public interface VotersEnrolledRepository extends JpaRepository<VotersEnrolled, 
 
 	VotersEnrolled findByVoterId(int parseInt);
 	
+	@Query("SELECT CASE WHEN COUNT(ve.name) > 0 THEN 'true' ELSE 'false' END FROM VotersEnrolled ve "+ " where ve.votingMode='0'  and ve.voterId in ?1")
+	boolean searchByVoterIdForOffline(String voterId);
+	
+	@Query("SELECT CASE WHEN COUNT(ve.name) > 0 THEN 'true' ELSE 'false' END FROM VotersEnrolled ve "+ " where ve.votingMode='1'  and ve.voterId in ?1")
+	boolean searchByVoterIdForOnline(String voterId);
+	
+	@Query("SELECT  COUNT(ve.name) FROM VotersEnrolled ve ")
+	Integer findTotalRegisteredVoters();
+	
+	@Query("SELECT  COUNT(ve.name) FROM VotersEnrolled ve "+ " where ve.votingMode='0'")
+	Integer findTotalOfflineVoters();
+	
+	@Query("SELECT  COUNT(ve.name) FROM VotersEnrolled ve "+ " where ve.votingMode='1'")
+	Integer findTotalOnlineVoters();
+	
 }

@@ -1,0 +1,12 @@
+/**
+ * 
+ */
+package com.pon.pvt.master.dto;
+
+/**
+ * @author Sanjeev
+ *
+ */
+public class ElectionScheduleDTO {
+
+}

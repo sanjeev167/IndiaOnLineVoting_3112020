@@ -3,13 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>AdminLTE 2 | 404 Page not found</title>
+<title>IndiaOnLineVoting | 404 Page not found</title>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 
 
-	<!-- Content Wrapper. Contains page content -->
-	<div class="content-wrapper">
+	
 		<!-- Content Header (Page header) -->
 		<section class="content-header">
 			<h1>404 Error Page</h1>
@@ -56,8 +55,7 @@
 			<!-- /.error-page -->
 		</section>
 		<!-- /.content -->
-	</div>
-	<!-- /.content-wrapper -->
+	
 
 
 </body>

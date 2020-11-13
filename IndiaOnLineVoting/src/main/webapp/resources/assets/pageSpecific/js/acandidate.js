@@ -418,6 +418,9 @@ function clearFormData() {
     .append('<option selected="selected" value="">-Select-</option>');
     $('#assemblyNameId').empty()
     .append('<option selected="selected" value="">-Select-</option>');
+     $('#partyNameId').empty()
+    .append('<option selected="selected" value="">-Select-</option>');
+    
 }
 //This will be called for cleaning the error message already shown on the page.
 function cleanAllMsg() {
@@ -480,7 +483,7 @@ function removeReadOnlyProp() {
 	$('#acandidateNameId').prop("readonly", false);
 	$('#acandidateNoId').prop("readonly", false);
 	$('#electionYearId').attr('disabled', false);
-	$('#electionYearId').attr('disabled', false);
+	$('#partyNameId').attr('disabled', false);
 	$("input[type=radio]").attr('disabled', false);
 	
 		
@@ -821,7 +824,7 @@ function loadStateBasedPartyCombo(id,selectedId){
 	
 	/* stop form from submitting normally */	
 	method = 'GET';
-	url = "/pvt/master/party/" + "/list?stateId=" + id;		
+	url = "/pvt/master/party" + "/list?stateId=" + id;		
 	$
 	.ajax({
 		type : method,

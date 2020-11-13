@@ -178,7 +178,7 @@
 	
 	//this will handle an ajax call error when the session is expired.
 	//var loginPageLink = '/admin/pub/login?expiredThroughAjax';//for testing only	
-	var loginPageLink = '/admin/pub/login?expired';
+	var loginPageLink = '//login?expired';
 	/*$(document).ajaxError(function (event, xhr) {		
 	if(xhr.status=="440"){
 	//alert("Some message...........");

@@ -23,11 +23,17 @@ public class JsonResponse {
 	List<ddData> imgComboList;
 	
 	
+	List<String>marqueeList;
 	
 	
 	
 	
-	
+	public List<String> getMarqueeList() {
+		return marqueeList;
+	}
+	public void setMarqueeList(List<String> marqueeList) {
+		this.marqueeList = marqueeList;
+	}
 	public List<ddData> getImgComboList() {
 		return imgComboList;
 	}

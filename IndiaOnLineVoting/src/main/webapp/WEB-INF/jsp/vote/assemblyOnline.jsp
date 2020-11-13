@@ -82,7 +82,10 @@
 				<!-- Default box -->
 				<div class="box">
 					<div class="box-header with-border">
-						<h3 class="box-title">Select your favorite candidate <br><label style="color:blue;">Vote will be accepted from 8 A.M. to 6 P.M.</label></h3>
+						<h3 class="box-title">Select your favorite candidate <br><br><label style="color:blue;">
+						Vote will be accepted from <br><br>
+						<c:out value="${votingTime}"></c:out>
+						</label></h3>
 				
 					</div>
 
@@ -203,7 +206,28 @@
 	</div>
 	<!-- /.modal -->
 
-
+<div class="modal fade " id="voteCastSuccessId" >
+		<div class="modal-dialog modal-sm " >
+			<div class="modal-content" style="border-radius: 10px;">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title">Vote-Casted.</h4>
+				</div>
+				<div class="modal-body " style="border-radius: 10px;">
+					<p>Your vote has been received successfully. An acknowledgement has been sent at your registered mobile and mail.</p>
+				</div>
+				<div class="modal-footer">					
+					<button type="button" class="btn btn-primary" onclick="javascript:window.open('/','_self')">Ok</button>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!-- /.modal -->
 
 
 	<!-- jQuery 3 -->
@@ -341,7 +365,7 @@ loadGrid(voterId,electionType);
 		//Accept Vote
 		$("#receiveVoteId").click(function(){			
              $('#modal-default').modal('hide');
-            // window.location.replace('/');
+           
 			var jsonData={
 					  "electionYear":electionYear,
 					  "electionType":electionType,
@@ -353,11 +377,7 @@ loadGrid(voterId,electionType);
                       "votingPartyId":votingPartyId,
                       "selectedCandidateIdForVoting": candidateSelectedId                                         
 					}
-		     //Check data in json
-		    /* alert("electionYear ="+electionYear+" electionType="+electionType+" stateNameId="+stateNameId
-				     +" loksabhaNameId="+loksabhaNameId+" assemblyNameId="+assemblyNameId+" pollingBoothNameId="+pollingBoothNameId+" voterId="+voterId
-				     +" candidateSelectedId="+candidateSelectedId
-				     );  */
+		     
 				   ///Ajax call Started	
 				 	$.ajax({
 				 		type : 'POST',
@@ -370,11 +390,9 @@ loadGrid(voterId,electionType);
 				 		success : function(response) {
 				 			//alert("Response is coming");
 				 			$('#successMsgId').html("<span style='color:green;font:bold;'>"+response.statusMsg+"</span>");
-				 			if(response.status){
-				 				window.location.replace("/");
+				 			if(response.status){				 				
 				 				//Do something if required	
-				 				//$("#RegistrationSuccessModalMsgId").html(response.statusMsg);		
-				 				//$("#RegistrationSuccessModalId").modal('show');
+				 				$("#voteCastSuccessId").modal('show');
 				 			}else{
 				 				//alert("Form has an error = "+response.statusMsg);
 				 	           $("#secret_err").html(response.fieldErrMsgMap.secret);	
@@ -385,13 +403,9 @@ loadGrid(voterId,electionType);
 				 			formatErrorMessage(jqXHR, exception);
 				 		}
 				 	});
-				 	///Ajax call ends
-		     
+				 	///Ajax call ends  
 
-		});
-
-		
-		
+		});		
 	</script>
 </body>
 </html>

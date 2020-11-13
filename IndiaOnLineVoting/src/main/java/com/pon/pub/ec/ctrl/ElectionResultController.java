@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
+import com.pon.pvt.master.entity.SensetivePagelinkMaster;
+import com.pon.pvt.master.service.SensetivePagelinkService;
 import com.pon.pvt.voting.dto.ElectionDetailDTO;
 import com.pon.pvt.voting.entity.LoksabhaVoteRepository;
 import com.pon.pvt.voting.entity.VoteRepository;
@@ -38,7 +40,8 @@ public class ElectionResultController {
 	
 	@Autowired
 	ElectionResultService electionResultService;
-	
+	@Autowired
+	SensetivePagelinkService sensetivePagelinkService;
 	
 	@GetMapping("result")	
 	public String electionResult(Model model,HttpServletRequest request, HttpServletResponse response) {		
@@ -46,8 +49,15 @@ public class ElectionResultController {
 		String target="/vote/result";
 			
 		try {
+			String pageUrl=request.getRequestURI();
+			SensetivePagelinkMaster sensetivePagelinkMaster=sensetivePagelinkService.getSensetivePagelinkDetails(pageUrl);
+			//Check the voting channel availability
+			if(sensetivePagelinkMaster.isChannelState()) {
 		ElectionDetailDTO electionDetailDTO=new ElectionDetailDTO();
-		
+			}else {								
+				model.addAttribute("notAvailabilityMsg", sensetivePagelinkMaster.getDenyMessage());
+				target="/resultNotPublished";
+			}
 		}catch (Exception ex) {
 			CustomRuntimeException exLocal=ExceptionApplicationUtility.wrapRunTimeException(ex);
 			//Handle this exception

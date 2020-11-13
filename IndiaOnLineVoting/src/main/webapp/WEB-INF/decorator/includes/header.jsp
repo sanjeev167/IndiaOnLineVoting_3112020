@@ -23,7 +23,7 @@
 		<div class="collapse navbar-collapse pull-left" id="navbar-collapse">
 			<ul class="nav navbar-nav">
 				<li><a href="/"><i class="fa fa-home"></i> </a></li>							
-				<li><a href="/pvt/adm/db">Online_Vote-Locking-Schedule</a></li>				
+				<li><a href="/pvt/adm/db"><i class="fa fa-dashboard"></i></a></li>				
 			</ul>
 
 		</div>

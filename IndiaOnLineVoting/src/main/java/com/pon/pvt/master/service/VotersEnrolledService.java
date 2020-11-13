@@ -33,4 +33,10 @@ public interface VotersEnrolledService extends FieldValueWithParentIdExists{
 	boolean deleteMultipleRecords(Integer[] recordIdArray)throws CustomRuntimeException;
 	
 	boolean findByVoterName(LoginDTO loginDTO)throws CustomRuntimeException;
+	
+	public Integer findTotalRegisteredVoters()throws CustomRuntimeException;
+	public Integer findTotalOnlineVoters()throws CustomRuntimeException;
+	public Integer findTotalOfflineVoters()throws CustomRuntimeException;
+	
+	
 }

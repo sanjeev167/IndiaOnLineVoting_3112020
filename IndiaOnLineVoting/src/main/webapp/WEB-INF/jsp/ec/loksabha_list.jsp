@@ -11,7 +11,7 @@
 <!-- Main content -->
 <section class="content container-fluid">
 	<div class="row">
-		<div class="col-md-9">
+		<div class="col-md-12">
 			<div class="box box-primary ">
 				<div class="box-header with-border">
 
@@ -80,8 +80,8 @@
 							<label for="inputStateName" class="col-sm-4 control-label">
 								State</label>
 							<div class="col-sm-7">
-								<select class="form-control" name="stateId" id="stateNameId" >
-									<option value="">-- Select --</option>																	
+								<select class="form-control select2" style="width: 100%;" name="stateId" id="stateNameId" >
+																									
 								</select>
 								 <span id="stateNameId_err" class="field-error"></span>
 							</div>
@@ -90,7 +90,7 @@
 							<label for="inputSortName" class="col-sm-4 control-label">
 								Loksabha</label>
 							<div class="col-sm-7">
-								<input type="text" class="form-control" name="loksabhaName"
+								<input type="text" class="form-control" style="width: 100%;" name="loksabhaName"
 									id="loksabhaNameId" placeholder="Loksabha Name">
 								<span id="loksabhaNameId_err" class="field-error"></span>
 							</div>
@@ -101,7 +101,7 @@
 								No</label>
 							<div class="col-sm-7">
 								<input type="text" class="form-control" name="loksabhaNo"
-									id="loksabhaNoId" placeholder="Loksabha Name">
+									id="loksabhaNoId" placeholder="Loksabha No">
 								<span id="loksabhaNoId_err" class="field-error"></span>
 							</div>
 						</div>

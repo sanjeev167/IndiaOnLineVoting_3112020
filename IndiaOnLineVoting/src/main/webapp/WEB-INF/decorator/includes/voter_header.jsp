@@ -24,7 +24,7 @@
 			<ul class="nav navbar-nav">
 				<li><a href="/"><i class="fa fa-home"></i> </a></li>					
 				
-				<li><a href="/pvt/voter/lock_vote"><i class="fa fa-lock" style="color:yellow"></i> - Online-Vote</a></li>				
+				<li><a href="/pvt/voter/db"><i class="fa fa-dashboard" style="color:yellow"></i></a></li>				
 			</ul>
 
 		</div>

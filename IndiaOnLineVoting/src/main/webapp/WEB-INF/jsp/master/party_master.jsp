@@ -88,8 +88,8 @@
 						<div class="form-group">
 							<label for="inputPartyType" class="col-sm-4 control-label">Party-Type</label>
 							<div class="col-sm-7">
-								<select class="form-control" name="partyTypeId" id="partyTypeIdId">
-									<option value="">-- Select --</option>
+								<select class="form-control select2" style="width: 100%;" name="partyTypeId" id="partyTypeIdId">
+									
 									<option value="National">National</option>
 									<option value="Regional">Regional</option>
 								</select> <span id="partyTypeIdId_err" class="field-error"></span>
@@ -99,8 +99,8 @@
 							<label for="inputStateName" class="col-sm-4 control-label">
 								Present[State]</label>
 							<div class="col-sm-7">
-								<select class="form-control" name="stateNameId" id="stateNameIdId">
-									<option value="">-- Select --</option>
+								<select class="form-control select2"  style="width: 100%;" name="stateNameId" id="stateNameIdId">
+									
 
 								</select> <span id="stateNameIdId_err" class="field-error"></span>
 							</div>
@@ -119,7 +119,7 @@
 							<label for="inputSortName"  class="col-sm-4 control-label">
 								Symbol</label>
 							<div class="col-sm-7">
-								<select id="partySymbolIdId" name="partySymbolId"  class="form-control"></select>								
+								<select id="partySymbolIdId" name="partySymbolId" ></select>								
 								  <span id="partySymbolIdId_err" class="field-error"></span>
 							</div>
 						</div>

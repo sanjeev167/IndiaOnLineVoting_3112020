@@ -1,0 +1,38 @@
+/**
+ * 
+ */
+package com.support.config.listener;
+
+import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import com.support.config.listener.AdminInfoListener;
+import com.support.config.listener.AppSessionCountListener;
+
+/**
+ * @author Sanjeev
+ *
+ */
+@Configuration
+public class RegisterDifferentListeners {
+
+	// Register AppSessionCountListener
+		@Bean
+		public ServletListenerRegistrationBean<AppSessionCountListener> sessionCountListener() {
+			
+			ServletListenerRegistrationBean<AppSessionCountListener> listenerRegBean = new ServletListenerRegistrationBean<>();
+			
+			listenerRegBean.setListener(new AppSessionCountListener());
+			
+			return listenerRegBean;
+		}
+
+		// Register AdminInfoListener
+		@Bean
+		public ServletListenerRegistrationBean<AdminInfoListener> adminInfoListener() {
+			ServletListenerRegistrationBean<AdminInfoListener> listenerRegBean = new ServletListenerRegistrationBean<>();
+			listenerRegBean.setListener(new AdminInfoListener());
+			return listenerRegBean;
+		}
+}

@@ -1,0 +1,12 @@
+<ul class="sidebar-menu" data-widget="tree">		
+<li><a href="<%=request.getContextPath() %>/pub/ec/voters/"><i class="fa fa-circle-o"></i>Enrolled-Voters</a></li>
+<li ><a href="<%=request.getContextPath() %>/pub/ec/voters/" style="color:red;">Registered-Voters</a><i class="fa fa-circle-o"></i></li>										
+<li ><a href="<%=request.getContextPath() %>/pub/ec/Lcandidates/">Loksabha-Candidate-List</a><i class="fa fa-circle-o"></i></li>
+<li ><a href="<%=request.getContextPath() %>/pub/ec/Acandidates/">Assembly-Candidate-List</a><i class="fa fa-circle-o"></i></li>
+<li ><a href="<%=request.getContextPath() %>/pub/ec/parties/">Party-List</a><i class="fa fa-circle-o"></i></li>
+<li ><a href="<%=request.getContextPath() %>/pub/ec/loksabhas/">Loksabha List</a><i class="fa fa-circle-o"></i></li>
+<li ><a href="<%=request.getContextPath() %>/pub/ec/assemblies/">Assembly	List</a><i class="fa fa-circle-o"></i></li>
+<li ><a	href="<%=request.getContextPath() %>/pub/ec/pollingBooths/">Polling Booth List</a><i class="fa fa-circle-o"></i></li>
+<li ><a href="<%=request.getContextPath() %>/pub/ec/states/">State List</a><i class="fa fa-circle-o"></i></li>	
+</ul>
+	

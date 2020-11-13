@@ -1,0 +1,12 @@
+/**
+ * 
+ */
+package com.pon.pub.hm.component;
+
+/**
+ * @author Sanjeev
+ *
+ */
+public class HitCountComponent {
+
+}

@@ -1,0 +1,43 @@
+/**
+ * 
+ */
+package com.pon.pub.hm.component;
+
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+
+/**
+ * @author Sanjeev
+ *
+ */
+@Service
+public class HitCountComponent {
+	private Integer hitCount;
+	private Integer onLineUsers;
+	public Integer getHitCount() {
+		return hitCount;
+	}
+	
+	
+	
+	public HitCountComponent(Integer hitCount, Integer onLineUsers) {
+		super();
+		this.hitCount = hitCount;
+		this.onLineUsers = onLineUsers;
+	}
+
+	public HitCountComponent() {}
+
+	public void setHitCount(Integer hitCount) {
+		this.hitCount = hitCount;
+	}
+	public Integer getOnLineUsers() {
+		return onLineUsers;
+	}
+	public void setOnLineUsers(Integer onLineUsers) {
+		this.onLineUsers = onLineUsers;
+	}
+	
+	
+
+}

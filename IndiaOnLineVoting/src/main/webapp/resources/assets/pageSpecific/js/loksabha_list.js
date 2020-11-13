@@ -336,6 +336,8 @@ function clearFormData() {
 	$("#addEditFormId").trigger("reset");
 	$('#loksabhaNameId').val("");
 	$('#stateNameId').val("");
+	$('#loksabhaNoId').val("");
+	
 }
 //This will be called for cleaning the error message already shown on the page.
 function cleanAllMsg() {

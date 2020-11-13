@@ -1,9 +1,0 @@
-package com.pon.pub.hm.repo;
-
-import org.springframework.data.jpa.repository.JpaRepository;
-
-import com.pon.pub.hm.entity.OnlineVoterAccount;
-
-public interface OnlineVoterAccountRepository extends  JpaRepository<OnlineVoterAccount, Integer> {
-
-}

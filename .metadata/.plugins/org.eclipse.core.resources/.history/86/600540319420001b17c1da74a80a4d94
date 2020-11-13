@@ -1,0 +1,49 @@
+/**
+ * 
+ */
+package com.pon.pub.hm.ctrl;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import com.pon.pvt.master.service.VotersEnrolledService;
+import com.support.custom.exception.CustomRuntimeException;
+
+
+
+/**
+ * @author Sanjeev
+ *
+ */
+
+@Controller
+
+public class HomeController {
+	
+	@Autowired
+	VotersEnrolledService votersEnrolledService;
+	
+	@GetMapping({"/","home"})
+	public String welcome(Model model,HttpServletRequest request, HttpServletResponse response) {
+		
+		try {
+			
+			model.addAttribute("totalRegisteredVoters",votersEnrolledService.findTotalRegisteredVoters());
+			model.addAttribute("totalOfflineVoters",votersEnrolledService.findTotalOfflineVoters());
+			model.addAttribute("totalOnlineVoters",votersEnrolledService.findTotalOnlineVoters());
+		} catch (CustomRuntimeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return "home";
+		
+		
+	}
+
+}

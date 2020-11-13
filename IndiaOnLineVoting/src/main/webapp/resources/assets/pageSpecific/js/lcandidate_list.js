@@ -170,12 +170,13 @@ $('#loksabhaNameId').on('change', function(e) {
 });
 $('#stateNameId').on('change', function(e) {
 	cleanAllMsg();
-	//alert("Going to load State combo");
+	
 	
 	$('#loksabhaNameId').empty().append('<option  value="">-Select-</option>');	
 	loadStateCombo($('#stateNameId').val(),"");
 	
 	$('#partyNameId').empty().append('<option  value="">-Select-</option>');	
+	
 	loadStateBasedPartyCombo($('#stateNameId').val(),"");
 });
 
@@ -482,7 +483,8 @@ function loadRecordInForm(response) {
 	$('#lcandidateNoId').val(response.lcandidateNo);
 	$('#electionYearId').val(response.electionYear);
 	
-	$('#partyNameId').empty().append('<option  value="">-Select-</option>');	
+	$('#partyNameId').empty().append('<option  value="">-Select-</option>');
+		
 	loadStateBasedPartyCombo(response.stateNameId,response.partyNameId)
 	
 	
@@ -748,7 +750,7 @@ function loadStateBasedPartyCombo(id,selectedId){
 	
 	/* stop form from submitting normally */	
 	method = 'GET';
-	url = "/pvt/master/party/" + "/list?stateId=" + id;		
+	url = "/pvt/master/party" + "/list?stateId=" + id;		
 	$
 	.ajax({
 		type : method,

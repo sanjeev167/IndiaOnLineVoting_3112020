@@ -1,0 +1,82 @@
+/**
+ * 
+ */
+package com.pon.pvt.adm.ctrl;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.pon.config.sec.ActiveUserStore;
+import com.pon.pvt.master.service.SensetivePagelinkService;
+import com.pon.pvt.master.service.VotersEnrolledService;
+import com.pon.pvt.voter.service.VoteLockinigService;
+import com.support.custom.exception.CustomRuntimeException;
+
+/**
+ * @author Sanjeev
+ *
+ */
+@Controller
+@RequestMapping("/pvt/adm/db/")
+public class DashboardController { 
+
+	public static int currentSessionCount;
+	public static int hitCount;
+
+	@Autowired
+	VotersEnrolledService votersEnrolledService;
+	@Autowired
+	ActiveUserStore activeUserStore;
+
+	@Autowired
+	SensetivePagelinkService sensetivePagelinkService;
+	
+	
+	@Autowired
+	VoteLockinigService voteLockinigService;
+
+	@GetMapping("")
+	public String db(Model model, HttpServletRequest request, HttpServletResponse response) {
+		String target = "/adm/db";
+		try {
+			model.addAttribute("totalRegisteredVoters", votersEnrolledService.findTotalRegisteredVoters());
+			model.addAttribute("totalOfflineVoters", votersEnrolledService.findTotalOfflineVoters());
+			model.addAttribute("totalOnlineVoters", votersEnrolledService.findTotalOnlineVoters());
+			model.addAttribute("onLineUsers", activeUserStore.getUsers().size());
+			model.addAttribute("liveSessionCount", currentSessionCount);
+			model.addAttribute("hitCount", hitCount);
+		} catch (CustomRuntimeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return target;
+	}
+
+	@GetMapping("profile")
+	public String profile(Model model, HttpServletRequest request, HttpServletResponse response) {
+		String target = "/adm/profile";
+
+		return target;
+	}
+
+	@GetMapping("voteLockAudit")
+	public String voteLockAudit(Model model, HttpServletRequest request, HttpServletResponse response) {
+		String target = "/adm/voteLockAudit";
+
+		return target;
+	}
+
+	@GetMapping("electionSchedule")
+	public String electionSchedule(Model model, HttpServletRequest request, HttpServletResponse response) {
+		String target = "/adm/electionSchedule";
+
+		return target;
+	}
+
+}

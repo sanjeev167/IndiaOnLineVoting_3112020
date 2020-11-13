@@ -31,6 +31,8 @@ import com.google.gson.Gson;
 import com.pon.pub.hm.dto.RegistrationDTO;
 import com.pon.pub.hm.service.RegistrationService;
 import com.pon.pvt.master.dto.CityMasterDTO;
+import com.pon.pvt.master.entity.SensetivePagelinkMaster;
+import com.pon.pvt.master.service.SensetivePagelinkService;
 import com.pon.pvt.voter.dto.VoteLockinigDTO;
 import com.pon.pvt.voter.entity.VoteLockinig;
 import com.pon.pvt.voter.service.VoteLockinigService;
@@ -52,30 +54,34 @@ public class LockYourOnlineVoteController {
 	VoteLockinigService voteLockinigService;
 	@Autowired
 	RegistrationService registrationService;
+	@Autowired
+	SensetivePagelinkService sensetivePagelinkService;
 
 	@GetMapping("lock_vote")
 	public String lockVote(Model model, HttpServletRequest request, HttpServletResponse response) {
 		log.info("LockYourOnlineVoteController :==> lockVote :==> Started");
-		 String username;
-		 Object principal =SecurityContextHolder.getContext().getAuthentication().getPrincipal(); 
-		 
+		 String username; String target="/voter/lock_vote";
+		 Object principal =SecurityContextHolder.getContext().getAuthentication().getPrincipal(); 		 
 		  if (principal instanceof UserDetails) { 
 			  username = ((UserDetails)principal). getUsername(); } 
-		  else { username = principal.toString(); }
-		 
-		 
-		 
+		  else { username = principal.toString(); }		 
 		VoteLockinigDTO voteLockinigDTO;
 		try {
-			voteLockinigDTO = registrationService.loadByMailId(username);
-			model.addAttribute(voteLockinigDTO);
+			String pageUrl=request.getRequestURI();
+			SensetivePagelinkMaster sensetivePagelinkMaster=sensetivePagelinkService.getSensetivePagelinkDetails(pageUrl);
+			if(sensetivePagelinkMaster.isChannelState()) {
+				voteLockinigDTO = registrationService.loadByMailId(username);
+				model.addAttribute(voteLockinigDTO);				
+			}else {								
+				model.addAttribute("notAvailabilityMsg", sensetivePagelinkMaster.getDenyMessage());
+				target="/resultNotPublished";
+			}		
 		} catch (CustomRuntimeException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 		log.info("LockYourOnlineVoteController :==> lockVote :==> Ended");
-		return "/voter/lock_vote";
+		return target;
 	}
 	
 	

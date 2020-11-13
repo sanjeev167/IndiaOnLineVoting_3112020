@@ -1,0 +1,65 @@
+/**
+ * 
+ */
+package com.pon.pub.hm.ctrl;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
+import com.pon.config.filter.HitCounterFilter;
+import com.pon.config.sec.ActiveUserStore;
+import com.pon.pub.hm.component.HitCountComponent;
+import com.pon.pvt.master.service.VotersEnrolledService;
+import com.support.custom.exception.CustomRuntimeException;
+
+
+
+/**
+ * @author Sanjeev
+ *
+ */
+
+@Controller
+public class HomeController {
+	
+	@Autowired
+	VotersEnrolledService votersEnrolledService;
+	
+	@Autowired
+	HitCountComponent hitCountComponent;  
+	@Autowired
+    ActiveUserStore activeUserStore;
+	
+	
+	@GetMapping({"/","home"})
+	public String welcome(Model model,HttpServletRequest request, HttpServletResponse response) {
+		
+		try {			
+			model.addAttribute("totalRegisteredVoters",votersEnrolledService.findTotalRegisteredVoters());
+			model.addAttribute("totalOfflineVoters",votersEnrolledService.findTotalOfflineVoters());
+			model.addAttribute("totalOnlineVoters",votersEnrolledService.findTotalOnlineVoters());
+			model.addAttribute("onLineUsers",activeUserStore.getUsers().size());
+			  
+			System.out.println("hitCountComponent.getHitCount() = "+HitCounterFilter.currentHitCount);
+			model.addAttribute("hitCount",HitCounterFilter.currentHitCount);			
+			model.addAttribute("liveSessionCount",hitCountComponent.getHitCount());
+			
+		} catch (CustomRuntimeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return "home";
+		
+		
+	}
+
+}

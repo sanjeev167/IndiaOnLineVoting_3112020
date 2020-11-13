@@ -470,6 +470,7 @@ function loadRecordInForm(response) {
 	$('#loksabhaNameId').val(response.loksabhaNameId);	
 	$('#assemblyNameIdId').val(response.assemblyNameId);
 	$('#pollingBoothNameId').val(response.pollingBoothName);
+	
 	$('#pollingBoothNoId').val(response.pollingBoothNo);
 }
 

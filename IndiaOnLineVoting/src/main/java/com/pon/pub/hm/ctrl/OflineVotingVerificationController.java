@@ -38,16 +38,10 @@ public class OflineVotingVerificationController {
 	public String voterIdVerification(@RequestParam String voteVoterId,HttpServletRequest request, HttpServletResponse response) {
 		log.info("OflineVotingVerificationController :==> voterIdVerification :==> Started");
 		JsonResponse jsonResponse=new JsonResponse();
+		
 		try {
-			String statusTop[]=voterIdentificationService.verifyVoterId(voteVoterId);	
-			
-			
-			if(statusTop[0].equals("1")) {	
-				//Is he authorized for online voting"
-				/*String statusLock[]=voterIdentificationService.hasHeLockedHisVoteForOnline(voteVoterId);
-				if(statusLock[0].equals("0")) {
-					jsonResponse.setStatus(false);
-					jsonResponse.setStatusMsg(statusLock[1]);*/
+			String statusTop[]=voterIdentificationService.verifyOfflineVoterId(voteVoterId);			
+			if(statusTop[0].equals("1")) {
 					//Check whether he is already casted his vote or not 
 					String statusCasted[]=voterIdentificationService.checkWhetherHeIsAlreadyCastedVoteOffline(voteVoterId);	
 					if(statusCasted[0].equals("0")) {//Already casted his vote
@@ -56,12 +50,7 @@ public class OflineVotingVerificationController {
 					}else {//Can cast his vote
 						jsonResponse.setStatus(true);
 						jsonResponse.setStatusMsg(statusCasted[1]);	
-					}
-					
-				/*}else {
-					jsonResponse.setStatus(false);
-					jsonResponse.setStatusMsg(statusLock[1]);					
-				}*/						
+					}									
 			}else {
 				jsonResponse.setStatus(false);
 				jsonResponse.setStatusMsg(statusTop[1]);								
@@ -88,8 +77,8 @@ public class OflineVotingVerificationController {
 		log.info("OflineVotingVerificationController :==> secretIdVerification :==> Started");
 		JsonResponse jsonResponse=new JsonResponse();
 		try {
-			//String status[]=voterIdentificationService.verifyVoterId(secretId);	
-			//
+			
+			//It was deliberately passed this verification as the voter is a offline voter
 			String status[]= {"1","Secret has been verified successfully."};
 			//String status[]= {"0","Secret is wrong."};
 			if(status[0].equals("1")) {			

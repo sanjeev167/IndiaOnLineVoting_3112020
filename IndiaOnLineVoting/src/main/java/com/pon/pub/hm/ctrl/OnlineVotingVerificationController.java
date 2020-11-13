@@ -49,7 +49,7 @@ public class OnlineVotingVerificationController {
 		}
 		
 		try {
-			String status[]=voterIdentificationService.verifyVoterId(voteVoterId);			
+			String status[]=voterIdentificationService.verifyOnlineVoterId(voteVoterId);			
 			if(status[0].equals("1")) {				
 				String lockStatus[]=voterIdentificationService.hasHeLockedHisVoteForOnline(voteVoterId,currentLoggedInUser);				
 				if(lockStatus[0].equals("1")) {

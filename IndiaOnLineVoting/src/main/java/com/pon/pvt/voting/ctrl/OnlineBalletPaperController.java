@@ -3,6 +3,8 @@
  */
 package com.pon.pvt.voting.ctrl;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
+
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -25,6 +27,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
+import com.pon.pvt.master.entity.SensetivePagelinkMaster;
+import com.pon.pvt.master.service.SensetivePagelinkService;
+import com.pon.pvt.master.service.VotersEnrolledService;
 import com.pon.pvt.voting.dto.AssemblyBalletForEnrolledVotersDTO;
 import com.pon.pvt.voting.dto.ElectionDetailDTO;
 import com.pon.pvt.voting.dto.LoksabhaBalletForEnrolledVotersDTO;
@@ -36,6 +41,7 @@ import com.support.JsonResponse.JsonResponse;
 import com.support.custom.exception.CustomRuntimeException;
 import com.support.custom.exception.ExceptionApplicationUtility;
 import com.support.grid_pagination.DataTableResults;
+import com.support.util.AppUtil;
 
 /**
  * @author Sanjeev
@@ -51,12 +57,50 @@ public class OnlineBalletPaperController {
 	AssemblyBalletService assemblyBalletService;
 	@Autowired
 	LoksabhaBalletService loksabhaBalletService;
+	@Autowired
+	VotersEnrolledService votersEnrolledService;
+	@Autowired
+	SensetivePagelinkService sensetivePagelinkService;
+	
+	@GetMapping("linkInActive")	
+	public String linkInActive(Model model,HttpServletRequest request, HttpServletResponse response) {
+		log.info("OfflineBalletPaperController :==> linkInActive :==> Started");
+		String target="resultNotPublished";	
+		try {			
+			SensetivePagelinkMaster sensetivePagelinkMaster=sensetivePagelinkService.getSensetivePagelinkDetails("/pvt/vote/online");
+			//Check the voting channel availability
+			if(sensetivePagelinkMaster.isChannelState()) {
+			 ;//This will not execute as it is called when the link is inactive.
+			}else {								
+				model.addAttribute("notAvailabilityMsg", sensetivePagelinkMaster.getDenyMessage());				
+			}
+		}catch (CustomRuntimeException ex) {
+			// Handle this exception
+			String exceptionCause= ex.getExceptionInfo().exceptionCause;
+		} catch (Exception ex) {
+			CustomRuntimeException exLocal=ExceptionApplicationUtility.wrapRunTimeException(ex);
+			//Handle this exception
+			String exceptionCause= exLocal.getExceptionInfo().exceptionCause;
+		}
+		log.info("OfflineBalletPaperController :==> linkInActive :==> End");
+		return target;	
+	}
 	
 	@GetMapping("onlineV") 
 	public String openOnlineVotingValidationPageForUser(Model model,HttpServletRequest request, HttpServletResponse response) {
+		String target="home";
 		model.addAttribute("canBeOpened","1");
-		
-		return "home";
+        try {
+        	
+			model.addAttribute("totalRegisteredVoters",votersEnrolledService.findTotalRegisteredVoters());
+			model.addAttribute("totalOfflineVoters",votersEnrolledService.findTotalOfflineVoters());
+			model.addAttribute("totalOnlineVoters",votersEnrolledService.findTotalOnlineVoters());
+			
+		} catch (CustomRuntimeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return target;
 	}
 	
 	
@@ -69,12 +113,19 @@ public class OnlineBalletPaperController {
 		String targetL ="/vote/loksabhaOnline";
 		
 		try {
+			String pageUrl=request.getRequestURI();
+			SensetivePagelinkMaster sensetivePagelinkMaster=sensetivePagelinkService.getSensetivePagelinkDetails(pageUrl);
+			//Check the voting channel availability
+	if(sensetivePagelinkMaster.isChannelState()) {	
 		if(electionType.equals("A")) {
 			target=targetA;
 			ElectionDetailDTO electionDetailDTO=assemblyBalletService.loadElectionDetails(voterId, electionType);		
 			model.addAttribute(electionDetailDTO);
 			VoterDetailsDTO voterDetailsDTO=assemblyBalletService.loadVotersDetails(voterId);			
 			model.addAttribute(voterDetailsDTO);
+			model.addAttribute("votingTime", AppUtil.convertJavaDateIntoStringDateWithTime(sensetivePagelinkMaster.getActivateStartDate())
+					                         +" to "+
+					                         AppUtil.convertJavaDateIntoStringDateWithTime(sensetivePagelinkMaster.getActivateEndDate()));
 		}
 		if(electionType.equals("P")) {
 			target=targetL;
@@ -82,7 +133,14 @@ public class OnlineBalletPaperController {
 			model.addAttribute(electionDetailDTO);
 			VoterDetailsDTO voterDetailsDTO=loksabhaBalletService.loadVotersDetails(voterId);			
 			model.addAttribute(voterDetailsDTO);
+			model.addAttribute("votingTime", AppUtil.convertJavaDateIntoStringDateWithTime(sensetivePagelinkMaster.getActivateStartDate())
+                    +" to "+
+                    AppUtil.convertJavaDateIntoStringDateWithTime(sensetivePagelinkMaster.getActivateEndDate()));
 		}
+			}else {
+				model.addAttribute("notAvailabilityMsg", sensetivePagelinkMaster.getDenyMessage());
+				target="/resultNotPublished";	
+			}
 		}catch (CustomRuntimeException ex) {
 			// Handle this exception
 			String exceptionCause= ex.getExceptionInfo().exceptionCause;
@@ -138,6 +196,7 @@ public class OnlineBalletPaperController {
 		voteDetailDTO.setVotingMode("1");
 		
 		try {
+			
 			if (result.hasErrors()) {
 				// Get error message
 				Map<String, String> errors = result.getFieldErrors().stream()

@@ -60,7 +60,11 @@ public class LoginController {
 		log.info("postLogin()");
 		String target="/pvt/voter/db";
 		RedirectView redirectView = new RedirectView();     
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();	
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
+		System.out.println("San = "+auth.getAuthorities().contains("ROLE_ADMIN"));
+		System.out.println("Man ="+auth.getAuthorities());
 		if (auth != null && auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {			
 			target= "/pvt/adm/db"; 			 
 		}

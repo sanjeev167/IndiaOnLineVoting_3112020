@@ -87,7 +87,7 @@
 							<label for="inputCountryName" class="col-sm-4 control-label">
 								Country Name</label>
 							<div class="col-sm-7">
-								<select class="form-control" name="countryNameId"
+								<select class="form-control select2" style="width: 100%;" name="countryNameId"
 									id="countryNameId">
 									<option value="">-- Select --</option>
 
@@ -98,9 +98,9 @@
 							<label for="inputCountryName" class="col-sm-4 control-label">
 								State Name</label>
 							<div class="col-sm-7">
-								<select class="form-control" name="stateNameId" id="stateNameId">
-									<option value="">-- Select --</option>
-
+								<select class="form-control select2" style="width: 100%;" name="stateNameId" id="stateNameId">
+									
+                                <option value="">-- Select --</option>
 								</select> <span id="stateNameId_err" class="field-error"></span>
 							</div>
 						</div>
@@ -108,7 +108,7 @@
 							<label for="inputSortName" class="col-sm-4 control-label">
 								City Name</label>
 							<div class="col-sm-7">
-								<input type="text" class="form-control" name="cityName"
+								<input type="text" class="form-control" style="width: 100%;" name="cityName"
 									id="cityNameId" placeholder="City Name"> <span
 									id="cityNameId_err" class="field-error"></span>
 							</div>

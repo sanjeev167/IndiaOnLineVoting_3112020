@@ -1,7 +1,4 @@
 
-<!DOCTYPE html>
-<html>
-<head>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
@@ -11,14 +8,8 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-
-
-
-</head>
-<body>
-	<!-- Full Width Column -->
 	<!-- Content Wrapper. Contains page content -->
-	<div class="content-wrapper" >
+	
 		<!-- Content Header (Page header) -->
 		<section class="content-header">
 			<h1>&nbsp;&nbsp;&nbsp;Register yourself for Online Voting.</h1>
@@ -32,7 +23,7 @@
 		<section class="content">
 
 			<div class="row ">
-				<div class="col-md-3" style="float: left;  height: auto;">
+				<div class="col-md-4" style="height: auto;">
 					<!-- Profile Image -->
 					<div class="box box-primary" style="height: 445px">
 						<div class="box-body box-profile">
@@ -125,147 +116,144 @@
 
 
 			</div>
-			<!-- /.col -->
-			<div class="col-md-3"
-				style="float: left; width: 25%; height: auto; display: none"
-				id="loginDetailsFormId">
-				<!-- Profile Image -->
-				<div class="box box-primary" style="height: 445px">
-					<div class="box-body box-profile">
-						<img class="profile-user-img img-responsive img-circle"
-							src="<%request.getContextPath();%>/resources/assets/ec/img/register.png">
-
-						<h3 class="profile-username text-center">Voter Login Details
-						</h3>
-
-
-						<span style="color: red; font-weight: bold;">${message}</span>
-
-  
-						<div class="form-group has-feedback">
-							<input type="text" class="form-control" name="name" id="nameId"
-								placeholder="Full name" /> <span
-								class="glyphicon glyphicon-user form-control-feedback"></span> <span 
-								id="name_err" style="color:red; font-weight:bold;"></span>
-						</div>
-
-						<div class="form-group has-feedback">
-							<input type="email" class="form-control" name="userLoginId"
-								id="userLoginId" placeholder="Email" /> <span
-								class="glyphicon glyphicon-envelope form-control-feedback"></span>
-							<span id="userLoginId_err" style="color:red; font-weight:bold;"></span>
-						</div>
-
-
-
-						<div class="form-group has-feedback">
-							<input type="password" class="form-control" name="password"
-								id="passwordId" placeholder="Password" /> <span
-								class="glyphicon glyphicon-lock form-control-feedback"></span> <span
-								id="password_err" style="color:red; font-weight:bold;"></span>
-						</div>
-						
-						<div class="form-group has-feedback">
-							<input type="password" class="form-control" id="passwordConfId"
-								name="passwordConf" placeholder="Retype password" /> <span
-								class="glyphicon glyphicon-log-in form-control-feedback"></span>
-							<span id="passwordConf_err" style="color:red; font-weight:bold;"></span>
-						</div>
-						<div class="row">
-
-							<div class="col-xs-4 pull-right" style="display:block;" id="nextButtonId">
-								<button class="btn btn-primary btn-block btn-flat"
-									id="submitLoginDetailsId">Next</button>
-							</div>
-							<!-- /.col -->
-						</div>
-
-					</div>
-					<!-- /.box-body -->
-				</div>
-				<!-- /.box -->
-			</div>
-			<!-- /.col -->
-
-			<div class="col-md-3"
-				style="float: right; width: 25%; height: auto; display: none"
-				id="MobileAndSecurityDetailsId">
-				<!-- Profile Image -->
-				<div class="box box-primary" style="height: 445px">
-					<div class="box-body box-profile">
-						<img class="profile-user-img img-responsive img-circle"
-							src="<%request.getContextPath();%>/resources/assets/ec/img/register.png">
-
-						<h3 class="profile-username text-center">Mobile No. & Voting-Secret</h3>
-						<span style="color: red; font-weight: bold;">${message}</span>
-						
-						
+				<!-- /.col -->
+				<div class="col-md-4"
+					style="float: left; width: 25%; height: auto; display: none"
+					id="loginDetailsFormId">
+					<!-- Profile Image -->
+					<div class="box box-primary" style="height: 445px">
+						<div class="box-body box-profile">
+							<img class="profile-user-img img-responsive img-circle"
+								src="<%request.getContextPath();%>/resources/assets/ec/img/register.png">
+	
+							<h3 class="profile-username text-center">Voter Login Details
+							</h3>
+	
+	
+							<span style="color: red; font-weight: bold;">${message}</span>
+	
+	  
 							<div class="form-group has-feedback">
-							  <div class="input-group">
-							    
-								<input type="text" class="form-control" name="mobileNo" id="mobileNoId"
-									placeholder="Mobile-No for communication" data-inputmask="'mask': '9999999999'" data-mask/> 
-									<div class="input-group-addon" id="mobileVerificationButtonBgId" style="background-color: blue; ">
-									<i><a href="#" id="mobileVerificationId"><strong id="mobileVerificationButtonId" style="color:yellow;">Verify</strong></a></i>									
-								</div>
-								</div>
-								<span id="mobileNo_err" style="color:red; font-weight:bold;"></span>	
+								<input type="text" class="form-control" name="name" id="nameId"
+									placeholder="Full name" /> <span
+									class="glyphicon glyphicon-user form-control-feedback"></span> <span 
+									id="name_err" style="color:red; font-weight:bold;"></span>
 							</div>
-							
-							
-							<div class="form-group has-feedback" style="display:none" id="otpInputId">
-							  <div class="input-group">
-							    
-								<input type="text" class="form-control" name="mobileOtp" id="mobileOtpId"
-									placeholder="Mobile OTP please" data-inputmask="'mask': '9999'" data-mask/> 
-									<div class="input-group-addon" style="background-color: blue; " id="mobileOtpVerificationButtonBgId">
-									<i><a href="#" id="mobileOtpVerifyId"><strong style="color:yellow" id="mobileOtpVerificationButtonId">Verify</strong></a></i>
-								</div>
-								</div>	
-								<span id="mobileOtp_err" style="color:red; font-weight:bold;"></span>
-							</div>
-
+	
 							<div class="form-group has-feedback">
-								<input type="text" class="form-control" name="secret" disabled="disabled"
-									id="regsecretId" placeholder="Online-Voting-Account-Secret" /> <span
+								<input type="email" class="form-control" name="userLoginId"
+									id="userLoginId" placeholder="Email" /> <span
 									class="glyphicon glyphicon-envelope form-control-feedback"></span>
-
-								<span id="secret_err" style="color:red; font-weight:bold;"></span>
+								<span id="userLoginId_err" style="color:red; font-weight:bold;"></span>
 							</div>
-							<br>
+	
+	
+	
+							<div class="form-group has-feedback">
+								<input type="password" class="form-control" name="password"
+									id="passwordId" placeholder="Password" /> <span
+									class="glyphicon glyphicon-lock form-control-feedback"></span> <span
+									id="password_err" style="color:red; font-weight:bold;"></span>
+							</div>
 							
+							<div class="form-group has-feedback">
+								<input type="password" class="form-control" id="passwordConfId"
+									name="passwordConf" placeholder="Retype password" /> <span
+									class="glyphicon glyphicon-log-in form-control-feedback"></span>
+								<span id="passwordConf_err" style="color:red; font-weight:bold;"></span>
+							</div>
 							<div class="row">
-								<div class="col-xs-8">
-									<div class="checkbox icheck">
-										<label style="margin-left: 22px;"> <input
-											type="checkbox">&nbsp;&nbsp; I agree to the <a
-											href="terms">terms</a>
-										</label>
-									</div>
-								</div> 
-								<!-- /.col -->
-								<div class="col-xs-4" style="display:none;" id="registerButtonId">
-									<button id="submitRegistrationDetailsId"
-										class="btn btn-primary btn-block btn-flat">Register</button>
+	
+								<div class="col-xs-4 pull-right" style="display:block;" id="nextButtonId">
+									<button class="btn btn-primary btn-block btn-flat"
+										id="submitLoginDetailsId">Next</button>
 								</div>
 								<!-- /.col -->
 							</div>
-						
+	
+						</div>
+						<!-- /.box-body -->
 					</div>
-					<!-- /.box-body -->
+					<!-- /.box -->
 				</div>
-				<!-- /.box -->
-
-
-			</div>
-			<!-- /.col -->
-	</div>
-
-
+				<!-- /.col -->
+	
+				<div class="col-md-4"
+					style="float: right; width: 25%; height: auto; display: none"
+					id="MobileAndSecurityDetailsId">
+					<!-- Profile Image -->
+					<div class="box box-primary" style="height: 445px">
+						<div class="box-body box-profile">
+							<img class="profile-user-img img-responsive img-circle"
+								src="<%request.getContextPath();%>/resources/assets/ec/img/register.png">
+	
+							<h3 class="profile-username text-center">Mobile No. & Voting-Secret</h3>
+							<span style="color: red; font-weight: bold;">${message}</span>
+							
+							
+								<div class="form-group has-feedback">
+								  <div class="input-group">
+								    
+									<input type="text" class="form-control" name="mobileNo" id="mobileNoId"
+										placeholder="Mobile-No for communication" data-inputmask="'mask': '9999999999'" data-mask/> 
+										<div class="input-group-addon" id="mobileVerificationButtonBgId" style="background-color: blue; ">
+										<i><a href="#" id="mobileVerificationId"><strong id="mobileVerificationButtonId" style="color:yellow;">Verify</strong></a></i>									
+									</div>
+									</div>
+									<span id="mobileNo_err" style="color:red; font-weight:bold;"></span>	
+								</div>
+								
+								
+								<div class="form-group has-feedback" style="display:none" id="otpInputId">
+								  <div class="input-group">
+								    
+									<input type="text" class="form-control" name="mobileOtp" id="mobileOtpId"
+										placeholder="Mobile OTP please" data-inputmask="'mask': '9999'" data-mask/> 
+										<div class="input-group-addon" style="background-color: blue; " id="mobileOtpVerificationButtonBgId">
+										<i><a href="#" id="mobileOtpVerifyId"><strong style="color:yellow" id="mobileOtpVerificationButtonId">Verify</strong></a></i>
+									</div>
+									</div>	
+									<span id="mobileOtp_err" style="color:red; font-weight:bold;"></span>
+								</div>
+	
+								<div class="form-group has-feedback">
+									<input type="text" class="form-control" name="secret" disabled="disabled"
+										id="regsecretId" placeholder="Online-Voting-Account-Secret" /> <span
+										class="glyphicon glyphicon-envelope form-control-feedback"></span>
+	
+									<span id="secret_err" style="color:red; font-weight:bold;"></span>
+								</div>
+								<br>
+								
+								<div class="row">
+									<div class="col-xs-8">
+										<div class="checkbox icheck">
+											<label style="margin-left: 22px;"> <input
+												type="checkbox">&nbsp;&nbsp; I agree to the <a
+												href="terms">terms</a>
+											</label>
+										</div>
+									</div> 
+									<!-- /.col -->
+									<div class="col-xs-4" style="display:none;" id="registerButtonId">
+										<button id="submitRegistrationDetailsId"
+											class="btn btn-primary btn-block btn-flat">Register</button>
+									</div>
+									<!-- /.col -->
+								</div>
+							
+						</div>
+						<!-- /.box-body -->
+					</div>
+					<!-- /.box -->
+	
+	
+				</div>
+				<!-- /.col -->
+	        </div>
 	</section>
 	<!-- /.content -->
-	</div>
-	<!-- /.content-wrapper -->
+	
 
 	<!-- jQuery 3 -->
 	<script
@@ -945,9 +933,3 @@ $('[data-mask]').inputmask();
 	</div>
 	<!-- /.modal -->
 
-
-
-
-
-</body>
-</html>

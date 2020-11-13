@@ -47,7 +47,7 @@ import com.pon.pvt.master.dto.StateMasterDTO;
                             }))
 public class StateMaster implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -55,18 +55,13 @@ public class StateMaster implements Serializable {
     private Integer id;
     @Column(name = "name")
     private String name;
-    
-    
     @OneToMany(mappedBy = "stateId")
     private List<CityMaster> cityMasterList;
-    
     @JoinColumn(name = "country_id", referencedColumnName = "id")
     @ManyToOne
     private CountryMaster countryId;
-    
     @OneToMany(mappedBy = "stateId")
     private List<LoksabhaMaster> loksabhaMasterList;
-    
     @OneToMany(mappedBy = "stateId")
     private List<PartyMaster> partyMasterList;
 
@@ -147,7 +142,7 @@ public class StateMaster implements Serializable {
 
     @Override
     public String toString() {
-        return "com.pon.pvt.master.entity.StateMaster[ id=" + id + " ]";
+        return "com.example.demo.StateMaster[ id=" + id + " ]";
     }
     
 }

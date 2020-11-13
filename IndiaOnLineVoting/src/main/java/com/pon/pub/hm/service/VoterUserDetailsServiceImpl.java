@@ -39,7 +39,7 @@ public class VoterUserDetailsServiceImpl implements UserDetailsService {
 			//log.info("Sanjeev = " + new BCryptPasswordEncoder().encode(onlineVoterAccount.getPwd()));
 			if (onlineVoterAccount != null || email!=null) {
 				builder = org.springframework.security.core.userdetails.User.withUsername(email);
-				builder.password(new BCryptPasswordEncoder().encode(onlineVoterAccount.getPwd()));
+				builder.password(onlineVoterAccount.getPwd());
 				builder.authorities(customVoterUserDetailsImpl.getAuthorities(onlineVoterAccount));
 			}else {
 				 throw new UsernameNotFoundException("No Voter is found");

@@ -11,7 +11,7 @@
 <!-- Main content -->
 <section class="content container-fluid">
 	<div class="row">
-		<div class="col-md-9">
+		<div class="col-md-12">
 			<div class="box box-primary ">
 				<div class="box-header with-border">
 
@@ -84,9 +84,9 @@
 							<label for="inputStateName" class="col-sm-4 control-label">
 								State</label>
 							<div class="col-sm-7">
-								<select class="form-control" name="stateNameId"
+								<select class="form-control select2" style="width: 100%;" name="stateNameId"
 									id="stateNameId">
-									<option value="">-- Select --</option>
+									
 
 								</select> <span id="stateNameId_err" class="field-error"></span>
 							</div>
@@ -95,7 +95,7 @@
 							<label for="inputLoksabhaName" class="col-sm-4 control-label">
 								Loksabha</label>
 							<div class="col-sm-7">
-								<select class="form-control" name="loksabhaNameId" id="loksabhaNameId">
+								<select class="form-control select2" style="width: 100%;" name="loksabhaNameId" id="loksabhaNameId">
 									<option value="">-- Select --</option>
 
 								</select> <span id="loksabhaNameId_err" class="field-error"></span>
@@ -107,7 +107,7 @@
 							<label for="inputSortName" class="col-sm-4 control-label">
 								Assembly</label>
 							<div class="col-sm-7">
-							   <select class="form-control" name="assemblyNameId" id="assemblyNameIdId">
+							   <select class="form-control select2" style="width: 100%;" name="assemblyNameId" id="assemblyNameIdId">
 									<option value="">-- Select --</option>
 
 								</select> 
@@ -129,8 +129,8 @@
 							<label for="inputSortName" class="col-sm-4 control-label">
 								Booth No</label>
 							<div class="col-sm-7">
-								<input type="text" class="form-control" name="pollingBoothNo"
-									id="pollingBoothNoId" placeholder="Assembly No"> <span
+								<input type="text" class="form-control" style="width: 100%;" name="pollingBoothNo"
+									id="pollingBoothNoId" placeholder="Booth No"> <span
 									id="pollingBoothNoId_err" class="field-error"></span>
 							</div>
 						</div>

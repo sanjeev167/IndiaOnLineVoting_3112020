@@ -1,9 +1,0 @@
-package com.pon.pub.hm.repo;
-
-import org.springframework.data.jpa.repository.JpaRepository;
-
-import com.pon.pvt.master.entity.PartySymbol;
-
-public interface OnlineVoterAccountRepository extends  JpaRepository<OnlineVoterAccount, Integer> {
-
-}

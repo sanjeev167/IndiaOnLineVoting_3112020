@@ -1,0 +1,46 @@
+
+   
+
+    <!-- Main content -->
+    <section class="content">
+
+      <!-- Default box -->
+      <div class="box">
+        <div class="box-header with-border">
+          <h3 class="box-title">About online voting</h3>
+        </div>
+        <div class="box-body">
+          You can vote online provided you have locked your vote for the same through lock vote feature of the website.
+          if you have locked your vote timely, you need to follow the followings
+          <ul>
+              <li>Login first</li>
+              <li>Click online voting</li>
+              <li> Provide voter identification Details there
+                   <ul>
+                       <li>Voter-Id verification</li>
+                       <li>It will check your voter Id for online voting</li>
+                       <li>It also check whether you have already casted your vote or not</li>
+                       <li>Then it will ask you to supply voting secret given at the time of registration</li>
+                       <li>After completing the verification, it will check the voting link validity</li>
+                       <li>Lastly, it will check whether there is any election already scheduled in your constituency or not.</li>
+                   </ul>
+              </li>
+              
+          </ul>
+        </div>
+        <!-- /.box-body -->
+        
+      </div>
+      <!-- /.box -->
+
+    </section>
+    <!-- /.content -->
+  
+
+<!-- jQuery 3 -->
+	<script
+		src="<%request.getContextPath();%>/resources/assets/bower_components/jquery/dist/jquery.min.js"></script>
+	<!-- Bootstrap 3.3.7 -->
+	<script
+		src="<%request.getContextPath();%>/resources/assets/bower_components/bootstrap/dist/js/bootstrap.min.js"
+		type="text/javascript"></script>

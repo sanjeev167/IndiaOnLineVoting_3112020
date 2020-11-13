@@ -18,7 +18,7 @@
 
 		<div class="row">
 
-			<div class="col-md-9">
+			<div class="col-md-12">
 				<div class="nav-tabs-custom" >
 					<ul class="nav nav-tabs"
 						style="background-color: orange; font-weight: bold;">
@@ -237,9 +237,9 @@
 										<label for="inputStateName" class="col-sm-4 control-label">
 											State</label>
 										<div class="col-sm-7">
-											<select class="form-control" name="stateNameId"
+											<select class="form-control select2" style="width: 100%;" name="stateNameId"
 												id="stateNameId">
-												<option value="">-- Select --</option>
+												
 		
 											</select> <span id="stateNameId_err" class="field-error"></span>
 										</div>
@@ -248,7 +248,7 @@
 										<label for="inputLoksabhaName" class="col-sm-4 control-label">
 											Loksabha</label>
 										<div class="col-sm-7">
-											<select class="form-control" name="loksabhaNameId"
+											<select class="form-control select2" style="width: 100%;" name="loksabhaNameId"
 												id="loksabhaNameId">
 												<option value="">-- Select --</option>
 		
@@ -260,7 +260,7 @@
 										<label for="inputSortName" class="col-sm-4 control-label">
 											Assembly</label>
 										<div class="col-sm-7">
-											<select class="form-control" name="assemblyNameId"
+											<select class="form-control select2" style="width: 100%;" name="assemblyNameId"
 												id="assemblyNameId">
 												<option value="">-- Select --</option>
 		
@@ -272,7 +272,7 @@
 										<label for="inputSortName" class="col-sm-4 control-label">
 											Booth</label>
 										<div class="col-sm-7">
-											<select class="form-control" name="pollingBoothNameId"
+											<select class="form-control select2" style="width: 100%;" name="pollingBoothNameId"
 												id="pollingBoothNameIdId">
 												<option value="">-- Select --</option>
 											</select> <span id="pollingBoothNameIdId_err" class="field-error"></span>
@@ -302,8 +302,8 @@
 											<label for="inputSortName" class="col-sm-4 control-label">
 												Sex</label>
 											<div class="col-sm-7">
-											        <select class="form-control" name="sex"	id="sexId">
-												       <option value="">-- Select --</option>
+											        <select class="form-control select2" style="width: 100%;" name="sex"	id="sexId">
+												      
 												       <option value="M">Male</option>
 												       <option value="F">Female</option>
 											        </select> 

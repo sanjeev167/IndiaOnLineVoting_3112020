@@ -10,6 +10,10 @@ import com.support.custom.exception.CustomRuntimeException;
  *
  */
 public interface VoterIdentificationService {
+	
+	String [] verifyOfflineVoterId(String voterId) throws CustomRuntimeException;
+	
+	String [] verifyOnlineVoterId(String voterId) throws CustomRuntimeException;
 
 	String [] verifyVoterId(String voterId) throws CustomRuntimeException;
 
