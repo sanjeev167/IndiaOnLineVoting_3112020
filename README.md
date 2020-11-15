@@ -10,58 +10,67 @@ How it works ?
 Any voter registered with EC can register himself/herself with IndiaOnLineVoting.
 
 Pre-requisite Conditions for registration:
+#######################################
+1. A registered voter Id card.
 
-A registered voter Id card.
+2. Aadhar Card.
 
-Aadhar Card.
+3. An active mobile for OTP communication.
 
-An active mobile for OTP communication.
-
-A mail-id for communication
+4. A mail-id for communication
 
 Registration Process
+###################
+1. Voter Id verification.
 
-Voter Id verification.
-
-Voter Id OTP verification.
+2. Voter Id OTP verification.
 
 Aadhar Verification
 
-Can use finger impression for verification
+3. Can use finger impression for verification
 
-OR can use Aadhar Id verification
+4. OR can use Aadhar Id verification
 
-Aadhar OTP verification
+5. Aadhar OTP verification
 
 Once Voter verification is over, it will ask you to supply login details
+#########################################################################
 
 Once login details are accepted, it will ask you to supply security details and mobile no.
+#########################################################################################
 
 Security Detail: It is a voting-secret.
 
 Mobile No for communication
 
 Once registration process is over, login first and then lock your vote for online voting.
+########################################################################################
 
-Vote-Locking
+1. Vote-Locking
 
-Vote-Locking link is accessible to a Registered-Voter only
+2. Vote-Locking link is accessible to a Registered-Voter only
 
-Vote-Locking link is active for a certain period of time just before election.
+3. Vote-Locking link is active for a certain period of time just before election.
 
 Can't cast your vote online without locking your vote
+#####################################################
 
 Last vote-lock status will be considered by application
+########################################################
 
 If lock status is "Locked" , you can cast your vote online
+##############################################################
 
 If lock status is "Unlocked" , you can't cast your vote online. You can use EVM only.
+####################################################################################
 
 Vote lock or unlock history is maintained.
+###########################################
 
 
-Following things have been developed
-
+########################################################
+     Following things have been developed
+#######################################################
 
 1.) Registration
 
