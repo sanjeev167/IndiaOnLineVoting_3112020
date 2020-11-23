@@ -1,4 +1,0 @@
-<ul class="sidebar-menu" data-widget="tree">		
-<li><a href="<%=request.getContextPath() %>/pub/ec/voters/"><i class="fa fa-circle-o"></i>Enrolled-Voters</a></li>	
-</ul>
-	
